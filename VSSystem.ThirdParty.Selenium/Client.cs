@@ -6,28 +6,24 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        async public Task ExecuteAsync(params Actions.ActionCollection[] actionCollections)
+        async public Task ExecuteAsync(params Actions.ActionTask[] actionTasks)
         {
             try
             {
-                if (actionCollections?.Length > 0)
+                if (actionTasks?.Length > 0)
                 {
-                    foreach (var actionCollection in actionCollections)
+                    foreach (var actionTask in actionTasks)
                     {
-                        var driver = DriverExtension.CreateDriver(actionCollection.Browser, actionCollection.IsIncognito);
+                        var driver = DriverExtension.CreateDriver(actionTask.Browser, actionTask.IsIncognito);
                         if (driver != null)
                         {
                             driver.Manage().Window.Maximize();
-                            if (!string.IsNullOrWhiteSpace(actionCollection.Url))
-                            {
-                                driver.Url = actionCollection.Url;
-                            }
 
-                            if (actionCollection.Actions?.Count > 0)
+                            if (actionTask.Sections?.Count > 0)
                             {
-                                foreach (var actionObj in actionCollection.Actions)
+                                foreach (var section in actionTask.Sections)
                                 {
-                                    await actionObj.ExecuteAsync(driver);
+                                    await section.ExecuteAsync(driver);
                                 }
                             }
 #if DEBUG

@@ -3,15 +3,15 @@ using VSSystem.ThirdParty.Selenium.Define;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
-    public class ActionCollection
+    public class ActionTask
     {
-        string _Url;
-        public string Url { get { return _Url; } set { _Url = value; } }
+        string _Name;
+        public string Name { get { return _Name; } set { _Name = value; } }
         EBrowser _Browser;
         public EBrowser Browser { get { return _Browser; } set { _Browser = value; } }
         bool _IsIncognito;
         public bool IsIncognito { get { return _IsIncognito; } set { _IsIncognito = value; } }
-        List<IAction> _Actions;
-        public List<IAction> Actions { get { return _Actions; } set { _Actions = value; } }
+        List<Section> _Sections;
+        public List<Section> Sections { get { return _Sections; } set { _Sections = value; } }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
@@ -38,30 +39,50 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         protected IWebElement _GetWebElement(IWebDriver driver)
         {
+            if (_DelaySeconds > 0)
+            {
+                Thread.Sleep(System.TimeSpan.FromSeconds(_DelaySeconds));
+            }
             IWebElement elementObj = null;
             if (!string.IsNullOrWhiteSpace(_ID))
             {
-                elementObj = driver.FindElement(By.Id(_ID));
+                try
+                {
+                    elementObj = driver.FindElement(By.Id(_ID));
+                }
+                catch { }
             }
             if (elementObj == null)
             {
                 if (!string.IsNullOrWhiteSpace(_Name))
                 {
-                    elementObj = driver.FindElement(By.Name(_Name));
+                    try
+                    {
+                        elementObj = driver.FindElement(By.Name(_Name));
+                    }
+                    catch { }
                 }
             }
             if (elementObj == null)
             {
                 if (!string.IsNullOrWhiteSpace(_XPath))
                 {
-                    elementObj = driver.FindElement(By.XPath(_XPath));
+                    try
+                    {
+                        elementObj = driver.FindElement(By.XPath(_XPath));
+                    }
+                    catch { }
                 }
             }
             if (elementObj == null)
             {
                 if (!string.IsNullOrWhiteSpace(_ClassName))
                 {
-                    elementObj = driver.FindElement(By.ClassName(_ClassName));
+                    try
+                    {
+                        elementObj = driver.FindElement(By.ClassName(_ClassName));
+                    }
+                    catch { }
                 }
             }
             return elementObj;
@@ -114,5 +135,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             return Task.CompletedTask;
         }
+
     }
 }

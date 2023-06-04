@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "label": "buildtestselenium",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/TestSelenium/TestSelenium.csproj",
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

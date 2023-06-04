@@ -3,9 +3,9 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
-using VSSystem.ThirdParty.Define;
+using VSSystem.ThirdParty.Selenium.Define;
 
-namespace VSSystem.ThirdParty.Selenium
+namespace VSSystem.ThirdParty.Selenium.Extensions
 {
     class DriverExtension
     {

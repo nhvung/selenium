@@ -11,7 +11,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 <ItemGroup>
-    <ProjectReference Include="./VSSystem.ThirdParty.Selenium/VSSystem.ThirdParty.Selenium.csproj" />
+    <ProjectReference Include="../VSSystem.ThirdParty.Selenium/VSSystem.ThirdParty.Selenium.csproj" />
   </ItemGroup>
  
 </Project>

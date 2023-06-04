@@ -1,4 +1,4 @@
-namespace VSSystem.ThirdParty.Define
+namespace VSSystem.ThirdParty.Selenium.Define
 {
     public enum EBrowser : int
     {

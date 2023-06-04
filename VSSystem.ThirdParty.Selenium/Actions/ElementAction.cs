@@ -19,6 +19,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
 
         #region Actions props
+        int _DelaySeconds;
+        public int DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         protected string _Value;
         public string Value { get { return _Value; } set { _Value = value; } }
         bool _Click;
@@ -71,6 +73,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             var elementObj = _GetWebElement(driver);
             if (elementObj != null)
             {
+                if (_DelaySeconds > 0)
+                {
+                    Thread.Sleep(System.TimeSpan.FromSeconds(_DelaySeconds));
+                }
                 if (!string.IsNullOrWhiteSpace(_Value))
                 {
                     elementObj.SendKeys(_Value);

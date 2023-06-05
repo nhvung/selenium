@@ -111,7 +111,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 {
                                     new SelectElement(elementObj).SelectByText(_Props.Text);
                                 }
-                                catch (Exception ex)
+                                catch //(Exception ex)
                                 {
 
                                 }
@@ -158,7 +158,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                 }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
 
             }

@@ -79,7 +79,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 _IsCorrect = isCorrect;
                 _debugLog?.Invoke(_Name);
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
 
             }

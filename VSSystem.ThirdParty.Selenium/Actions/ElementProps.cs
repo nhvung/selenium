@@ -67,7 +67,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     elementObj = searchCtx.FindElement(By.Id(_ID));
                 }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
 
                 }
@@ -92,7 +92,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                         elementObj = searchCtx.FindElement(By.XPath(_XPath));
                     }
-                    catch (Exception ex)
+                    catch //(Exception ex)
                     {
 
                     }

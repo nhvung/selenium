@@ -34,10 +34,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     fileName = Guid.NewGuid().ToString().ToLower();
                 }
 
-                string filePath = $"{folderPath}/{fileName}.png";
+                FileInfo file = new FileInfo($"{folderPath}/{fileName}.png");
+                if (!file.Directory.Exists)
+                {
+                    file.Directory.Create();
+                }
 
                 var screenShotObj = ((ITakesScreenshot)driver).GetScreenshot();
-                screenShotObj.SaveAsFile(filePath, ScreenshotImageFormat.Png);
+                screenShotObj.SaveAsFile(file.FullName, ScreenshotImageFormat.Png);
 
             }
             catch { }

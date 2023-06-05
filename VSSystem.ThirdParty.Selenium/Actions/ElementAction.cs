@@ -13,49 +13,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
     public class ElementAction : IAction
     {
         #region Identity
-        protected string _ID;
-        public string ID { get { return _ID; } set { _ID = value; } }
-        protected string _Name;
-        public string Name { get { return _Name; } set { _Name = value; } }
-        protected string _XPath;
-        public string XPath { get { return _XPath; } set { _XPath = value; } }
-        ClassItem _ClassItem;
-        public ClassItem ClassItem { get { return _ClassItem; } set { _ClassItem = value; } }
-        string _Type;
-        public string Type { get { return _Type; } set { _Type = value; } }
-        [Newtonsoft.Json.JsonIgnore]
-        public EElementType EType
-        {
-            get
-            {
-                EElementType result = EElementType.Undefine;
-                if (!string.IsNullOrWhiteSpace(_Type))
-                {
-                    Enum.TryParse(_Type, true, out result);
-                }
-                return result;
-            }
-        }
-        string _IFrameID;
-        public string IFrameID { get { return _IFrameID; } set { _IFrameID = value; } }
-        string _ParentID;
-        public string ParentID { get { return _ParentID; } set { _ParentID = value; } }
-        TagItem _TagItem;
-        public TagItem TagItem { get { return _TagItem; } set { _TagItem = value; } }
-        bool? _SwitchToNewWindow;
-        public bool? SwitchToNewWindow { get { return _SwitchToNewWindow; } set { _SwitchToNewWindow = value; } }
+        ElementProps _Props;
+        public ElementProps Props { get { return _Props; } set { _Props = value; } }
         #endregion
 
 
         #region Actions props
         int? _DelaySeconds;
         public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
-        protected string _Value;
-        public string Value { get { return _Value; } set { _Value = value; } }
-        protected string _Text;
-        public string Text { get { return _Text; } set { _Text = value; } }
-        bool? _Checked;
-        public bool? Checked { get { return _Checked; } set { _Checked = value; } }
         bool? _Click;
         public bool? Click { get { return _Click; } set { _Click = value; } }
         bool? _DoubleClick;
@@ -69,133 +34,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         #endregion
 
-
-        protected IWebElement _GetWebElement(IWebDriver driver)
-        {
-
-            IWebElement elementObj = null;
-            ISearchContext searchCtx = driver;
-            if (!string.IsNullOrWhiteSpace(_ParentID))
-            {
-                try
-                {
-                    searchCtx = driver.FindElement(By.Id(_ParentID));
-                }
-                catch { }
-            }
-
-            if (!string.IsNullOrWhiteSpace(_ID))
-            {
-                try
-                {
-                    elementObj = searchCtx.FindElement(By.Id(_ID));
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            if (elementObj == null)
-            {
-                if (!string.IsNullOrWhiteSpace(_Name))
-                {
-                    try
-                    {
-                        elementObj = searchCtx.FindElement(By.Name(_Name));
-                    }
-                    catch { }
-                }
-            }
-            if (elementObj == null)
-            {
-                if (!string.IsNullOrWhiteSpace(_XPath))
-                {
-                    try
-                    {
-
-                        elementObj = searchCtx.FindElement(By.XPath(_XPath));
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                }
-            }
-            if (elementObj == null)
-            {
-                if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
-                {
-                    try
-                    {
-                        var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
-                        if (foundElementObjs?.Count > 0)
-                        {
-                            if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
-                            {
-                                elementObj = foundElementObjs.FirstOrDefault(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value) ?? false);
-                            }
-                            if (elementObj == null)
-                            {
-                                if (!string.IsNullOrWhiteSpace(_ClassItem.Text))
-                                {
-                                    elementObj = foundElementObjs.FirstOrDefault(ite => ite.Text?.Equals(_ClassItem.Text) ?? false);
-                                }
-                            }
-                            if (elementObj == null)
-                            {
-                                int index = _ClassItem.Index ?? foundElementObjs.Count;
-                                if (_ClassItem.Index < foundElementObjs.Count)
-                                {
-                                    elementObj = foundElementObjs.ElementAtOrDefault(index);
-                                }
-                            }
-                        }
-                    }
-                    catch { }
-                }
-            }
-            if (elementObj == null)
-            {
-                if (!string.IsNullOrWhiteSpace(_TagItem?.TagName))
-                {
-                    try
-                    {
-                        var foundElementObjs = searchCtx.FindElements(By.TagName(_TagItem.TagName))?.Where(ite => ite.Displayed)?.ToList();
-                        if (foundElementObjs?.Count > 0)
-                        {
-                            if (!string.IsNullOrWhiteSpace(_TagItem.Value))
-                            {
-                                elementObj = foundElementObjs.FirstOrDefault(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value) ?? false);
-                            }
-                            if (elementObj == null)
-                            {
-                                if (!string.IsNullOrWhiteSpace(_TagItem.Text))
-                                {
-                                    elementObj = foundElementObjs.FirstOrDefault(ite => ite.Text?.Equals(_TagItem.Text) ?? false);
-                                }
-                            }
-                            if (elementObj == null)
-                            {
-                                int index = _TagItem.Index ?? foundElementObjs.Count;
-                                if (_TagItem.Index < foundElementObjs.Count)
-                                {
-                                    elementObj = foundElementObjs.ElementAtOrDefault(index);
-                                }
-                            }
-                        }
-                    }
-                    catch { }
-                }
-            }
-
-
-
-            return elementObj;
-        }
-
         public Task ExecuteAsync(IWebDriver driver) { return _ExecuteAsync(driver); }
         protected virtual Task _ExecuteAsync(IWebDriver driver)
         {
+            if (_Props == null)
+            {
+                return Task.CompletedTask;
+            }
             int delaySeconds = _DelaySeconds ?? 0;
             if (delaySeconds > 0)
             {
@@ -203,16 +48,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             try
             {
-                if (!string.IsNullOrWhiteSpace(_IFrameID))
+                if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
                     try
                     {
-                        driver = driver.SwitchTo().Frame(_IFrameID);
+                        driver = driver.SwitchTo().Frame(_Props.IFrameID);
                     }
                     catch { }
                 }
 
-                if (_SwitchToNewWindow ?? false)
+                if (_Props.SwitchToNewWindow ?? false)
                 {
                     try
                     {
@@ -226,7 +71,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     catch { }
                 }
 
-                var elementObj = _GetWebElement(driver);
+                var elementObj = Props.GetWebElement(driver);
                 if (elementObj != null)
                 {
                     if (_Actions?.Count > 0)
@@ -236,35 +81,35 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             actionObj?.ExecuteAsync(driver);
                         }
                     }
-                    if (!string.IsNullOrWhiteSpace(_Value))
+                    if (!string.IsNullOrWhiteSpace(_Props.Value))
                     {
-                        if (EType == EElementType.Select)
+                        if (_Props.EType == EElementType.Select)
                         {
-                            if (!string.IsNullOrWhiteSpace(_Value))
+                            if (!string.IsNullOrWhiteSpace(_Props.Value))
                             {
                                 try
                                 {
-                                    new SelectElement(elementObj).SelectByValue(_Value);
+                                    new SelectElement(elementObj).SelectByValue(_Props.Value);
                                 }
                                 catch { }
                             }
                         }
                         else
                         {
-                            elementObj.SendKeys(_Value);
+                            elementObj.SendKeys(_Props.Value);
                         }
 
                         Thread.Sleep(100);
                     }
-                    if (!string.IsNullOrWhiteSpace(_Text))
+                    if (!string.IsNullOrWhiteSpace(_Props.Text))
                     {
-                        if (EType == EElementType.Select)
+                        if (_Props.EType == EElementType.Select)
                         {
-                            if (!string.IsNullOrWhiteSpace(_Text))
+                            if (!string.IsNullOrWhiteSpace(_Props.Text))
                             {
                                 try
                                 {
-                                    new SelectElement(elementObj).SelectByText(_Text);
+                                    new SelectElement(elementObj).SelectByText(_Props.Text);
                                 }
                                 catch (Exception ex)
                                 {
@@ -274,9 +119,9 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                         Thread.Sleep(100);
                     }
-                    if (_Checked != null)
+                    if (_Props.Checked != null)
                     {
-                        if (elementObj.Selected != _Checked)
+                        if (elementObj.Selected != _Props.Checked)
                         {
                             new OpenQA.Selenium.Interactions.Actions(driver)
                             .MoveToElement(elementObj)
@@ -319,7 +164,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             try
             {
-                if (_SwitchToNewWindow ?? false)
+                if (_Props.SwitchToNewWindow ?? false)
                 {
                     try
                     {

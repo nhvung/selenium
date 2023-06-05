@@ -17,7 +17,7 @@ namespace VSSystem.ThirdParty.Selenium
                 {
                     foreach (var actionTask in actionTasks)
                     {
-                        using (var driver = DriverExtension.CreateDriver(actionTask.Browser, actionTask.IsIncognito))
+                        using (var driver = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito))
                         {
                             if (driver != null)
                             {

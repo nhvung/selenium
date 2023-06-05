@@ -55,14 +55,14 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                         break;
                     case EBrowser.Firefox:
                         {
-                            var opts = _CreateChromeOptions(isIncognito);
-                            driver = new ChromeDriver(opts);
+                            var opts = _CreateFirefoxOptions(isIncognito);
+                            driver = new FirefoxDriver(opts);
                         }
                         break;
                     case EBrowser.Edge:
                         {
-                            var opts = _CreateChromeOptions(isIncognito);
-                            driver = new ChromeDriver(opts);
+                            var opts = _CreateEdgeOptions(isIncognito);
+                            driver = new EdgeDriver(opts);
                         }
                         break;
                 }

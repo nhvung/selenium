@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class ElementValidateAction : IValidateAction
+    public class ElementWaitingAction : IValidateAction
     {
         #region Identity
         protected string _ID;
@@ -191,25 +191,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             {
                 if (_Displayed != null)
                 {
-                    if (elementObj.Displayed != _Displayed)
+                    while (elementObj.Displayed != _Displayed)
                     {
-                        return false;
+                        Thread.Sleep(1000);
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(_Text))
-                {
-                    if (!elementObj.Text?.Equals(_Text) ?? false)
-                    {
-                        return false;
-                    }
-                }
-                if (!string.IsNullOrWhiteSpace(_Value))
-                {
-                    if (!elementObj.GetAttribute("value")?.Equals(_Value) ?? false)
-                    {
-                        return false;
-                    }
-                }
+
                 return true;
             }
             return false;

@@ -13,7 +13,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         public NavigateAction()
         {
-
+            _Url = null;
         }
         public NavigateAction(string url)
         {
@@ -28,7 +28,11 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
                 }
-                driver.Url = _Url;
+                if (!string.IsNullOrWhiteSpace(_Url))
+                {
+                    driver.Url = _Url;
+                }
+
             }
             catch { }
 

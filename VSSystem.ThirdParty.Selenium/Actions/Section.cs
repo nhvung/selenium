@@ -12,20 +12,27 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Name { get { return _Name; } set { _Name = value; } }
         List<IAction> _RequestActions;
         public List<IAction> RequestActions { get { return _RequestActions; } set { _RequestActions = value; } }
+        List<IValidateAction> _WaitingActions;
+        public List<IValidateAction> WaitingActions { get { return _WaitingActions; } set { _WaitingActions = value; } }
         List<IValidateAction> _ValidateActions;
         public List<IValidateAction> ValidateActions { get { return _ValidateActions; } set { _ValidateActions = value; } }
-
-        public delegate void dlgOnCorrect(string name);
-        public delegate void dlgOnFailed(string name);
+        bool _IsCorrect;
         [Newtonsoft.Json.JsonIgnore]
-        public dlgOnCorrect OnCorrect;
-        [Newtonsoft.Json.JsonIgnore]
-        public dlgOnFailed OnFailed;
-
-        public Section(string name)
+        public bool IsCorrect { get { return _IsCorrect; } }
+        protected Action<string> _debugLog;
+        public Section(string name, Action<string> debugLog = default)
         {
             _Name = name;
             _RequestActions = null;
+            _ValidateActions = null;
+            _WaitingActions = null;
+            _debugLog = debugLog;
+        }
+        public Section()
+        {
+            _Name = null;
+            _RequestActions = null;
+            _WaitingActions = null;
             _ValidateActions = null;
         }
         public async Task ExecuteAsync(IWebDriver driver)
@@ -36,7 +43,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     foreach (var actionObj in _RequestActions)
                     {
+
                         await actionObj.ExecuteAsync(driver);
+                    }
+                }
+                if (_WaitingActions?.Count > 0)
+                {
+                    foreach (var actionObj in _WaitingActions)
+                    {
+                        bool isValid = actionObj.IsCorrect(driver);
                     }
                 }
                 bool isCorrect = true;
@@ -52,16 +67,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                     }
                 }
-                if (isCorrect)
-                {
-                    OnCorrect?.Invoke(_Name);
-                }
-                else
-                {
-                    OnFailed?.Invoke(_Name);
-                }
+                _IsCorrect = isCorrect;
+                _debugLog?.Invoke(_Name);
             }
-            catch { }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

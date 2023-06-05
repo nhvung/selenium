@@ -34,12 +34,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         #endregion
 
-        public void Execute(IWebDriver driver) { _Execute(driver); }
-        protected virtual void _Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver) { return _Execute(driver); }
+        protected virtual bool _Execute(IWebDriver driver)
         {
             if (_Props == null)
             {
-                return;
+                return false;
             }
             int delaySeconds = _DelaySeconds ?? 0;
             if (delaySeconds > 0)
@@ -184,6 +184,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             }
             catch { }
+            return true;
         }
 
     }

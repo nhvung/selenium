@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace testselenium
 {
@@ -11,13 +9,12 @@ namespace testselenium
         static Dictionary<string, bool> _validateResult;
         async static Task Main(string[] args)
         {
-            _validateResult = new Dictionary<string, bool>(StringComparer.InvariantCultureIgnoreCase);
             string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
             var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.Section>()
                 {
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test login", name=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test login", (name, correct)=> Console.WriteLine($"{name} is correct.")){
 
                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(checkUrl),
@@ -59,12 +56,12 @@ ID="txtPassword",
                             },
                             new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
                                 DelaySeconds = 1,
-                                FileName = "login-success"
+                                FileName = "step-1-login-success"
                             }
                         },
 
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test view gallery", name=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test view gallery", (name, correct)=> Console.WriteLine($"{name} is correct.")){
 
                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
@@ -78,7 +75,7 @@ Click=true
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
                             {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassItem(){
+ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps(){
                                     ClassName = "icon_function",
                                     Index = 2
                                 },
@@ -107,7 +104,7 @@ ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
                             },
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
- ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassItem("ms-options-wrap", 0),
+ ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ms-options-wrap", 0),
                                 },
                                 DelaySeconds = 1,
 
@@ -142,7 +139,7 @@ ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
  ParentID="list-share",
-                                 TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagItem("input", 1),
+                                 TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagProps("input", 1),
                                 Checked = true,
                                 },
                                 DelaySeconds = 1,
@@ -151,7 +148,7 @@ ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ParentID="list-share",
-                                 TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagItem("input", 2),
+                                 TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagProps("input", 2),
                                 Checked = true,
                                 },
 
@@ -175,7 +172,7 @@ ID="chk-all-state",
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
                             {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassItem(){
+ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps(){
                                     ClassName = "button100_green",
                                     Index = 0
                                 },
@@ -202,7 +199,7 @@ IFrameID="GCTIFrame",
                                 Click=true
                             },
                         },
-                        ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IValidateAction>()
+                        ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>()
                         {
                             new VSSystem.ThirdParty.Selenium.Actions.ElementValidateAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
@@ -215,10 +212,10 @@ IFrameID="GCTIFrame",
                         },
                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
                             DelaySeconds = 1,
-                            FileName = "view-gallery"
+                            FileName = "step-2-view-gallery"
                         }
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test csa", name=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test csa", (name,correct)=> Console.WriteLine($"{name} is correct.")){
 
                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
@@ -239,14 +236,14 @@ ID="ctl00_ContentPlaceHolder1_btnAnalysisReport",
                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 SwitchToNewWindow = true,
-                                TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagItem("button", text: "Wait"),
+                                TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("button", text: "Wait"),
                                 },
                                 DelaySeconds = 20,
 
                                 Click = true
                             },
                         },
-                        WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IWaitingAction>(){
+                        WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ID = "loading-msg",
@@ -260,7 +257,7 @@ SwitchToNewWindow = true,
                         },
                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
                             DelaySeconds = 1,
-                            FileName = "run-csa"
+                            FileName = "step-3-run-csa"
                         }
                     },
                 };

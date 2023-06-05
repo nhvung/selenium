@@ -14,8 +14,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Name { get { return _Name; } set { _Name = value; } }
         string _XPath;
         public string XPath { get { return _XPath; } set { _XPath = value; } }
-        ClassItem _ClassItem;
-        public ClassItem ClassItem { get { return _ClassItem; } set { _ClassItem = value; } }
+        ClassProps _ClassItem;
+        public ClassProps ClassItem { get { return _ClassItem; } set { _ClassItem = value; } }
         string _Type;
         public string Type { get { return _Type; } set { _Type = value; } }
         [Newtonsoft.Json.JsonIgnore]
@@ -36,8 +36,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string IFrameID { get { return _IFrameID; } set { _IFrameID = value; } }
         string _ParentID;
         public string ParentID { get { return _ParentID; } set { _ParentID = value; } }
-        TagItem _TagItem;
-        public TagItem TagItem { get { return _TagItem; } set { _TagItem = value; } }
+        TagProps _TagItem;
+        public TagProps TagItem { get { return _TagItem; } set { _TagItem = value; } }
         bool? _SwitchToNewWindow;
         public bool? SwitchToNewWindow { get { return _SwitchToNewWindow; } set { _SwitchToNewWindow = value; } }
         string _Value;

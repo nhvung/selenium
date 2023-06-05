@@ -19,7 +19,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
             _Url = url;
         }
-        public void Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             }
             catch { }
+            return true;
         }
     }
 }

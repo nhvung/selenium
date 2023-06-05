@@ -12,17 +12,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Name { get { return _Name; } set { _Name = value; } }
         List<IAction> _RequestActions;
         public List<IAction> RequestActions { get { return _RequestActions; } set { _RequestActions = value; } }
-        List<IWaitingAction> _WaitingActions;
-        public List<IWaitingAction> WaitingActions { get { return _WaitingActions; } set { _WaitingActions = value; } }
-        List<IValidateAction> _ValidateActions;
-        public List<IValidateAction> ValidateActions { get { return _ValidateActions; } set { _ValidateActions = value; } }
+        List<IAction> _WaitingActions;
+        public List<IAction> WaitingActions { get { return _WaitingActions; } set { _WaitingActions = value; } }
+        List<IAction> _ValidateActions;
+        public List<IAction> ValidateActions { get { return _ValidateActions; } set { _ValidateActions = value; } }
         bool _IsCorrect;
         [Newtonsoft.Json.JsonIgnore]
         public bool IsCorrect { get { return _IsCorrect; } }
-        protected Action<string> _debugLog;
+        protected Action<string, bool> _debugLog;
         ScreenShotAction _ScreenShot;
         public ScreenShotAction ScreenShot { get { return _ScreenShot; } set { _ScreenShot = value; } }
-        public Section(string name, Action<string> debugLog = default)
+        public Section(string name, Action<string, bool> debugLog = default)
         {
             _Name = name;
             _RequestActions = null;
@@ -39,7 +39,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _ValidateActions = null;
             _ScreenShot = null;
         }
-        public void Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     foreach (var actionObj in _WaitingActions)
                     {
-                        actionObj.Wait(driver);
+                        actionObj.Execute(driver);
                     }
                 }
                 bool isCorrect = true;
@@ -63,7 +63,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     foreach (var actionObj in _ValidateActions)
                     {
-                        bool isValid = actionObj.IsCorrect(driver);
+                        bool isValid = actionObj.Execute(driver);
                         if (!isValid)
                         {
                             isCorrect = false;
@@ -77,12 +77,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     _ScreenShot.Execute(driver);
                 }
                 _IsCorrect = isCorrect;
-                _debugLog?.Invoke(_Name);
+                _debugLog?.Invoke(_Name, isCorrect);
             }
             catch //(Exception ex)
             {
 
             }
+            return true;
         }
     }
 }

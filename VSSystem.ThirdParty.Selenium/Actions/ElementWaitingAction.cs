@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class ElementWaitingAction : IWaitingAction
+    public class ElementWaitingAction : IAction
     {
         #region Identity
         ElementProps _Props;
@@ -24,11 +24,11 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
 
 
-        public void Wait(IWebDriver driver)
+        public bool Execute(IWebDriver driver)
         {
             if (_Props == null)
             {
-                return;
+                return false;
             }
             int delaySeconds = _DelaySeconds ?? 0;
             if (delaySeconds > 0)
@@ -68,6 +68,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                 }
             }
+            return true;
         }
     }
 }

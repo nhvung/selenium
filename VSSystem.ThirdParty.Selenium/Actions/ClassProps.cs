@@ -1,6 +1,6 @@
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
-    public class ClassItem
+    public class ClassProps
     {
         string _ClassName;
         public string ClassName { get { return _ClassName; } set { _ClassName = value; } }
@@ -10,11 +10,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Value { get { return _Value; } set { _Value = value; } }
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
-        public ClassItem() { }
-        public ClassItem(string className, int? index)
+        public ClassProps() { }
+        public ClassProps(string className, int? index)
         {
             _ClassName = className;
             _Index = index;
+        }
+        public ClassProps(string className, string value = null, string text = null)
+        {
+            _ClassName = className;
+            _Value = value;
+            _Text = text;
         }
     }
 

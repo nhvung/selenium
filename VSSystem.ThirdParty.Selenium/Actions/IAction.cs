@@ -4,6 +4,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 {
     public interface IAction
     {
-        void Execute(IWebDriver driver);
+        bool Execute(IWebDriver driver);
     }
 }

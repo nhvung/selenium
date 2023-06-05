@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class ElementValidateAction : IValidateAction
+    public class ElementValidateAction : IAction
     {
         #region Identity
         ElementProps _Props;
@@ -24,7 +24,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
 
 
-        public bool IsCorrect(IWebDriver driver)
+        public bool Execute(IWebDriver driver)
         {
             if (_Props == null)
             {

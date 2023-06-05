@@ -43,6 +43,9 @@ namespace testselenium
                                 ID="ctl00_AgencySelectionControl_cboAgencySelection",
                                 Text="Agency Enable VCC"
                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.SnapshotAction(){
+                                DelaySeconds = 1
+                            }
                         },
                         ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IValidateAction>()
                         {
@@ -153,6 +156,9 @@ namespace testselenium
                                 ID="btnContinue",
                                 Click=true
                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.SnapshotAction(){
+                                DelaySeconds = 5
+                            }
                         },
                         ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IValidateAction>()
                         {

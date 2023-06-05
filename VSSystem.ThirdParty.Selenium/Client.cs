@@ -9,7 +9,7 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        async public Task ExecuteAsync(params Actions.ActionTask[] actionTasks)
+        public void Execute(params Actions.ActionTask[] actionTasks)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     foreach (var section in actionTask.Sections)
                                     {
-                                        await section.ExecuteAsync(driver);
+                                        section.Execute(driver);
                                     }
                                 }
 #if DEBUG

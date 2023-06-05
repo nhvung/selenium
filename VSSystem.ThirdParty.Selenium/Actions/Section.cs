@@ -35,7 +35,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _WaitingActions = null;
             _ValidateActions = null;
         }
-        public async Task ExecuteAsync(IWebDriver driver)
+        public void Execute(IWebDriver driver)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     foreach (var actionObj in _RequestActions)
                     {
 
-                        await actionObj.ExecuteAsync(driver);
+                        actionObj.Execute(driver);
                     }
                 }
                 if (_WaitingActions?.Count > 0)

@@ -14,7 +14,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string FolderPath { get { return _FolderPath; } set { _FolderPath = value; } }
         string _FileName;
         public string FileName { get { return _FileName; } set { _FileName = value; } }
-        public Task ExecuteAsync(IWebDriver driver)
+        public void Execute(IWebDriver driver)
         {
             int delaySeconds = _DelaySeconds ?? 0;
             if (delaySeconds > 0)
@@ -45,7 +45,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             }
             catch { }
-            return Task.CompletedTask;
         }
     }
 }

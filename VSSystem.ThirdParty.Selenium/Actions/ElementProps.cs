@@ -5,6 +5,7 @@ using VSSystem.ThirdParty.Selenium.Define;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class ElementProps
     {
         string _ID;

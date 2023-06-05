@@ -229,7 +229,7 @@ ID="txtPassword",
                 Sections = sections
             };
 
-            await client.ExecuteAsync(taskParams1Obj
+            client.Execute(taskParams1Obj
             // , taskParams2Obj
             // , taskParams3Obj
             );

@@ -34,12 +34,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         #endregion
 
-        public Task ExecuteAsync(IWebDriver driver) { return _ExecuteAsync(driver); }
-        protected virtual Task _ExecuteAsync(IWebDriver driver)
+        public void Execute(IWebDriver driver) { _Execute(driver); }
+        protected virtual void _Execute(IWebDriver driver)
         {
             if (_Props == null)
             {
-                return Task.CompletedTask;
+                return;
             }
             int delaySeconds = _DelaySeconds ?? 0;
             if (delaySeconds > 0)
@@ -78,7 +78,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         foreach (var actionObj in _Actions)
                         {
-                            actionObj?.ExecuteAsync(driver);
+                            actionObj?.Execute(driver);
                         }
                     }
                     if (!string.IsNullOrWhiteSpace(_Props.Value))
@@ -184,7 +184,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             }
             catch { }
-            return Task.CompletedTask;
         }
 
     }

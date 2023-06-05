@@ -2,8 +2,8 @@ using OpenQA.Selenium;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
-    public interface IAction
+    public interface IWaitingAction
     {
-        void Execute(IWebDriver driver);
+        void Wait(IWebDriver driver);
     }
 }

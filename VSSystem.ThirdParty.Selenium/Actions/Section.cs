@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class Section : IAction
     {
         string _Name;
@@ -13,9 +14,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public List<IAction> RequestActions { get { return _RequestActions; } set { _RequestActions = value; } }
         List<IValidateAction> _ValidateActions;
         public List<IValidateAction> ValidateActions { get { return _ValidateActions; } set { _ValidateActions = value; } }
+
         public delegate void dlgOnCorrect(string name);
         public delegate void dlgOnFailed(string name);
+        [Newtonsoft.Json.JsonIgnore]
         public dlgOnCorrect OnCorrect;
+        [Newtonsoft.Json.JsonIgnore]
         public dlgOnFailed OnFailed;
 
         public Section(string name)
@@ -47,7 +51,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             break;
                         }
                     }
-
                 }
                 if (isCorrect)
                 {
@@ -58,10 +61,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     OnFailed?.Invoke(_Name);
                 }
             }
-            catch (Exception ex)
-            {
-
-            }
+            catch { }
         }
     }
 }

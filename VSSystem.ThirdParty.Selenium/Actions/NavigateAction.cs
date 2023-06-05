@@ -4,12 +4,13 @@ using OpenQA.Selenium;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class NavigateAction : IAction
     {
         string _Url;
         public string Url { get { return _Url; } set { _Url = value; } }
-        int _DelaySeconds;
-        public int DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
+        int? _DelaySeconds;
+        public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         public NavigateAction()
         {
 
@@ -22,9 +23,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
             try
             {
-                if (_DelaySeconds > 0)
+                int delaySeconds = _DelaySeconds ?? 0;
+                if (delaySeconds > 0)
                 {
-                    Thread.Sleep(System.TimeSpan.FromSeconds(_DelaySeconds));
+                    Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
                 }
                 driver.Url = _Url;
             }

@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class ElementAction : IAction
     {
         #region Identity
@@ -20,28 +21,29 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
 
         #region Actions props
-        int _DelaySeconds;
-        public int DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
+        int? _DelaySeconds;
+        public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         protected string _Value;
         public string Value { get { return _Value; } set { _Value = value; } }
-        bool _Click;
-        public bool Click { get { return _Click; } set { _Click = value; } }
-        bool _DoubleClick;
-        public bool DoubleClick { get { return _DoubleClick; } set { _DoubleClick = value; } }
-        bool _ClickAndHold;
-        public bool ClickAndHold { get { return _ClickAndHold; } set { _ClickAndHold = value; } }
-        bool _MouseIn;
-        public bool MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
-        bool _MouseOut;
-        public bool MouseOut { get { return _MouseOut; } set { _MouseOut = value; } }
+        bool? _Click;
+        public bool? Click { get { return _Click; } set { _Click = value; } }
+        bool? _DoubleClick;
+        public bool? DoubleClick { get { return _DoubleClick; } set { _DoubleClick = value; } }
+        bool? _ClickAndHold;
+        public bool? ClickAndHold { get { return _ClickAndHold; } set { _ClickAndHold = value; } }
+        bool? _MouseIn;
+        public bool? MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
+        // bool _MouseOut;
+        // public bool MouseOut { get { return _MouseOut; } set { _MouseOut = value; } }
         #endregion
 
 
         protected IWebElement _GetWebElement(IWebDriver driver)
         {
-            if (_DelaySeconds > 0)
+            int delaySeconds = _DelaySeconds ?? 0;
+            if (delaySeconds > 0)
             {
-                Thread.Sleep(System.TimeSpan.FromSeconds(_DelaySeconds));
+                Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
             }
             IWebElement elementObj = null;
             if (!string.IsNullOrWhiteSpace(_ID))
@@ -94,39 +96,34 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             var elementObj = _GetWebElement(driver);
             if (elementObj != null)
             {
-                if (_DelaySeconds > 0)
+                int delaySeconds = _DelaySeconds ?? 0;
+                if (delaySeconds > 0)
                 {
-                    Thread.Sleep(System.TimeSpan.FromSeconds(_DelaySeconds));
+                    Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
                 }
                 if (!string.IsNullOrWhiteSpace(_Value))
                 {
                     elementObj.SendKeys(_Value);
                     Thread.Sleep(100);
                 }
-                if (_Click)
+                if (_Click ?? false)
                 {
                     elementObj.Click();
                     Thread.Sleep(100);
                 }
-                if (_DoubleClick)
+                if (_DoubleClick ?? false)
                 {
                     new OpenQA.Selenium.Interactions.Actions(driver)
                     .DoubleClick(elementObj)
                     .Perform();
                 }
-                if (_MouseIn)
+                if (_MouseIn ?? false)
                 {
                     new OpenQA.Selenium.Interactions.Actions(driver)
                     .MoveToElement(elementObj)
                     .Perform();
                 }
-                // if (_MouseOut)
-                // {
-                //     new OpenQA.Selenium.Interactions.Actions(driver)
-                //     .Release(elementObj)
-                //     .Perform();
-                // }
-                if (_ClickAndHold)
+                if (_ClickAndHold ?? false)
                 {
                     new OpenQA.Selenium.Interactions.Actions(driver)
                     .ClickAndHold(elementObj)

@@ -1,0 +1,42 @@
+{
+  "Name": "Test BIQ web task 1",
+  "Browser": 1,
+  "IsIncognito": true,
+  "Sections": [
+    {
+      "Name": "TEST LOGIN",
+      "RequestActions": [
+        {
+          "Url": "https://14.161.7.248:4431/ballisticsearch",
+          "DelaySeconds": 3
+        },
+        {
+          "ID": "txtUserName",
+          "Value": "ex_vung"
+        },
+        {
+          "ID": "txtPassword",
+          "Value": "Evidence9!"
+        },
+        {
+          "ID": "btnOk",
+          "Click": true
+        },
+        {
+          "Url": "https://14.161.7.248:4431/ballisticsearch/GUI/Home.aspx"
+        }
+      ],
+      "ValidateActions": [
+        {
+          "ID": "dvBallistics",
+          "DelaySeconds": 3,
+          "Displayed": true
+        },
+        {
+          "ID": "ctl00_ContentPlaceHolder1_dvUserManagement",
+          "Displayed": false
+        }
+      ]
+    }
+  ]
+}

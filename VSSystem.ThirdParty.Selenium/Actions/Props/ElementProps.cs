@@ -107,32 +107,45 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             if (elementObj == null)
             {
-                if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
+                if (!string.IsNullOrWhiteSpace(_ClassItem.ClassName))
                 {
                     try
                     {
+#if DEBUG
+                        if (_ClassItem.ClassName == "ajax_overlay")
+                        {
+
+                        }
+#endif
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
                         if (foundElementObjs?.Count > 0)
                         {
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
                             {
-                                elementObj = foundElementObjs.FirstOrDefault(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value) ?? false);
+                                foundElementObjs = foundElementObjs
+                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value) ?? false)
+                                ?.ToList();
                             }
-                            if (elementObj == null)
+
+                            if (!string.IsNullOrWhiteSpace(_ClassItem.Text))
                             {
-                                if (!string.IsNullOrWhiteSpace(_ClassItem.Text))
-                                {
-                                    elementObj = foundElementObjs.FirstOrDefault(ite => ite.Text?.Equals(_ClassItem.Text) ?? false);
-                                }
+                                foundElementObjs = foundElementObjs
+                                ?.Where(ite => ite.Text?.Equals(_ClassItem.Text) ?? false)
+                                ?.ToList();
                             }
-                            if (elementObj == null)
+                            if (foundElementObjs?.Count > 0)
                             {
                                 int index = _ClassItem.Index ?? foundElementObjs.Count;
-                                if (_ClassItem.Index < foundElementObjs.Count)
+                                if (index < foundElementObjs.Count)
                                 {
                                     elementObj = foundElementObjs.ElementAtOrDefault(index);
                                 }
+                                else
+                                {
+                                    elementObj = foundElementObjs?.FirstOrDefault();
+                                }
                             }
+
                         }
                     }
                     catch { }
@@ -149,23 +162,30 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         {
                             if (!string.IsNullOrWhiteSpace(_TagItem.Value))
                             {
-                                elementObj = foundElementObjs.FirstOrDefault(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value) ?? false);
+                                foundElementObjs = foundElementObjs
+                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value) ?? false)
+                                ?.ToList();
                             }
-                            if (elementObj == null)
+
+                            if (!string.IsNullOrWhiteSpace(_TagItem.Text))
                             {
-                                if (!string.IsNullOrWhiteSpace(_TagItem.Text))
-                                {
-                                    elementObj = foundElementObjs.FirstOrDefault(ite => ite.Text?.Equals(_TagItem.Text) ?? false);
-                                }
+                                foundElementObjs = foundElementObjs
+                                ?.Where(ite => ite.Text?.Equals(_TagItem.Text) ?? false)
+                                ?.ToList();
                             }
-                            if (elementObj == null)
+                            if (foundElementObjs?.Count > 0)
                             {
                                 int index = _TagItem.Index ?? foundElementObjs.Count;
-                                if (_TagItem.Index < foundElementObjs.Count)
+                                if (index < foundElementObjs.Count)
                                 {
                                     elementObj = foundElementObjs.ElementAtOrDefault(index);
                                 }
+                                else
+                                {
+                                    elementObj = foundElementObjs?.FirstOrDefault();
+                                }
                             }
+
                         }
                     }
                     catch { }

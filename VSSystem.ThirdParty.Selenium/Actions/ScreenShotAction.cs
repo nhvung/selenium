@@ -14,12 +14,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string FolderPath { get { return _FolderPath; } set { _FolderPath = value; } }
         string _FileName;
         public string FileName { get { return _FileName; } set { _FileName = value; } }
-        public bool Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
-            int delaySeconds = _DelaySeconds ?? 1;
-            if (delaySeconds > 0)
+            int delayMiliseconds = 50;
+            if (_DelaySeconds > 0)
             {
-                Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
+                delayMiliseconds = Convert.ToInt32(_DelaySeconds * 1000);
+            }
+            if (delayMiliseconds > 0)
+            {
+                Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
             }
             try
             {
@@ -44,7 +48,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 screenShotObj.SaveAsFile(file.FullName, ScreenshotImageFormat.Png);
 
             }
-            catch { }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(new Exception("Execute exception.", ex));
+            }
             return true;
         }
     }

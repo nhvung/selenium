@@ -34,51 +34,67 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         #endregion
 
-        public bool Execute(IWebDriver driver) { return _Execute(driver); }
-        protected virtual bool _Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default) { return _Execute(driver, debugLogAction, errorLogAction); }
+        protected virtual bool _Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             if (_Props == null)
             {
                 return false;
             }
-            int delaySeconds = _DelaySeconds ?? 1;
-            if (delaySeconds > 0)
+            double delayMiliseconds = 50;
+            if (_DelaySeconds > 0)
             {
-                Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
+                delayMiliseconds = Convert.ToInt32(_DelaySeconds * 1000);
+            }
+            if (delayMiliseconds > 0)
+            {
+                Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
             }
             try
             {
+                IWebDriver processDriver = driver;
                 if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
                     try
                     {
-                        driver = driver.SwitchTo().Frame(_Props.IFrameID);
-                    }
-                    catch { }
-                }
+                        processDriver = processDriver.SwitchTo().Frame(_Props.IFrameID);
 
-                if (_Props.SwitchToNewWindow ?? false)
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
+                    }
+                }
+                else if (_Props.SwitchToNewWindow ?? false)
                 {
                     try
                     {
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
                         {
-                            driver = driver.SwitchTo().Window(lastWindow);
+                            processDriver = processDriver.SwitchTo().Window(lastWindow);
                         }
 
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
                 }
 
-                var elementObj = Props.GetWebElement(driver);
+                if (processDriver == null)
+                {
+                    processDriver = driver;
+                }
+
+                var elementObj = Props.GetWebElement(processDriver);
                 if (elementObj != null)
                 {
                     if (_Actions?.Count > 0)
                     {
                         foreach (var actionObj in _Actions)
                         {
-                            actionObj?.Execute(driver);
+                            actionObj?.Execute(processDriver);
                         }
                     }
                     if (!string.IsNullOrWhiteSpace(_Props.Value))
@@ -123,7 +139,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         if (elementObj.Selected != _Props.Checked)
                         {
-                            new OpenQA.Selenium.Interactions.Actions(driver)
+                            new OpenQA.Selenium.Interactions.Actions(processDriver)
                             .MoveToElement(elementObj)
                             // .ScrollToElement(elementObj)
                             .Click()
@@ -137,53 +153,53 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     if (_DoubleClick ?? false)
                     {
-                        new OpenQA.Selenium.Interactions.Actions(driver)
+                        new OpenQA.Selenium.Interactions.Actions(processDriver)
                         // .ScrollToElement(elementObj)
                         .DoubleClick(elementObj)
                         .Perform();
                     }
                     if (_MouseIn ?? false)
                     {
-                        new OpenQA.Selenium.Interactions.Actions(driver)
+                        new OpenQA.Selenium.Interactions.Actions(processDriver)
                         .MoveToElement(elementObj)
                         // .ScrollToElement(elementObj)
                         .Perform();
                     }
                     if (_ClickAndHold ?? false)
                     {
-                        new OpenQA.Selenium.Interactions.Actions(driver)
+                        new OpenQA.Selenium.Interactions.Actions(processDriver)
                         // .ScrollToElement(elementObj)
                         .ClickAndHold(elementObj)
                         .Perform();
                     }
                 }
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
-
+                errorLogAction?.Invoke(new Exception("Execute exception.", ex));
             }
-            try
-            {
-                if (_Props.SwitchToNewWindow ?? false)
-                {
-                    try
-                    {
-                        var originalWindow = driver.WindowHandles.FirstOrDefault();
-                        if (!string.IsNullOrWhiteSpace(originalWindow))
-                        {
-                            driver = driver.SwitchTo().Window(originalWindow);
-                        }
+            // try
+            // {
+            //     if (_Props.SwitchToNewWindow ?? false)
+            //     {
+            //         try
+            //         {
+            //             var originalWindow = driver.WindowHandles.FirstOrDefault();
+            //             if (!string.IsNullOrWhiteSpace(originalWindow))
+            //             {
+            //                 driver = driver.SwitchTo().Window(originalWindow);
+            //             }
 
-                    }
-                    catch { }
-                }
-                else
-                {
-                    driver = driver.SwitchTo().DefaultContent();
-                }
+            //         }
+            //         catch { }
+            //     }
+            //     else
+            //     {
+            //         driver = driver.SwitchTo().DefaultContent();
+            //     }
 
-            }
-            catch { }
+            // }
+            // catch { }
             return true;
         }
 

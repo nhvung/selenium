@@ -9,7 +9,7 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        public void Execute(params Actions.ActionTask[] actionTasks)
+        public void Execute(Actions.ActionTask[] actionTasks, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     foreach (var section in actionTask.Sections)
                                     {
-                                        section.Execute(driver);
+                                        section.Execute(driver, debugLogAction, errorLogAction);
                                     }
                                 }
 #if DEBUG

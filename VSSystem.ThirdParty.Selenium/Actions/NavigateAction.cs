@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
@@ -19,22 +20,33 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
             _Url = url;
         }
-        public bool Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             try
             {
-                int delaySeconds = _DelaySeconds ?? 1;
-                if (delaySeconds > 0)
+                int delayMiliseconds = 50;
+                if (_DelaySeconds > 0)
                 {
-                    Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
+                    delayMiliseconds = Convert.ToInt32(_DelaySeconds * 1000);
+                }
+                if (delayMiliseconds > 0)
+                {
+                    Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
                 }
                 if (!string.IsNullOrWhiteSpace(_Url))
                 {
+                    if (driver.Url?.Equals(_Url) ?? false)
+                    {
+                        return true;
+                    }
                     driver.Url = _Url;
                 }
 
             }
-            catch { }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(new Exception("Execute exception.", ex));
+            }
             return true;
         }
     }

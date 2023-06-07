@@ -11,16 +11,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
         public TagProps() { }
-        public TagProps(string tagName, int? index)
+        public TagProps(string tagName, int? index = null)
         {
             _TagName = tagName;
             _Index = index;
         }
-        public TagProps(string tagName, string value = "", string text = "")
+        public TagProps(string tagName, string value = null, string text = null, int? index = null)
         {
             _TagName = tagName;
             _Value = value;
             _Text = text;
+            _Index = index;
         }
     }
 

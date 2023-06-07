@@ -199,6 +199,13 @@ IFrameID="GCTIFrame",
 
                                 Click=true
                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
+    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
+
+    },
+    Displayed = false,
+},
                         },
                         ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>()
                         {
@@ -208,7 +215,6 @@ IFrameID="GCTIFrame",
                                 },
 
                                 Displayed = true,
-                                DelaySeconds = 5
                             }
                         },
                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
@@ -221,10 +227,9 @@ IFrameID="GCTIFrame",
                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum"),
+TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum", index: 1),
 ParentID = "resultview"
                                 },
-                                DelaySeconds = 1,
                                 Click = true
                             },
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
@@ -236,16 +241,30 @@ ID="ctl00_ContentPlaceHolder1_btnSearchFace",
                                 DelaySeconds = 3
                             },
 
+new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
+    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
 
+    },
+    Displayed = false,
+},
 new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
                             {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
                                 },
-                                DelaySeconds = 10,
+                                DelaySeconds = 2,
 
                                 Click=true
                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
+    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
+
+    },
+    Displayed = false,
+    DelaySeconds = 3
+},
                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 IFrameID="GCTIFrame",
@@ -254,12 +273,19 @@ IFrameID="GCTIFrame",
 
                                 Click=true
                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
+    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
+
+    },
+    Displayed = false,
+},
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ParentID="pAlertWin",
                                 ID="btnControl_0",
                                 },
-DelaySeconds = 15,
+DelaySeconds = 1,
                                 Click=true
                             },
 new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
@@ -358,9 +384,22 @@ new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
                 Sections = sections
             };
 
-            client.Execute(taskParams1Obj
-            , taskParams2Obj
-            , taskParams3Obj
+            client.Execute(new VSSystem.ThirdParty.Selenium.Actions.ActionTask[]{
+                // taskParams1Obj,
+            taskParams2Obj,
+            // taskParams3Obj,
+            },
+errorLogAction: ex =>
+{
+    Console.WriteLine(ex.Message);
+    Console.WriteLine(ex.StackTrace);
+    if (ex.InnerException != null)
+    {
+        Console.WriteLine(ex.InnerException.Message);
+        Console.WriteLine(ex.InnerException.StackTrace);
+    }
+
+}
             );
 
         }

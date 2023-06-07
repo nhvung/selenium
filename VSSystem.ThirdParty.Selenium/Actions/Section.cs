@@ -39,7 +39,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _ValidateActions = null;
             _ScreenShot = null;
         }
-        public bool Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             try
             {
@@ -47,15 +47,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     foreach (var actionObj in _RequestActions)
                     {
-
-                        actionObj.Execute(driver);
+                        actionObj.Execute(driver, debugLogAction, errorLogAction);
                     }
                 }
                 if (_WaitingActions?.Count > 0)
                 {
                     foreach (var actionObj in _WaitingActions)
                     {
-                        actionObj.Execute(driver);
+                        actionObj.Execute(driver, debugLogAction, errorLogAction);
                     }
                 }
                 bool isCorrect = true;
@@ -63,7 +62,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     foreach (var actionObj in _ValidateActions)
                     {
-                        bool isValid = actionObj.Execute(driver);
+                        bool isValid = actionObj.Execute(driver, debugLogAction, errorLogAction);
                         if (!isValid)
                         {
                             isCorrect = false;
@@ -74,14 +73,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                 if (_ScreenShot != null)
                 {
-                    _ScreenShot.Execute(driver);
+                    _ScreenShot.Execute(driver, debugLogAction, errorLogAction);
                 }
                 _IsCorrect = isCorrect;
                 _debugLog?.Invoke(_Name, isCorrect);
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
-
+                errorLogAction?.Invoke(new Exception("Execute exception.", ex));
             }
             return true;
         }

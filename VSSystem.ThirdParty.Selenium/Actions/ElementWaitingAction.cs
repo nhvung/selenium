@@ -24,50 +24,96 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
 
 
-        public bool Execute(IWebDriver driver)
+        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             if (_Props == null)
             {
                 return false;
             }
-            int delaySeconds = _DelaySeconds ?? 1;
-            if (delaySeconds > 0)
+            int delayMiliseconds = 50;
+            if (_DelaySeconds > 0)
             {
-                Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));
+                delayMiliseconds = Convert.ToInt32(_DelaySeconds * 1000);
             }
-            if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
+            if (delayMiliseconds > 0)
             {
-                try
-                {
-                    driver = driver.SwitchTo().Frame(_Props.IFrameID);
-                }
-                catch { }
+                Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
             }
-
-            if (_Props.SwitchToNewWindow ?? false)
+            try
             {
-                try
+                IWebDriver processDriver = driver;
+                if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
-                    var lastWindow = driver.WindowHandles.LastOrDefault();
-                    if (!string.IsNullOrWhiteSpace(lastWindow))
+                    try
                     {
-                        driver = driver.SwitchTo().Window(lastWindow);
+                        processDriver = processDriver.SwitchTo().Frame(_Props.IFrameID);
+
                     }
-
-                }
-                catch { }
-            }
-            var elementObj = _Props.GetWebElement(driver);
-            if (elementObj != null)
-            {
-                if (_Displayed != null)
-                {
-                    while (elementObj.Displayed != _Displayed)
+                    catch (Exception ex)
                     {
-                        Thread.Sleep(1000);
+                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
                     }
                 }
+                else if (_Props.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var lastWindow = driver.WindowHandles.LastOrDefault();
+                        if (!string.IsNullOrWhiteSpace(lastWindow))
+                        {
+                            processDriver = processDriver.SwitchTo().Window(lastWindow);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+
+                if (processDriver == null)
+                {
+                    processDriver = driver;
+                }
+                var elementObj = _Props.GetWebElement(processDriver);
+                if (elementObj != null)
+                {
+                    if (_Displayed != null)
+                    {
+                        while (elementObj.Displayed != _Displayed)
+                        {
+                            Thread.Sleep(1000);
+                        }
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(new Exception("Execute exception.", ex));
+            }
+            // try
+            // {
+            //     if (_Props.SwitchToNewWindow ?? false)
+            //     {
+            //         try
+            //         {
+            //             var originalWindow = driver.WindowHandles.FirstOrDefault();
+            //             if (!string.IsNullOrWhiteSpace(originalWindow))
+            //             {
+            //                 driver = driver.SwitchTo().Window(originalWindow);
+            //             }
+
+            //         }
+            //         catch { }
+            //     }
+            //     else
+            //     {
+            //         driver = driver.SwitchTo().DefaultContent();
+            //     }
+
+            // }
+            // catch { }
+
             return true;
         }
     }

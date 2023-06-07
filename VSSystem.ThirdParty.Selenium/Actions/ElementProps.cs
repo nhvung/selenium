@@ -65,6 +65,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             {
                 try
                 {
+#if DEBUG
+                    if (_ID == "ctl00_ContentPlaceHolder1_btnQuickSearch")
+                    {
+
+                    }
+#endif
+
                     elementObj = searchCtx.FindElement(By.Id(_ID));
                 }
                 catch //(Exception ex)

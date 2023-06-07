@@ -23,7 +23,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
             try
             {
-                int delaySeconds = _DelaySeconds ?? 0;
+                int delaySeconds = _DelaySeconds ?? 1;
                 if (delaySeconds > 0)
                 {
                     Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));

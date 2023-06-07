@@ -9,7 +9,8 @@ namespace testselenium
         static Dictionary<string, bool> _validateResult;
         async static Task Main(string[] args)
         {
-            string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
+            // string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
+            string checkUrl = $"https://sandbox.evidenceiq.com/biq";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
             var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.Section>()
@@ -21,14 +22,14 @@ namespace testselenium
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ID="txtUserName",
-                                Value = "ex_vung"
+                                Value = "leu.vung1"
                                 }
 
                             },
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 ID="txtPassword",
-                                Value = "Evidence9!"
+                                Value = "Evidence2!"
                                 }
 
                             },
@@ -49,7 +50,7 @@ ID="txtPassword",
                                 {
                                 Type = "select",
                                 ID="ctl00_AgencySelectionControl_cboAgencySelection",
-                                Text="Agency EvidenceIQ Firearm Examiner"
+                                Text="LEA_Vung"
                                 },
                                 DelaySeconds = 1
 
@@ -94,14 +95,14 @@ IFrameID="GCTIFrame",
                                 Click=true
                             },
 
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
-                                Value="new tool"
-                                },
-                                DelaySeconds = 1,
+//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+// ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
+//                                 Value="new tool"
+//                                 },
+//                                 DelaySeconds = 1,
 
-                            },
+//                             },
 //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
 //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 //  ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ms-options-wrap", 0),
@@ -118,15 +119,15 @@ ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
 
 //                                Click=true
 //                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
- Type = "select",
-                                ID="cboAgencyScope",
-                                Value="-3"
-                                },
-                                DelaySeconds = 1,
+//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+//  Type = "select",
+//                                 ID="cboAgencyScope",
+//                                 Value="-3"
+//                                 },
+//                                 DelaySeconds = 1,
 
-                            },
+//                             },
 //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
 //                                 Props =new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 //  ParentID="list-share",
@@ -220,7 +221,7 @@ IFrameID="GCTIFrame",
                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: ".380 Automatic / .380 ACP / 9mm KURZ / 9x17mm / 9mm Browning (Court) / 9mm Browning Short"),
+TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum"),
 ParentID = "resultview"
                                 },
                                 DelaySeconds = 1,
@@ -234,7 +235,34 @@ ID="ctl00_ContentPlaceHolder1_btnSearchFace",
                                 Click = true,
                                 DelaySeconds = 3
                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 60}
+
+
+new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
+                            {
+                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
+                                },
+                                DelaySeconds = 10,
+
+                                Click=true
+                            },
+                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+IFrameID="GCTIFrame",
+                                ID="btnContinue",
+                                },
+
+                                Click=true
+                            },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+ParentID="pAlertWin",
+                                ID="btnControl_0",
+                                },
+DelaySeconds = 15,
+                                Click=true
+                            },
+new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
 //                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
 //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 // SwitchToNewWindow = true,
@@ -331,8 +359,8 @@ ID="ctl00_ContentPlaceHolder1_btnSearchFace",
             };
 
             client.Execute(taskParams1Obj
-            // , taskParams2Obj
-            // , taskParams3Obj
+            , taskParams2Obj
+            , taskParams3Obj
             );
 
         }

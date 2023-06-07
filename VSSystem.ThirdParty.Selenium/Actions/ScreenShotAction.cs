@@ -16,7 +16,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string FileName { get { return _FileName; } set { _FileName = value; } }
         public bool Execute(IWebDriver driver)
         {
-            int delaySeconds = _DelaySeconds ?? 0;
+            int delaySeconds = _DelaySeconds ?? 1;
             if (delaySeconds > 0)
             {
                 Thread.Sleep(System.TimeSpan.FromSeconds(delaySeconds));

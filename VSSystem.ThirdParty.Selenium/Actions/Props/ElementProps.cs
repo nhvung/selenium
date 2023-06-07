@@ -50,6 +50,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public IWebElement GetWebElement(IWebDriver driver)
         {
 
+
             IWebElement elementObj = null;
             ISearchContext searchCtx = driver;
             if (!string.IsNullOrWhiteSpace(_ParentID))
@@ -65,13 +66,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             {
                 try
                 {
-#if DEBUG
-                    if (_ID == "ctl00_ContentPlaceHolder1_btnQuickSearch")
-                    {
-
-                    }
-#endif
-
                     elementObj = searchCtx.FindElement(By.Id(_ID));
                 }
                 catch //(Exception ex)
@@ -107,16 +101,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             if (elementObj == null)
             {
-                if (!string.IsNullOrWhiteSpace(_ClassItem.ClassName))
+                if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
                 {
                     try
                     {
-#if DEBUG
-                        if (_ClassItem.ClassName == "ajax_overlay")
-                        {
-
-                        }
-#endif
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
                         if (foundElementObjs?.Count > 0)
                         {

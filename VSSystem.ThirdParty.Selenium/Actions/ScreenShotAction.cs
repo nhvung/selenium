@@ -3,13 +3,14 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     public class ScreenShotAction : IAction
     {
-        int? _DelaySeconds;
-        public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
+        protected double? _DelaySeconds;
+        public double? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         string _FolderPath;
         public string FolderPath { get { return _FolderPath; } set { _FolderPath = value; } }
         string _FileName;
@@ -27,6 +28,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             try
             {
+                // new WebDriverWait(driver, TimeSpan.FromSeconds(100)).Until(ite => ((IJavaScriptExecutor)ite).ExecuteScript("return document.readyState").Equals("complete"));
                 string folderPath = _FolderPath;
                 if (string.IsNullOrWhiteSpace(folderPath))
                 {

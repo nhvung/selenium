@@ -6,12 +6,10 @@ using OpenQA.Selenium;
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class Section : IAction
+    public class Section : AAction
     {
-        string _Name;
-        public string Name { get { return _Name; } set { _Name = value; } }
-        List<IAction> _RequestActions;
-        public List<IAction> RequestActions { get { return _RequestActions; } set { _RequestActions = value; } }
+        List<IAction> _Actions;
+        public List<IAction> Actions { get { return _Actions; } set { _Actions = value; } }
         List<IAction> _WaitingActions;
         public List<IAction> WaitingActions { get { return _WaitingActions; } set { _WaitingActions = value; } }
         List<IAction> _ValidateActions;
@@ -22,30 +20,27 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         protected Action<string, bool> _debugLog;
         ScreenShotAction _ScreenShot;
         public ScreenShotAction ScreenShot { get { return _ScreenShot; } set { _ScreenShot = value; } }
-        public Section(string name, Action<string, bool> debugLog = default)
+        public Section() : base()
         {
-            _Name = name;
-            _RequestActions = null;
-            _ValidateActions = null;
-            _WaitingActions = null;
-            _debugLog = debugLog;
-            _ScreenShot = null;
-        }
-        public Section()
-        {
-            _Name = null;
-            _RequestActions = null;
+            _Actions = null;
             _WaitingActions = null;
             _ValidateActions = null;
             _ScreenShot = null;
         }
-        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
+        public Section(string name, double? delaySeconds = null) : base(name, delaySeconds)
+        {
+            _Actions = null;
+            _ValidateActions = null;
+            _WaitingActions = null;
+            _ScreenShot = null;
+        }
+        public override bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             try
             {
-                if (_RequestActions?.Count > 0)
+                if (_Actions?.Count > 0)
                 {
-                    foreach (var actionObj in _RequestActions)
+                    foreach (var actionObj in _Actions)
                     {
                         actionObj.Execute(driver, debugLogAction, errorLogAction);
                     }

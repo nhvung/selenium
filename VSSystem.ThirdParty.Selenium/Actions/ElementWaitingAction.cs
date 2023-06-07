@@ -2,19 +2,17 @@ using System;
 using System.Linq;
 using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class ElementWaitingAction : IAction
+    public class ElementWaitingAction : AAction
     {
         #region Identity
         ElementProps _Props;
         public ElementProps Props { get { return _Props; } set { _Props = value; } }
         #endregion
-
-        int? _DelaySeconds;
-        public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
 
         string _Value;
         public string Value { get { return _Value; } set { _Value = value; } }
@@ -22,9 +20,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Text { get { return _Text; } set { _Text = value; } }
         bool? _Displayed;
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
+        public ElementWaitingAction() : base()
+        {
+        }
+        public ElementWaitingAction(string name, double? delaySeconds = null) : base(name, delaySeconds)
+        {
+        }
 
-
-        public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
+        public override bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             if (_Props == null)
             {
@@ -41,6 +44,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             try
             {
+                // new WebDriverWait(driver, TimeSpan.FromSeconds(100)).Until(ite => ((IJavaScriptExecutor)ite).ExecuteScript("return document.readyState").Equals("complete"));
                 IWebDriver processDriver = driver;
                 if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {

@@ -15,9 +15,9 @@ namespace testselenium
 
             var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.Section>()
                 {
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test login", (name, correct)=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test login"){
 
-                        RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
+                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(checkUrl),
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
@@ -62,9 +62,9 @@ ID="txtPassword",
                         },
 
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test view gallery", (name, correct)=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test view gallery"){
 
-                        RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
+                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
                             {
                                 Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
@@ -222,73 +222,86 @@ IFrameID="GCTIFrame",
                             FileName = "step-2-view-gallery"
                         }
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test search 1n", (name,correct)=> Console.WriteLine($"{name} is correct.")){
+                    new VSSystem.ThirdParty.Selenium.Actions.Section("test search 1n"){
 
-                        RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
+                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum", index: 1),
-ParentID = "resultview"
+                                    TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum", index: 1),
+                                    ParentID = "resultview"
                                 },
                                 Click = true
                             },
                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID="ctl00_ContentPlaceHolder1_btnSearchFace",
+                                    ID="ctl00_ContentPlaceHolder1_btnSearchFace",
                                 },
 
                                 Click = true,
                                 DelaySeconds = 3
                             },
 
-new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
-
-    },
-    Displayed = false,
-},
-new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
+                            new VSSystem.ThirdParty.Selenium.Actions.NavigateWaitingAction("https://sandbox.evidenceiq.com/biq/GUI/QuickSearch.aspx",(driverUrl, url)=>driverUrl.StartsWith(url,StringComparison.InvariantCultureIgnoreCase))
                             {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
-                                },
-                                DelaySeconds = 2,
-
-                                Click=true
+                                DelaySeconds = 10
                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
-
-    },
-    Displayed = false,
-    DelaySeconds = 3
-},
-                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-IFrameID="GCTIFrame",
-                                ID="btnContinue",
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
+                            {
+                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                {
+                                    ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
                                 },
+                                DelaySeconds = 1,
 
-                                Click=true
+                                Click = true
                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
+                            {
+                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                {
+                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
 
-    },
-    Displayed = false,
-},
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ParentID="pAlertWin",
-                                ID="btnControl_0",
                                 },
-DelaySeconds = 1,
-                                Click=true
+                                Displayed = false,
+                                DelaySeconds = 3
                             },
-new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
+                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
+                             {
+                                 Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                 {
+                                     IFrameID = "GCTIFrame",
+                                     ID = "btnContinue",
+                                 },
+
+                                 Click = true
+                             },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
+                            {
+                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                {
+                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
+                                },
+                                Displayed = false,
+                            },
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
+                            {
+                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                {
+                                    ParentID = "pAlertWin",
+                                    ID = "btnControl_0",
+                                },
+                                DelaySeconds = 1,
+                                Click = true
+                            },
+
+// new VSSystem.ThirdParty.Selenium.Actions.NavigateAction() { DelaySeconds = 5 },
+
+                        },
+                        ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
+                            DelaySeconds = 1,
+                            FileName = "step-3-run-search-1n"
+                        },
+
 //                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
 //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
 // SwitchToNewWindow = true,
@@ -298,7 +311,7 @@ new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
 
 //                                 Click = true
 //                             },
-                        },
+                        
 //                         WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
 //                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
 //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
@@ -318,49 +331,49 @@ new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
                     },
 //                     new VSSystem.ThirdParty.Selenium.Actions.Section("test csa", (name,correct)=> Console.WriteLine($"{name} is correct.")){
 
-//                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID="chkSelectAll",
-//                                 },
-//                                 DelaySeconds = 1,
+            //                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
+            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+            // ID="chkSelectAll",
+            //                                 },
+            //                                 DelaySeconds = 1,
 
-//                                 Click = true
-//                             },
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID="ctl00_ContentPlaceHolder1_btnAnalysisReport",
-//                                 },
+            //                                 Click = true
+            //                             },
+            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+            // ID="ctl00_ContentPlaceHolder1_btnAnalysisReport",
+            //                                 },
 
-//                                 Click = true
-//                             },
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// SwitchToNewWindow = true,
-//                                 TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("button", text: "Wait"),
-//                                 },
-//                                 DelaySeconds = 20,
+            //                                 Click = true
+            //                             },
+            //                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
+            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+            // SwitchToNewWindow = true,
+            //                                 TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("button", text: "Wait"),
+            //                                 },
+            //                                 DelaySeconds = 20,
 
-//                                 Click = true
-//                             },
-//                         },
-//                         WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID = "loading-msg",
-// SwitchToNewWindow = true,
-//                                 },
+            //                                 Click = true
+            //                             },
+            //                         },
+            //                         WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
+            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
+            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
+            // ID = "loading-msg",
+            // SwitchToNewWindow = true,
+            //                                 },
 
-//                                 Displayed = false,
+            //                                 Displayed = false,
 
-//                                 DelaySeconds = 5
-//                             }
-//                         },
-//                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-//                             DelaySeconds = 1,
-//                             FileName = "step-3-run-csa"
-//                         }
-//                     },
+            //                                 DelaySeconds = 5
+            //                             }
+            //                         },
+            //                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
+            //                             DelaySeconds = 1,
+            //                             FileName = "step-3-run-csa"
+            //                         }
+            //                     },
                 };
 
             var taskParams1Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web chrome")
@@ -389,18 +402,18 @@ new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(){DelaySeconds = 15},
             taskParams2Obj,
             // taskParams3Obj,
             },
-errorLogAction: ex =>
-{
-    Console.WriteLine(ex.Message);
-    Console.WriteLine(ex.StackTrace);
-    if (ex.InnerException != null)
-    {
-        Console.WriteLine(ex.InnerException.Message);
-        Console.WriteLine(ex.InnerException.StackTrace);
-    }
+                errorLogAction: ex =>
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                        Console.WriteLine(ex.InnerException.StackTrace);
+                    }
 
-}
-            );
+                }
+                );
 
         }
     }

@@ -10,7 +10,7 @@ using VSSystem.ThirdParty.Selenium.Define;
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-    public class ElementAction : IAction
+    public class ElementAction : AAction
     {
         #region Identity
         ElementProps _Props;
@@ -19,8 +19,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
 
         #region Actions props
-        int? _DelaySeconds;
-        public int? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         bool? _Click;
         public bool? Click { get { return _Click; } set { _Click = value; } }
         bool? _DoubleClick;
@@ -30,11 +28,21 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         bool? _MouseIn;
         public bool? MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
         List<IAction> _Actions;
+
+
+
         public List<IAction> Actions { get { return _Actions; } set { _Actions = value; } }
 
         #endregion
 
-        public bool Execute(IWebDriver driver, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default) { return _Execute(driver, debugLogAction, errorLogAction); }
+        public ElementAction() : base()
+        {
+        }
+        public ElementAction(string name, double? delaySeconds = null) : base(name, delaySeconds)
+        {
+        }
+
+        public override bool Execute(IWebDriver driver, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default) { return _Execute(driver, debugLogAction, errorLogAction); }
         protected virtual bool _Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             if (_Props == null)
@@ -52,6 +60,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             try
             {
+                // new WebDriverWait(driver, TimeSpan.FromSeconds(100)).Until(ite => ((IJavaScriptExecutor)ite).ExecuteScript("return document.readyState").Equals("complete"));
                 IWebDriver processDriver = driver;
                 if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {

@@ -1,5 +1,6 @@
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class TagProps
     {
         string _TagName;

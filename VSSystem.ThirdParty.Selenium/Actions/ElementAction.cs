@@ -37,6 +37,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
         public ElementAction() : base()
         {
+
         }
         public ElementAction(string name, double? delaySeconds = null) : base(name, delaySeconds)
         {

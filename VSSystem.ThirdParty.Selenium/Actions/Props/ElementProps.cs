@@ -46,11 +46,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Text { get { return _Text; } set { _Text = value; } }
         bool? _Checked;
         public bool? Checked { get { return _Checked; } set { _Checked = value; } }
-
+        bool? _Displayed;
+        public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
         public IWebElement GetWebElement(IWebDriver driver)
         {
-
-
             IWebElement elementObj = null;
             ISearchContext searchCtx = driver;
             if (!string.IsNullOrWhiteSpace(_ParentID))

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using OpenQA.Selenium;
+using VSSystem.ThirdParty.Selenium.Define;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
@@ -11,6 +12,20 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Url { get { return _Url; } set { _Url = value; } }
         protected double? _DelaySeconds;
         public double? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
+        protected string _Type;
+        public string Type { get { return _Type; } set { _Type = value; } }
+        public EActionType EType
+        {
+            get
+            {
+                EActionType result = EActionType.Undefine;
+                if (!string.IsNullOrWhiteSpace(_Type))
+                {
+                    Enum.TryParse(_Type, true, out result);
+                }
+                return result;
+            }
+        }
         public NavigateAction()
         {
             _Url = null;

@@ -1,12 +1,12 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+using VSSystem.ThirdParty.Selenium.Define;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class ScreenShotAction : IAction
     {
         protected double? _DelaySeconds;
@@ -15,6 +15,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string FolderPath { get { return _FolderPath; } set { _FolderPath = value; } }
         string _FileName;
         public string FileName { get { return _FileName; } set { _FileName = value; } }
+        public EActionType EType { get { return EActionType.Undefine; } }
         public bool Execute(IWebDriver driver, Action<string> debugLogAction, Action<Exception> errorLogAction)
         {
             int delayMiliseconds = 50;

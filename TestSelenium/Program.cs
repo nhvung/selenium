@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace testselenium
@@ -251,7 +252,7 @@ IFrameID="GCTIFrame",
                                 {
                                     ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
                                 },
-                                DelaySeconds = 1,
+                                DelaySeconds = 5,
 
                                 Click = true
                             },
@@ -292,6 +293,15 @@ IFrameID="GCTIFrame",
                                 },
                                 DelaySeconds = 1,
                                 Click = true
+                            },
+
+                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
+                            {
+                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
+                                {
+                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
+                                },
+                                Displayed = false,
                             },
 
 // new VSSystem.ThirdParty.Selenium.Actions.NavigateAction() { DelaySeconds = 5 },
@@ -387,7 +397,29 @@ IFrameID="GCTIFrame",
             {
                 IsIncognito = true,
                 Browser = "firefox",
-                Sections = sections
+                Sections = (new[]
+                { sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                sections,
+                }).SelectMany(ite => ite)
+                .ToList()
             };
 
             var taskParams3Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web edge")
@@ -402,19 +434,18 @@ IFrameID="GCTIFrame",
             taskParams2Obj,
             // taskParams3Obj,
             },
-                errorLogAction: ex =>
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-                    if (ex.InnerException != null)
-                    {
-                        Console.WriteLine(ex.InnerException.Message);
-                        Console.WriteLine(ex.InnerException.StackTrace);
-                    }
+                                errorLogAction: ex =>
+                                {
+                                    Console.WriteLine(ex.Message);
+                                    Console.WriteLine(ex.StackTrace);
+                                    if (ex.InnerException != null)
+                                    {
+                                        Console.WriteLine(ex.InnerException.Message);
+                                        Console.WriteLine(ex.InnerException.StackTrace);
+                                    }
 
-                }
-                );
-
+                                }
+                                );
         }
     }
 }

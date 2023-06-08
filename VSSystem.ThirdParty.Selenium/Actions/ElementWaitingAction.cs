@@ -14,10 +14,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public ElementProps Props { get { return _Props; } set { _Props = value; } }
         #endregion
 
-        string _Value;
-        public string Value { get { return _Value; } set { _Value = value; } }
-        string _Text;
-        public string Text { get { return _Text; } set { _Text = value; } }
         bool? _Displayed;
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
         public ElementWaitingAction() : base()

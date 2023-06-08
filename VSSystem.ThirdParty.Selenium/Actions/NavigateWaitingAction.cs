@@ -1,10 +1,10 @@
 using System;
-using System.Linq;
 using System.Threading;
 using OpenQA.Selenium;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
+    [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
     public class NavigateWaitingAction : NavigateAction
     {
         protected Func<string, string, bool> _urlPredicate;

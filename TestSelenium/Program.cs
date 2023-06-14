@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using VSSystem.ThirdParty.Selenium.Actions;
 
 namespace testselenium
 {
@@ -10,381 +12,115 @@ namespace testselenium
         static Dictionary<string, bool> _validateResult;
         async static Task Main(string[] args)
         {
+
+
+
             // string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
             string checkUrl = $"https://sandbox.evidenceiq.com/biq";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
-            var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.Section>()
-                {
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test login"){
+            // try
+            // {
+            //     client.Execute("./tasks/Test BIQ web firefox.json");
+            //     return;
+            // }
+            // catch { }
 
-                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-                            new VSSystem.ThirdParty.Selenium.Actions.NavigateAction(checkUrl),
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID="txtUserName",
-                                Value = "leu.vung1"
-                                }
+            var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.WebAction>();
+            var loginSection = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Test Login");
+            loginSection.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
 
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID="txtPassword",
-                                Value = "Evidence2!"
-                                }
+                new WebAction(){Url = checkUrl},
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 1,
+                    FileName = "Browse to BIQ",
+                },
+                new WebAction{
+                    Props=new ElementProps("txtUserName"){Value="leu.vung1"}
+                },
+                 new WebAction{
+                    Props=new ElementProps("txtPassword"){Value="Evidence2!"}
+                },
+                new WebAction{
+                    Props=new ElementProps("btnOk"),
+                    Click = true
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 1,
+                    FileName = "Logged in",
+                },
+                 new WebAction(){DelaySeconds = 1},
+            };
 
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction() {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
- ID="btnOk",
+            sections.Add(loginSection);
 
-                                },
-                                Click = true
+            var gotoBIQ = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Go to BIQ");
+            gotoBIQ.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
 
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.NavigateAction($"{checkUrl}/GUI/Home.aspx")
-                            {
-                                //DelaySeconds = 5
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                Type = "select",
-                                ID="ctl00_AgencySelectionControl_cboAgencySelection",
-                                Text="LEA_Vung"
-                                },
-                                DelaySeconds = 1
-
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-                                DelaySeconds = 1,
-                                FileName = "step-1-login-success"
-                            }
-                        },
-
+                new WebAction{
+                    Props=new ElementProps("dvBallistics"),
+                    MouseIn = true
+                },
+                new WebAction{
+                    DelaySeconds = 1,
+                    Props=new ElementProps("dvBallistics"),
+                    Click = true
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 1,
+                    FileName = "Go to BIQ",
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("icon_function", 0)
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test view gallery"){
-
-                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-                           new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID="dvBallistics",
-
-                                },
-Click=true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                            {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps(){
-                                    ClassName = "icon_function",
-                                    Index = 2
-                                },
-                                },
-
-                                DelaySeconds = 1,
-                                Click=true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-IFrameID="GCTIFrame",
-                                ID="btnCancel",
-                                },
-                                DelaySeconds = 2,
-
-                                Click=true
-                            },
-
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID="ctl00_ContentPlaceHolder1_ucNameFilter_txtCaseNumber",
-//                                 Value="new tool"
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                             },
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ms-options-wrap", 0),
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                                 Click = true
-//                             },
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  XPath="//*[@id=\"box-filter\"]/div[1]/div[2]/div/table/tbody/tr[7]/td[2]/div/div/ul/li[1]/ul/li[6]/label",
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                                Click=true
-//                             },
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  Type = "select",
-//                                 ID="cboAgencyScope",
-//                                 Value="-3"
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                             },
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props =new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  ParentID="list-share",
-//                                 ID="chk-all-share",
-//                                 Checked = false
-//                                 },
-//                                 DelaySeconds = 2,
-
-//                             },
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  ParentID="list-share",
-//                                  TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagProps("input", 1),
-//                                 Checked = true,
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                             },
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ParentID="list-share",
-//                                  TagItem=new VSSystem.ThirdParty.Selenium.Actions.TagProps("input", 2),
-//                                 Checked = true,
-//                                 },
-
-//                             },
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID="chk-all-state",
-//                                 Checked = false
-//                                 },
-//                                 DelaySeconds = 2,
-
-//                             },
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-//  ID="state6",
-//                                 Checked = true
-//                                 },
-//                                 DelaySeconds = 1,
-
-//                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                            {
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ClassItem=new VSSystem.ThirdParty.Selenium.Actions.ClassProps(){
-                                    ClassName = "button100_green",
-                                    Index = 0
-                                },
-                                },
-                                DelaySeconds = 1,
-
-                                Click=true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-ID= "txtCaseNumber",
-                                IFrameID="GCTIFrame",
-                                Value = "Test Selenium"
-                                },
-                                DelaySeconds = 1,
-
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-IFrameID="GCTIFrame",
-                                ID="btnContinue",
-                                },
-
-                                Click=true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-    Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-        ClassItem =new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
-
-    },
-    Displayed = false,
-},
-                        },
-                        ValidateActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>()
-                        {
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementValidateAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
- ID = "resultview",
-                                },
-
-                                Displayed = true,
-                            }
-                        },
-                        ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-                            DelaySeconds = 1,
-                            FileName = "step-2-view-gallery"
-                        }
+                    MouseIn = true
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("icon_function", 1)
                     },
-                    new VSSystem.ThirdParty.Selenium.Actions.Section("test search 1n"){
-
-                        Actions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-                                    TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("span", text: "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum", index: 1),
-                                    ParentID = "resultview"
-                                },
-                                Click = true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-                                Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-                                    ID="ctl00_ContentPlaceHolder1_btnSearchFace",
-                                },
-
-                                Click = true,
-                                DelaySeconds = 3
-                            },
-
-                            new VSSystem.ThirdParty.Selenium.Actions.NavigateWaitingAction("https://sandbox.evidenceiq.com/biq/GUI/QuickSearch.aspx",(driverUrl, url)=>driverUrl.StartsWith(url,StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                DelaySeconds = 10
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                    ID = "ctl00_ContentPlaceHolder1_btnQuickSearch",
-                                },
-                                DelaySeconds = 5,
-
-                                Click = true
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
-
-                                },
-                                Displayed = false,
-                                DelaySeconds = 3
-                            },
-                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                             {
-                                 Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                 {
-                                     IFrameID = "GCTIFrame",
-                                     ID = "btnContinue",
-                                 },
-
-                                 Click = true
-                             },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 0),
-                                },
-                                Displayed = false,
-                            },
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                    ParentID = "pAlertWin",
-                                    ID = "btnControl_0",
-                                },
-                                DelaySeconds = 1,
-                                Click = true
-                            },
-
-                            new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction()
-                            {
-                                Props = new VSSystem.ThirdParty.Selenium.Actions.ElementProps()
-                                {
-                                    ClassItem = new VSSystem.ThirdParty.Selenium.Actions.ClassProps("ajax_overlay", 1),
-                                },
-                                Displayed = false,
-                            },
-
-// new VSSystem.ThirdParty.Selenium.Actions.NavigateAction() { DelaySeconds = 5 },
-
-                        },
-                        ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-                            DelaySeconds = 1,
-                            FileName = "step-3-run-search-1n"
-                        },
-
-//                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// SwitchToNewWindow = true,
-//                                 TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("button", text: "Wait"),
-//                                 },
-//                                 DelaySeconds = 20,
-
-//                                 Click = true
-//                             },
-                        
-//                         WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-//                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-//                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-// ID = "loading-msg",
-// SwitchToNewWindow = true,
-//                                 },
-
-//                                 Displayed = false,
-
-//                                 DelaySeconds = 5
-//                             }
-//                         },
-//                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-//                             DelaySeconds = 1,
-//                             FileName = "step-3-run-csa"
-//                         }
+                    MouseIn = true
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("icon_function", 2)
                     },
-//                     new VSSystem.ThirdParty.Selenium.Actions.Section("test csa", (name,correct)=> Console.WriteLine($"{name} is correct.")){
+                    MouseIn = true
+                },
+                 new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("icon_function", 2)
+                    },
+                    Click = true
+                },
+                new WebAction(){
+                    DelaySeconds = 5,
+                    Props=new ElementProps("btnCancel"){
+                        IFrameID = "GCTIFrame"
+                    },
+                    Click = true
+                },
+                new WebAction(){
+                    DelaySeconds = 5,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("button100_green", "", "Search")
+                    },
+                    Click = true
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 10,
+                    FileName = "Go to search gallery",
+                },
 
-            //                         RequestActions = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-            // ID="chkSelectAll",
-            //                                 },
-            //                                 DelaySeconds = 1,
+                 new WebAction(){DelaySeconds = 1},
+            };
 
-            //                                 Click = true
-            //                             },
-            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-            // ID="ctl00_ContentPlaceHolder1_btnAnalysisReport",
-            //                                 },
-
-            //                                 Click = true
-            //                             },
-            //                              new VSSystem.ThirdParty.Selenium.Actions.ElementAction(){
-            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-            // SwitchToNewWindow = true,
-            //                                 TagItem = new VSSystem.ThirdParty.Selenium.Actions.TagProps("button", text: "Wait"),
-            //                                 },
-            //                                 DelaySeconds = 20,
-
-            //                                 Click = true
-            //                             },
-            //                         },
-            //                         WaitingActions = new List<VSSystem.ThirdParty.Selenium.Actions.IAction>(){
-            //                             new VSSystem.ThirdParty.Selenium.Actions.ElementWaitingAction(){
-            //                                 Props=new VSSystem.ThirdParty.Selenium.Actions.ElementProps(){
-            // ID = "loading-msg",
-            // SwitchToNewWindow = true,
-            //                                 },
-
-            //                                 Displayed = false,
-
-            //                                 DelaySeconds = 5
-            //                             }
-            //                         },
-            //                         ScreenShot = new VSSystem.ThirdParty.Selenium.Actions.ScreenShotAction(){
-            //                             DelaySeconds = 1,
-            //                             FileName = "step-3-run-csa"
-            //                         }
-            //                     },
-                };
+            sections.Add(gotoBIQ);
 
             var taskParams1Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web chrome")
             {
@@ -399,25 +135,6 @@ IFrameID="GCTIFrame",
                 Browser = "firefox",
                 Sections = (new[]
                 { sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
-                sections,
                 }).SelectMany(ite => ite)
                 .ToList()
             };

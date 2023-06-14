@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using VSSystem.ThirdParty.Selenium.Actions;
 using VSSystem.ThirdParty.Selenium.Extensions;
 
 namespace VSSystem.ThirdParty.Selenium
@@ -25,9 +26,14 @@ namespace VSSystem.ThirdParty.Selenium
 
                                 if (actionTask.Sections?.Count > 0)
                                 {
+                                    bool executeResult = true;
                                     foreach (var section in actionTask.Sections)
                                     {
-                                        section.Execute(driver, debugLogAction, errorLogAction);
+                                        var sectionResult = section.Execute(driver, debugLogAction, errorLogAction);
+                                        if (!sectionResult)
+                                        {
+                                            executeResult = false;
+                                        }
                                     }
                                 }
 #if DEBUG
@@ -60,5 +66,17 @@ namespace VSSystem.ThirdParty.Selenium
             }
             catch { }
         }
+
+        public void Execute(string fileName, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        {
+            try
+            {
+                var json = System.IO.File.ReadAllText(fileName, System.Text.Encoding.UTF8);
+
+            }
+            catch (Exception ex) { }
+        }
     }
+
+
 }

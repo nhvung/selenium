@@ -27,21 +27,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         }
         bool _IsIncognito;
         public bool IsIncognito { get { return _IsIncognito; } set { _IsIncognito = value; } }
-        List<Section> _Sections;
-        public List<Section> Sections { get { return _Sections; } set { _Sections = value; } }
+        List<WebAction> _Sections;
+        public List<WebAction> Sections { get { return _Sections; } set { _Sections = value; } }
 
-        [Newtonsoft.Json.JsonIgnore]
-        public bool IsCorrect
-        {
-            get
-            {
-                if (_Sections?.Count > 0)
-                {
-                    return _Sections.All(ite => ite.IsCorrect);
-                }
-                return false;
-            }
-        }
+
         public ActionTask(string name)
         {
             _Name = name;

@@ -7,7 +7,7 @@
             "preLaunchTask": "buildtestselenium",
             "program": "${workspaceFolder}/TestSelenium/bin/netcoreapp3.1/testselenium.dll",
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}/TestSelenium"
         }
     ]
 }

@@ -48,7 +48,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? Checked { get { return _Checked; } set { _Checked = value; } }
         bool? _Displayed;
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
-        public IWebElement GetWebElement(IWebDriver driver)
+        public IWebElement GetWebElement(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             IWebElement elementObj = null;
             ISearchContext searchCtx = driver;
@@ -58,7 +58,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     searchCtx = driver.FindElement(By.Id(_ParentID));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    errorLogAction?.Invoke(new Exception("FindElement(By.Id(", ex));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(_ID))
@@ -67,9 +70,9 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     elementObj = searchCtx.FindElement(By.Id(_ID));
                 }
-                catch //(Exception ex)
+                catch (Exception ex)
                 {
-
+                    errorLogAction?.Invoke(new Exception("FindElement(By.Id(", ex));
                 }
             }
             if (elementObj == null)
@@ -80,7 +83,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         elementObj = searchCtx.FindElement(By.Name(_Name));
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("FindElement(By.Name(", ex));
+                    }
                 }
             }
             if (elementObj == null)
@@ -92,9 +98,9 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                         elementObj = searchCtx.FindElement(By.XPath(_XPath));
                     }
-                    catch //(Exception ex)
+                    catch (Exception ex)
                     {
-
+                        errorLogAction?.Invoke(new Exception("FindElement(By.XPath(", ex));
                     }
                 }
             }
@@ -135,7 +141,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                         }
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("FindElement(By.ClassName(", ex));
+                    }
                 }
             }
             if (elementObj == null)
@@ -175,10 +184,22 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                         }
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("FindElement(By.TagName(", ex));
+                    }
                 }
             }
             return elementObj;
+        }
+        public ElementProps() { }
+        public ElementProps(string id, string name = null, string parentID = null, string iFrameID = null, bool? switchToNewWindow = null)
+        {
+            _ID = id;
+            _Name = name;
+            _ParentID = parentID;
+            _IFrameID = iFrameID;
+            _SwitchToNewWindow = switchToNewWindow;
         }
     }
 }

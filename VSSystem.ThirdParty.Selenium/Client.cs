@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using VSSystem.ThirdParty.Selenium.Actions;
 using VSSystem.ThirdParty.Selenium.Extensions;
 
 namespace VSSystem.ThirdParty.Selenium
@@ -70,9 +71,17 @@ namespace VSSystem.ThirdParty.Selenium
             try
             {
                 var json = System.IO.File.ReadAllText(fileName, System.Text.Encoding.UTF8);
+                var taskObj = JsonConvert.DeserializeObject<VSSystem.ThirdParty.Selenium.Actions.ActionTask>(json);
+                if (taskObj != null)
+                {
+                    Execute(new ActionTask[] { taskObj }, debugLogAction, errorLogAction);
+                }
 
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(ex);
+            }
         }
     }
 

@@ -19,12 +19,22 @@ namespace testselenium
             string checkUrl = $"https://sandbox.evidenceiq.com/biq";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
-            // try
-            // {
-            //     client.Execute("./tasks/Test BIQ web firefox.json");
-            //     return;
-            // }
-            // catch { }
+            try
+            {
+                client.Execute("./tasks/Test BIQ web firefox.json", errorLogAction: ex =>
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                        Console.WriteLine(ex.InnerException.StackTrace);
+                    }
+
+                });
+                return;
+            }
+            catch { }
 
             var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.WebAction>();
             var loginSection = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Test Login");

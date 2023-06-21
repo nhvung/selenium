@@ -51,7 +51,10 @@ namespace VSSystem.ThirdParty.Selenium
                                     }
                                     File.WriteAllText(taskFile.FullName, jsonTaskObj);
                                 }
-                                catch { }
+                                catch (Exception ex)
+                                {
+                                    errorLogAction?.Invoke(ex);
+                                }
                             }
                         }
 

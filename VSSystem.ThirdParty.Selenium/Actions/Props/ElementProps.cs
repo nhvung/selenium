@@ -38,6 +38,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         string _ParentID;
         public string ParentID { get { return _ParentID; } set { _ParentID = value; } }
         IWebElement _ParentElement;
+        [Newtonsoft.Json.JsonIgnore]
         public IWebElement ParentElement { get { return _ParentElement; } set { _ParentElement = value; } }
         TagProps _TagItem;
         public TagProps TagItem { get { return _TagItem; } set { _TagItem = value; } }
@@ -216,7 +217,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _ParentID = parentID;
             _IFrameID = iFrameID;
             _SwitchToNewWindow = switchToNewWindow;
-            _Actions = null;
         }
     }
 }

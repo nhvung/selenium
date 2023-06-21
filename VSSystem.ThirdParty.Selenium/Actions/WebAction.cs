@@ -80,7 +80,21 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         double? _DelaySeconds;
         public double? DelaySeconds { get { return _DelaySeconds; } set { _DelaySeconds = value; } }
         protected string _Url;
-        public string Url { get { return _Url; } set { _Url = value; } }
+        public string Url
+        {
+            get
+            {
+                try
+                {
+                    return _Url;
+                }
+                catch (Exception ex)
+                {
+                    throw (ex);
+                }
+            }
+            set { _Url = value; }
+        }
         protected List<WebAction> _Actions;
         public List<WebAction> Actions { get { return _Actions; } set { _Actions = value; } }
 

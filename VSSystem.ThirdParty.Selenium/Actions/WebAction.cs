@@ -59,7 +59,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? ClickAndHold { get { return _ClickAndHold; } set { _ClickAndHold = value; } }
         bool? _MouseIn;
         public bool? MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
-
+        bool? _ShiftKey;
+        public bool? ShiftKey { get { return _ShiftKey; } set { _ShiftKey = value; } }
+        bool? _ControlKey;
+        public bool? ControlKey { get { return _ControlKey; } set { _ControlKey = value; } }
+        bool? _AltKey;
+        public bool? AltKey { get { return _AltKey; } set { _AltKey = value; } }
 
         #endregion
         #endregion
@@ -94,8 +99,26 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
                 }
 
+
+
                 if (EType == EActionType.ScreenShot)
                 {
+                    if (_Props?.SwitchToNewWindow ?? false)
+                    {
+                        try
+                        {
+                            var lastWindow = driver.WindowHandles.LastOrDefault();
+                            if (!string.IsNullOrWhiteSpace(lastWindow))
+                            {
+                                driver = driver.SwitchTo().Window(lastWindow);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                        }
+                    }
                     try
                     {
                         string folderPath = _FolderPath;
@@ -120,7 +143,27 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("Execute exception.", ex));
+                        errorLogAction?.Invoke(new Exception("Screenshot exception.", ex));
+                    }
+
+                    if (_Props?.SwitchToNewWindow ?? false)
+                    {
+                        try
+                        {
+                            if (_Props?.CloseWindow ?? false)
+                            {
+                                driver.Close();
+                            }
+                            var firstWindow = driver.WindowHandles.FirstOrDefault();
+                            if (!string.IsNullOrWhiteSpace(firstWindow))
+                            {
+                                driver = driver.SwitchTo().Window(firstWindow);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                        }
                     }
                 }
 
@@ -140,6 +183,23 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                 if (_Actions?.Count > 0)
                 {
+                    if (_Props?.SwitchToNewWindow ?? false)
+                    {
+                        try
+                        {
+                            var lastWindow = driver.WindowHandles.LastOrDefault();
+                            if (!string.IsNullOrWhiteSpace(lastWindow))
+                            {
+                                driver = driver.SwitchTo().Window(lastWindow);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                        }
+                    }
+
                     foreach (var actionObj in _Actions)
                     {
                         try
@@ -152,7 +212,29 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                         catch { }
                     }
+
+                    if (_Props?.SwitchToNewWindow ?? false)
+                    {
+                        try
+                        {
+                            if (_Props?.CloseWindow ?? false)
+                            {
+                                driver.Close();
+                            }
+                            var firstWindow = driver.WindowHandles.FirstOrDefault();
+                            if (!string.IsNullOrWhiteSpace(firstWindow))
+                            {
+                                driver = driver.SwitchTo().Window(firstWindow);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                        }
+                    }
                 }
+
+
             }
             catch { }
             return result;
@@ -163,26 +245,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
             try
             {
-                IWebDriver processDriver = driver;
-                if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
-                {
-                    try
-                    {
-                        processDriver = processDriver.SwitchTo().Frame(_Props.IFrameID);
-                    }
-                    catch (Exception ex)
-                    {
-                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
-                    }
-                }
-                else if (_Props.SwitchToNewWindow ?? false)
+
+                if (_Props.SwitchToNewWindow ?? false)
                 {
                     try
                     {
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
                         {
-                            processDriver = processDriver.SwitchTo().Window(lastWindow);
+                            driver = driver.SwitchTo().Window(lastWindow);
                         }
 
                     }
@@ -191,13 +262,25 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
                     }
                 }
-
-                if (processDriver == null)
+                if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
-                    processDriver = driver;
+                    try
+                    {
+#if DEBUG
+                        if (_Props.IFrameID == "GCTIFrame")
+                        {
+
+                        }
+#endif
+                        driver = driver.SwitchTo().Frame(_Props.IFrameID);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
+                    }
                 }
 
-                var elementObj = Props.GetWebElement(processDriver, debugLogAction, errorLogAction);
+                var elementObj = Props.GetWebElement(driver, debugLogAction, errorLogAction);
                 if (elementObj != null)
                 {
                     if (EType == EActionType.Wait)
@@ -205,7 +288,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         int waitTime = 500;
                         if (_Props.Displayed != null)
                         {
-                            if (elementObj.Displayed != _Props.Displayed)
+                            while (elementObj.Displayed != _Props.Displayed)
                             {
                                 Thread.Sleep(waitTime);
                             }
@@ -236,81 +319,183 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                     }
 
-                    if (elementObj.Displayed)
+                    // if (elementObj.Displayed)
                     {
-                        if (!string.IsNullOrWhiteSpace(_Props.Value))
+
+                        if ((_ControlKey ?? false) || (_ShiftKey ?? false) || (_AltKey ?? false))
                         {
-                            if (_Props.EType == EElementType.Select)
+                            var actionObj = new OpenQA.Selenium.Interactions.Actions(driver);
+                            if (_ControlKey ?? false)
                             {
-                                if (!string.IsNullOrWhiteSpace(_Props.Value))
+                                actionObj = actionObj.KeyDown(Keys.Control);
+                            }
+                            if (_ShiftKey ?? false)
+                            {
+                                actionObj = actionObj.KeyDown(Keys.Shift);
+                            }
+                            if (_AltKey ?? false)
+                            {
+                                actionObj = actionObj.KeyDown(Keys.Alt);
+                            }
+
+                            if (_MouseIn ?? false)
+                            {
+                                actionObj = actionObj.MoveToElement(elementObj);
+                            }
+                            if (_Props.Checked != null)
+                            {
+                                if (elementObj.Selected != _Props.Checked)
+                                {
+                                    actionObj = actionObj.Click(elementObj);
+                                }
+                            }
+                            if (_Click ?? false)
+                            {
+                                actionObj = actionObj.Click(elementObj);
+                            }
+                            if (_DoubleClick ?? false)
+                            {
+                                actionObj = actionObj.DoubleClick(elementObj);
+                            }
+
+                            if (_ClickAndHold ?? false)
+                            {
+                                actionObj = actionObj.ClickAndHold(elementObj);
+                            }
+
+                            if (_ControlKey ?? false)
+                            {
+                                actionObj = actionObj.KeyUp(Keys.Control);
+                            }
+                            if (_ShiftKey ?? false)
+                            {
+                                actionObj = actionObj.KeyUp(Keys.Shift);
+                            }
+                            if (_AltKey ?? false)
+                            {
+                                actionObj = actionObj.KeyUp(Keys.Alt);
+                            }
+                            actionObj.Build().Perform();
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(_Props.Value))
+                            {
+                                if (_Props.EType == EElementType.Select)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(_Props.Value))
+                                    {
+                                        try
+                                        {
+                                            new SelectElement(elementObj).SelectByValue(_Props.Value);
+                                        }
+                                        catch { }
+                                    }
+                                }
+                                else
+                                {
+                                    elementObj.SendKeys(_Props.Value);
+                                }
+                            }
+                            if (!string.IsNullOrWhiteSpace(_Props.Text))
+                            {
+                                if (_Props.EType == EElementType.Select)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(_Props.Text))
+                                    {
+                                        try
+                                        {
+                                            new SelectElement(elementObj).SelectByText(_Props.Text);
+                                        }
+                                        catch //(Exception ex)
+                                        {
+
+                                        }
+                                    }
+                                }
+                            }
+                            if (_MouseIn ?? false)
+                            {
+                                new OpenQA.Selenium.Interactions.Actions(driver).MoveToElement(elementObj).Perform();
+                            }
+                            if (_Props.Checked != null)
+                            {
+                                if (elementObj.Selected != _Props.Checked)
+                                {
+                                    elementObj.Click();
+                                }
+                            }
+                            if (_Click ?? false)
+                            {
+                                try
+                                {
+                                    elementObj.Click();
+                                }
+                                catch
                                 {
                                     try
                                     {
-                                        new SelectElement(elementObj).SelectByValue(_Props.Value);
+                                        new OpenQA.Selenium.Interactions.Actions(driver).MoveToElement(elementObj, 1, 1).Click(elementObj).Perform();
                                     }
                                     catch { }
                                 }
                             }
-                            else
+                            if (_DoubleClick ?? false)
                             {
-                                elementObj.SendKeys(_Props.Value);
+                                new OpenQA.Selenium.Interactions.Actions(driver).DoubleClick(elementObj).Perform();
+                            }
+
+                            if (_ClickAndHold ?? false)
+                            {
+                                new OpenQA.Selenium.Interactions.Actions(driver).ClickAndHold(elementObj).Perform();
                             }
                         }
-                        if (!string.IsNullOrWhiteSpace(_Props.Text))
+                        if (_Props.Actions?.Count > 0)
                         {
-                            if (_Props.EType == EElementType.Select)
+                            foreach (var actionObj in _Props.Actions)
                             {
-                                if (!string.IsNullOrWhiteSpace(_Props.Text))
+                                try
                                 {
-                                    try
-                                    {
-                                        new SelectElement(elementObj).SelectByText(_Props.Text);
-                                    }
-                                    catch //(Exception ex)
-                                    {
-
-                                    }
+                                    actionObj.Props.ParentElement = elementObj;
+                                    actionObj.Execute(driver, debugLogAction, errorLogAction);
+                                }
+                                catch (Exception ex)
+                                {
+                                    errorLogAction?.Invoke(new Exception("_Props.Actions execute exception.", ex));
                                 }
                             }
                         }
-                        if (_Props.Checked != null)
-                        {
-                            if (elementObj.Selected != _Props.Checked)
-                            {
-                                new OpenQA.Selenium.Interactions.Actions(processDriver)
-                                .MoveToElement(elementObj)
-                                // .ScrollToElement(elementObj)
-                                .Click()
-                                .Perform();
-                            }
-                        }
-                        if (_Click ?? false)
-                        {
-                            elementObj.Click();
-                        }
-                        if (_DoubleClick ?? false)
-                        {
-                            new OpenQA.Selenium.Interactions.Actions(processDriver)
-                            // .ScrollToElement(elementObj)
-                            .DoubleClick(elementObj)
-                            .Perform();
-                        }
-                        if (_MouseIn ?? false)
-                        {
-                            new OpenQA.Selenium.Interactions.Actions(processDriver)
-                            .MoveToElement(elementObj)
-                            // .ScrollToElement(elementObj)
-                            .Perform();
-                        }
-                        if (_ClickAndHold ?? false)
-                        {
-                            new OpenQA.Selenium.Interactions.Actions(processDriver)
-                            // .ScrollToElement(elementObj)
-                            .ClickAndHold(elementObj)
-                            .Perform();
-                        }
                     }
                 }
+
+                if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
+                {
+                    try
+                    {
+                        driver = driver.SwitchTo().DefaultContent();
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("SwitchTo.ActiveElement exception.", ex));
+                    }
+                }
+
+                if (_Props.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var firstWindow = driver.WindowHandles.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        {
+                            driver = driver.SwitchTo().Window(firstWindow);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -319,6 +504,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             return true;
         }
+
 
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 using VSSystem.ThirdParty.Selenium.Define;
@@ -36,10 +37,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string IFrameID { get { return _IFrameID; } set { _IFrameID = value; } }
         string _ParentID;
         public string ParentID { get { return _ParentID; } set { _ParentID = value; } }
+        IWebElement _ParentElement;
+        public IWebElement ParentElement { get { return _ParentElement; } set { _ParentElement = value; } }
         TagProps _TagItem;
         public TagProps TagItem { get { return _TagItem; } set { _TagItem = value; } }
         bool? _SwitchToNewWindow;
         public bool? SwitchToNewWindow { get { return _SwitchToNewWindow; } set { _SwitchToNewWindow = value; } }
+        bool? _CloseWindow;
+        public bool? CloseWindow { get { return _CloseWindow; } set { _CloseWindow = value; } }
         string _Value;
         public string Value { get { return _Value; } set { _Value = value; } }
         string _Text;
@@ -48,19 +53,29 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? Checked { get { return _Checked; } set { _Checked = value; } }
         bool? _Displayed;
         public bool? Displayed { get { return _Displayed; } set { _Displayed = value; } }
+
+        List<WebAction> _Actions;
+        public List<WebAction> Actions { get { return _Actions; } set { _Actions = value; } }
         public IWebElement GetWebElement(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
+            return _GetWebElement(driver, debugLogAction, errorLogAction);
+        }
+        IWebElement _GetWebElement(ISearchContext searchCtx, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
+        {
             IWebElement elementObj = null;
-            ISearchContext searchCtx = driver;
-            if (!string.IsNullOrWhiteSpace(_ParentID))
+            if (_ParentElement != null)
+            {
+                searchCtx = _ParentElement;
+            }
+            else if (!string.IsNullOrWhiteSpace(_ParentID))
             {
                 try
                 {
-                    searchCtx = driver.FindElement(By.Id(_ParentID));
+                    searchCtx = searchCtx.FindElement(By.Id(_ParentID));
                 }
                 catch (Exception ex)
                 {
-                    errorLogAction?.Invoke(new Exception("FindElement(By.Id(", ex));
+                    errorLogAction?.Invoke(new Exception("FindElement(By.ParentID(", ex));
                 }
             }
 
@@ -116,14 +131,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value) ?? false)
+                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
 
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Text))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.Text?.Equals(_ClassItem.Text) ?? false)
+                                ?.Where(ite => ite.Text?.Equals(_ClassItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
                             if (foundElementObjs?.Count > 0)
@@ -154,19 +169,20 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     try
                     {
                         var foundElementObjs = searchCtx.FindElements(By.TagName(_TagItem.TagName))?.Where(ite => ite.Displayed)?.ToList();
+
                         if (foundElementObjs?.Count > 0)
                         {
                             if (!string.IsNullOrWhiteSpace(_TagItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value) ?? false)
+                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
 
                             if (!string.IsNullOrWhiteSpace(_TagItem.Text))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.Text?.Equals(_TagItem.Text) ?? false)
+                                ?.Where(ite => ite.Text?.Equals(_TagItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
                             if (foundElementObjs?.Count > 0)
@@ -200,6 +216,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _ParentID = parentID;
             _IFrameID = iFrameID;
             _SwitchToNewWindow = switchToNewWindow;
+            _Actions = null;
         }
     }
 }

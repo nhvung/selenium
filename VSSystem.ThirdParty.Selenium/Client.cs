@@ -1,17 +1,15 @@
 using System;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using VSSystem.ThirdParty.Selenium.Actions;
 using VSSystem.ThirdParty.Selenium.Extensions;
 
 namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        public void Execute(Actions.ActionTask[] actionTasks, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(Actions.ActionTask[] actionTasks, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
+            bool result = true;
             try
             {
                 if (actionTasks?.Length > 0)
@@ -22,24 +20,20 @@ namespace VSSystem.ThirdParty.Selenium
                         {
                             if (driver != null)
                             {
+                                // driver.Manage().Window.Position = new System.Drawing.Point(2000, 1);
                                 driver.Manage().Window.Maximize();
 
                                 if (actionTask.Sections?.Count > 0)
                                 {
-                                    bool executeResult = true;
                                     foreach (var section in actionTask.Sections)
                                     {
                                         var sectionResult = section.Execute(driver, debugLogAction, errorLogAction);
                                         if (!sectionResult)
                                         {
-                                            executeResult = false;
+                                            result = false;
                                         }
                                     }
                                 }
-#if DEBUG
-                                // Thread.Sleep(5000);
-#endif
-
                                 driver.Quit();
 
                                 try
@@ -65,6 +59,7 @@ namespace VSSystem.ThirdParty.Selenium
                 }
             }
             catch { }
+            return result;
         }
 
         public void Execute(string fileName, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)

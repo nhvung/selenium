@@ -33,7 +33,7 @@ namespace testselenium
                 new WebAction(){Url = checkUrl},
                  new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                     DelaySeconds = 1,
-                    FileName = "Browse to BIQ",
+                    FileName = "Step1.BrowseToBIQ",
                 },
                 new WebAction{
                     Props=new ElementProps("txtUserName"){Value="leu.vung1"}
@@ -45,9 +45,13 @@ namespace testselenium
                     Props=new ElementProps("btnOk"),
                     Click = true
                 },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait)
+                {
+
+                },
                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                     DelaySeconds = 1,
-                    FileName = "Logged in",
+                    FileName = "Step2.LoggedIn",
                 },
                  new WebAction(){DelaySeconds = 1},
             };
@@ -58,38 +62,13 @@ namespace testselenium
             gotoBIQ.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
 
                 new WebAction{
-                    Props=new ElementProps("dvBallistics"),
-                    MouseIn = true
-                },
-                new WebAction{
                     DelaySeconds = 1,
                     Props=new ElementProps("dvBallistics"),
                     Click = true
                 },
                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds = 1,
-                    FileName = "Go to BIQ",
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        ClassItem=new ClassProps("icon_function", 0)
-                    },
-                    MouseIn = true
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        ClassItem=new ClassProps("icon_function", 1)
-                    },
-                    MouseIn = true
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        ClassItem=new ClassProps("icon_function", 2)
-                    },
-                    MouseIn = true
+                    DelaySeconds = 3,
+                    FileName = "Step3.GoToBIQ",
                 },
                  new WebAction(){
                     DelaySeconds = 1,
@@ -99,28 +78,359 @@ namespace testselenium
                     Click = true
                 },
                 new WebAction(){
-                    DelaySeconds = 5,
+                    DelaySeconds =5,
                     Props=new ElementProps("btnCancel"){
                         IFrameID = "GCTIFrame"
                     },
                     Click = true
                 },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 3,
+                    FileName = "Step4.GalleryPage",
+                },
                 new WebAction(){
-                    DelaySeconds = 5,
+                    DelaySeconds = 3,
                     Props=new ElementProps(){
                         ClassItem=new ClassProps("button100_green", "", "Search")
                     },
                     Click = true
                 },
+                 new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("txtCaseNumber"){
+                        IFrameID = "GCTIFrame",
+                        Value = "test selenium"
+                    },
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("btnContinue"){
+                        IFrameID = "GCTIFrame"
+                    },
+                    Click = true
+                },
                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds = 10,
-                    FileName = "Go to search gallery",
+                    DelaySeconds = 5,
+                    FileName = "Step5.SearchGalleryResult",
                 },
 
-                 new WebAction(){DelaySeconds = 1},
+                // new WebAction(){
+                //     DelaySeconds = 3,
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajxitem", 1)
+                //     },
+                //     DoubleClick = true
+                // },
+                // new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //     Props=new ElementProps(){SwitchToNewWindow = true, CloseWindow = true},
+                //     DelaySeconds = 5,
+                //     FileName = "Step6.GalleryDetail",
+                // },
+
+                new WebAction(){
+                    Props=new ElementProps(){
+                        ParentID = "resultview",
+                        ClassItem=new ClassProps("ajaxselect", 0)
+                    },
+                    Click = true
+                },
+                //  new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 1)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 2)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 3)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 4)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 5)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 6)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 7)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 8)
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(){
+                //     Props=new ElementProps(){
+                //         ParentID = "resultview",
+                //         ClassItem=new ClassProps("ajaxselect", 9)
+                //     },
+                //     Click = true
+                // },
+                new WebAction(){
+                    Props=new ElementProps(){
+                        ParentID = "resultview",
+                        ClassItem=new ClassProps("ajaxselect", 10)
+                    },
+                    Click = true
+                },
+
+                // new WebAction(){
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps("ctl00_ContentPlaceHolder1_btnAnalysisReport"),
+                //     Click = true,
+                //     AltKey= true
+                // },
+
+                // new WebAction(){
+                //     DelaySeconds = 1,
+                //     Props = new ElementProps(){
+                //         ParentID = "dvSelectEngineCSA_Content",
+                //         TagItem = new TagProps("label", text: "Engine 7.9.0.2 SN")
+                //     },
+                //     Click=true
+                // },
+                // new WebAction(){
+                //     DelaySeconds = 1,
+                //     Props = new ElementProps(){
+                //         ParentID = "dvSelectEngineCSA",
+                //         TagItem = new TagProps("input", value: "CSA Report")
+                //     },
+                //     Click=true
+                // },
+                // new WebAction(){
+                //     DelaySeconds = 5,
+                //     Props=new ElementProps() {
+                //         SwitchToNewWindow = true,
+                //         CloseWindow = true
+                //     },
+                //     Actions = new List<WebAction>(){
+
+                //         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                //             DelaySeconds = 3,
+                //             Props=new ElementProps("loadingUI"){
+                //                 Displayed = false
+                //             },
+                //         },
+                //         new WebAction(){
+                //             DelaySeconds = 3,
+                //             Props = new ElementProps(){
+                //                 TagItem = new TagProps("button", text: "Wait")
+                //             },
+                //             Click = true
+                //         },
+                //          new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                //             DelaySeconds = 3,
+                //             Props=new ElementProps("loadingUI"){
+                //                 Displayed = false
+                //             },
+                //         },
+                //         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //             DelaySeconds = 3,
+                //             FileName = "Step6.RunCSA",
+                //         },
+                //     }
+                // },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnSearchFace"),
+                    Click = true
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 5,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnQuickSearch"),
+                    Click = true
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("btnContinue"){
+                        IFrameID = "GCTIFrame"
+                    },
+                    Click = true
+                },
+
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props = new ElementProps(){
+                        ParentID = "tdControlButton",
+                        TagItem=new TagProps("input",value: "Wait")
+                    },
+                    Click = true
+                },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ParentID = "tdControlButton",
+                        TagItem=new TagProps("input",value: "OK")
+                    },
+                    Click = true
+                },
+
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 3,
+                    FileName = "Step7.SearchPotentialLink",
+                },
+
+                 new WebAction(){DelaySeconds = 5},
             };
 
-            sections.Add(gotoBIQ);
+            // sections.Add(gotoBIQ);
+
+            var searchPL = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Search PL");
+            searchPL.Actions = new List<WebAction>()
+            {
+                new WebAction(){
+                    Url = "https://sandbox.evidenceiq.com/biq/GUI/QuickSearch.aspx?obj=42458212843648846&origin=42458212843627352"
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 5,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ClassItem=new ClassProps("ms-options-wrap",0)
+                    },
+                    Click = true
+                },
+
+                new WebAction(){
+                    DelaySeconds  =1,
+                    Props=new ElementProps(){
+                        Name = "Caliber",
+                        Actions = new List<WebAction>(){
+                            new WebAction(){
+                                Props = new ElementProps(){
+                                    TagItem = new TagProps("input", value: "474")
+                                },
+                                Click = true
+                            }
+                        }
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnQuickSearch"),
+                    Click = true
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("txtCaseNumber"){
+                        IFrameID = "GCTIFrame",
+                        Value = "test selenium"
+                    },
+                },
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps("btnContinue"){
+                        IFrameID = "GCTIFrame"
+                    },
+                    Click = true
+                },
+
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 3,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props = new ElementProps(){
+                        ParentID = "tdControlButton",
+                        TagItem=new TagProps("input",value: "Wait")
+                    },
+                    Click = true
+                },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        Displayed = false,
+                        ClassItem = new ClassProps("modalPopup")
+                    },
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props=new ElementProps(){
+                        ParentID = "tdControlButton",
+                        TagItem=new TagProps("input",value: "OK")
+                    },
+                    Click = true
+                },
+
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds = 3,
+                    FileName = "Step7.SearchPotentialLink",
+                },
+
+                 new WebAction(){DelaySeconds = 5},
+            };
+
+            sections.Add(searchPL);
 
             var taskParams1Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web chrome")
             {

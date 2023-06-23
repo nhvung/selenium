@@ -19,22 +19,22 @@ namespace testselenium
             string checkUrl = $"https://sandbox.evidenceiq.com/biq";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
-            try
-            {
-                client.Execute("./tasks/Test BIQ web firefox.json", errorLogAction: ex =>
-                {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-                    if (ex.InnerException != null)
-                    {
-                        Console.WriteLine(ex.InnerException.Message);
-                        Console.WriteLine(ex.InnerException.StackTrace);
-                    }
+            // try
+            // {
+            //     client.Execute("./tasks/Test BIQ web firefox.json", errorLogAction: ex =>
+            //     {
+            //         Console.WriteLine(ex.Message);
+            //         Console.WriteLine(ex.StackTrace);
+            //         if (ex.InnerException != null)
+            //         {
+            //             Console.WriteLine(ex.InnerException.Message);
+            //             Console.WriteLine(ex.InnerException.StackTrace);
+            //         }
 
-                });
-                return;
-            }
-            catch { }
+            //     });
+            //     return;
+            // }
+            // catch { }
 
             var sections = new System.Collections.Generic.List<VSSystem.ThirdParty.Selenium.Actions.WebAction>();
             var loginSection = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Test Login");
@@ -148,92 +148,11 @@ namespace testselenium
                     },
                     Click = true
                 },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 2)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 3)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 4)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 5)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 6)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 7)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 8)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 9)
-                    },
-                    Click = true
-                },
-                new WebAction(){
-                    Props=new ElementProps(){
-                        ParentID = "resultview",
-                        ClassItem=new ClassProps("ajaxselect", 10)
-                    },
-                    Click = true
-                },
 
                 new WebAction(){
                     DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnAnalysisReport"),
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnCompare"),
                     Click = true,
-                    AltKey= true
-                },
-
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props = new ElementProps(){
-                        ParentID = "dvSelectEngineCSA_Content",
-                        TagItem = new TagProps("label", text: "Engine 7.9.0.2 SN")
-                    },
-                    Click=true
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props = new ElementProps(){
-                        ParentID = "dvSelectEngineCSA",
-                        TagItem = new TagProps("input", value: "CSA Report")
-                    },
-                    Click=true
                 },
                 new WebAction(){
                     DelaySeconds = 5,
@@ -246,25 +165,61 @@ namespace testselenium
                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
                             DelaySeconds = 3,
                             Props=new ElementProps("loadingUI"){
+                                IFrameID = "Compare2DTool",
                                 Displayed = false
                             },
                         },
                         new WebAction(){
-                            DelaySeconds = 3,
-                            Props = new ElementProps(){
-                                TagItem = new TagProps("button", text: "Wait")
+                            DelaySeconds= 5,
+                            Props=new ElementProps("btnPatternMatching"){
+                                IFrameID = "Compare2DTool",
+                                ParentID = "optioncontroller"
                             },
                             Click = true
                         },
-                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                        new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
                             DelaySeconds = 3,
                             Props=new ElementProps("loadingUI"){
+                                IFrameID = "Compare2DTool",
                                 Displayed = false
                             },
                         },
                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                             DelaySeconds = 3,
-                            FileName = "Step6.RunCSA",
+                            FileName = "Step8.CompareImage",
+                        },
+
+                        new WebAction(){
+                            DelaySeconds= 5,
+                            Props=new ElementProps(){
+                                IFrameID = "Compare2DTool",
+                                ParentID = "optioncontroller",
+                                TagItem = new TagProps("span", text: "3d tool")
+                            },
+                            Click = true
+                        },
+
+                        new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                            DelaySeconds = 3,
+                            Props=new ElementProps(){
+                                IFrameID = "Compare3DToolThreeJS",
+                                ParentID = "imageLeftSlideCtr",
+                                TagItem = new TagProps("p", text: "Generating..."),
+                                Displayed = false
+                            },
+                        },
+                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                            DelaySeconds = 3,
+                            Props=new ElementProps(){
+                                IFrameID = "Compare3DToolThreeJS",
+                                ParentID = "imageRightSlideCtr",
+                                TagItem = new TagProps("p", text: "Generating..."),
+                                Displayed = false
+                            },
+                        },
+                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                            DelaySeconds = 3,
+                            FileName = "Step9.3DTool",
                         },
                     }
                 },
@@ -274,110 +229,6 @@ namespace testselenium
 
             sections.Add(gotoBIQ);
 
-            var searchPL = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Search PL");
-            searchPL.Actions = new List<WebAction>()
-            {
-                // new WebAction(){
-                //     Url = "https://sandbox.evidenceiq.com/biq/GUI/QuickSearch.aspx?obj=42458212843648846&origin=42458212843627352#afd1afb0188f45f391aae95a58a1c658"
-                // },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnSearchFace"),
-                    Click = true
-                },
-                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
-                    DelaySeconds = 10,
-                    Props=new ElementProps(){
-                        Displayed = false,
-                        ClassItem = new ClassProps("modalPopup")
-                    },
-                },
-
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        ClassItem=new ClassProps("ms-options-wrap",0)
-                    },
-                    Click = true
-                },
-
-                new WebAction(){
-                    DelaySeconds  =1,
-                    Props=new ElementProps(){
-                        Name = "Caliber",
-                        Actions = new List<WebAction>(){
-                            new WebAction(){
-                                Props = new ElementProps(){
-                                    TagItem = new TagProps("input", value: "474")
-                                },
-                                Click = true
-                            }
-                        }
-                    },
-                },
-
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_btnQuickSearch"),
-                    Click = true
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps("txtCaseNumber"){
-                        IFrameID = "GCTIFrame",
-                        Value = "test selenium"
-                    },
-                },
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps("btnContinue"){
-                        IFrameID = "GCTIFrame"
-                    },
-                    Click = true
-                },
-
-                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
-                    DelaySeconds = 3,
-                    Props=new ElementProps(){
-                        Displayed = false,
-                        ClassItem = new ClassProps("modalPopup")
-                    },
-                },
-
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props = new ElementProps(){
-                        ParentID = "tdControlButton",
-                        TagItem=new TagProps("input",value: "Wait")
-                    },
-                    Click = true
-                },
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        Displayed = false,
-                        ClassItem = new ClassProps("modalPopup")
-                    },
-                },
-
-                new WebAction(){
-                    DelaySeconds = 1,
-                    Props=new ElementProps(){
-                        ParentID = "tdControlButton",
-                        TagItem=new TagProps("input",value: "OK")
-                    },
-                    Click = true
-                },
-
-                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds = 3,
-                    FileName = "Step7.SearchPotentialLink",
-                },
-
-                 new WebAction(){DelaySeconds = 5},
-            };
-
-            sections.Add(searchPL);
 
             var taskParams1Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web chrome")
             {

@@ -148,6 +148,74 @@ namespace testselenium
                     },
                     Click = true
                 },
+                new WebAction(){
+                    Props=new ElementProps(){
+                        ParentID = "resultview",
+                        ClassItem=new ClassProps("ajaxselect", 2)
+                    },
+                    Click = true
+                },
+                new WebAction(){
+                    Props=new ElementProps(){
+                        ParentID = "resultview",
+                        ClassItem=new ClassProps("ajaxselect", 3)
+                    },
+                    Click = true
+                },
+                new WebAction(){
+                    Props=new ElementProps(){
+                        ParentID = "resultview",
+                        ClassItem=new ClassProps("ajaxselect", 4)
+                    },
+                    Click = true
+                },
+
+                new WebAction(){
+                    DelaySeconds = 1,
+                    Props = new ElementProps("ctl00_ContentPlaceHolder1_btnAnalysisReport"),
+                    Click = true
+                },
+
+                new WebAction(){
+                    DelaySeconds = 5,
+                    Props=new ElementProps{
+                        SwitchToNewWindow = true,
+                        CloseWindow = true
+                    },
+                    Actions = new List<WebAction>(){
+                        new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                            DelaySeconds = 3,
+                            Props=new ElementProps("loadingUI")
+                            {
+                                Displayed = false
+                            },
+                        },
+                        new WebAction(){
+                            DelaySeconds = 3,
+                            Props=new ElementProps()
+                            {
+                                TagItem = new TagProps("button", text: "Wait")
+                            },
+                            Click = true
+                        },
+                        new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
+                            DelaySeconds = 5,
+                            Props=new ElementProps("loadingUI")
+                            {
+                                Displayed = false
+                            }
+                        },
+                        new WebAction(){
+                            DelaySeconds = 1,
+                            ShiftKey = true,
+                            PressKeys = new List<string>(){"f"}
+                        },
+                        new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                            DelaySeconds = 5,
+                            FileName = "Step6.RunCSA",
+                        },
+                    }
+                },
 
                 new WebAction(){
                     DelaySeconds = 1,
@@ -186,7 +254,7 @@ namespace testselenium
                         },
                         new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                             DelaySeconds = 3,
-                            FileName = "Step8.CompareImage",
+                            FileName = "Step8.PatternMatching",
                         },
 
                         new WebAction(){

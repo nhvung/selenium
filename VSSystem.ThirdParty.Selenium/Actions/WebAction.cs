@@ -45,12 +45,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         }
 
         #region Element
+
         #region Identity
         ElementProps _Props;
         public ElementProps Props { get { return _Props; } set { _Props = value; } }
-        #endregion
-
-        #region Actions props
         bool? _Click;
         public bool? Click { get { return _Click; } set { _Click = value; } }
         bool? _DoubleClick;
@@ -59,6 +57,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? ClickAndHold { get { return _ClickAndHold; } set { _ClickAndHold = value; } }
         bool? _MouseIn;
         public bool? MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
+        #endregion
+
+        #region Actions props
+
         bool? _ShiftKey;
         public bool? ShiftKey { get { return _ShiftKey; } set { _ShiftKey = value; } }
         bool? _ControlKey;
@@ -67,6 +69,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? AltKey { get { return _AltKey; } set { _AltKey = value; } }
 
         #endregion
+
+        #region Key Press
+        List<string> _PressKeys;
+        public List<string> PressKeys { get { return _PressKeys; } set { _PressKeys = value; } }
+        #endregion
+
         #endregion
 
         #region Screen Shot props
@@ -194,6 +202,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     result = _ExecuteElement(driver, debugLogAction, errorLogAction);
                 }
+                else
+                {
+                    if (_PressKeys?.Count > 0)
+                    {
+                        _KeyAction(driver, debugLogAction, errorLogAction);
+                    }
+                }
 
                 if (_Actions?.Count > 0)
                 {
@@ -254,12 +269,117 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             return result;
         }
 
+        bool _KeyAction(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
+        {
+            try
+            {
+                if (_Props?.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var lastWindow = driver.WindowHandles.LastOrDefault();
+                        if (!string.IsNullOrWhiteSpace(lastWindow))
+                        {
+                            driver = driver.SwitchTo().Window(lastWindow);
+                        }
 
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
+                {
+                    try
+                    {
+                        driver = driver.SwitchTo().Frame(_Props.IFrameID);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
+                    }
+                }
+
+                var actionObj = new OpenQA.Selenium.Interactions.Actions(driver);
+                if (_ControlKey ?? false)
+                {
+                    actionObj = actionObj.KeyDown(Keys.Control);
+                }
+                if (_ShiftKey ?? false)
+                {
+                    actionObj = actionObj.KeyDown(Keys.Shift);
+                }
+                if (_AltKey ?? false)
+                {
+                    actionObj = actionObj.KeyDown(Keys.Alt);
+                }
+
+                foreach (var pressKey in _PressKeys)
+                {
+                    actionObj = actionObj.KeyDown(pressKey);
+                }
+
+                if (_ControlKey ?? false)
+                {
+                    actionObj = actionObj.KeyUp(Keys.Control);
+                }
+                if (_ShiftKey ?? false)
+                {
+                    actionObj = actionObj.KeyUp(Keys.Shift);
+                }
+                if (_AltKey ?? false)
+                {
+                    actionObj = actionObj.KeyUp(Keys.Alt);
+                }
+
+                foreach (var pressKey in _PressKeys)
+                {
+                    actionObj = actionObj.KeyUp(pressKey);
+                }
+
+                actionObj.Build().Perform();
+
+
+                if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
+                {
+                    try
+                    {
+                        driver = driver.SwitchTo().DefaultContent();
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("SwitchTo.ActiveElement exception.", ex));
+                    }
+                }
+
+                if (_Props?.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var firstWindow = driver.WindowHandles.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        {
+                            driver = driver.SwitchTo().Window(firstWindow);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(new Exception("_KeyAction exception.", ex));
+            }
+            return true;
+        }
         bool _ExecuteElement(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             try
             {
-
                 if (_Props.SwitchToNewWindow ?? false)
                 {
                     try
@@ -280,12 +400,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
-#if DEBUG
-                        if (_Props.IFrameID == "GCTIFrame")
-                        {
-
-                        }
-#endif
                         driver = driver.SwitchTo().Frame(_Props.IFrameID);
                     }
                     catch (Exception ex)
@@ -336,7 +450,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     // if (elementObj.Displayed)
                     {
 
-                        if ((_ControlKey ?? false) || (_ShiftKey ?? false) || (_AltKey ?? false))
+                        if ((_ControlKey ?? false) || (_ShiftKey ?? false) || (_AltKey ?? false) || _PressKeys?.Count > 0)
                         {
                             var actionObj = new OpenQA.Selenium.Interactions.Actions(driver);
                             if (_ControlKey ?? false)
@@ -351,6 +465,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             {
                                 actionObj = actionObj.KeyDown(Keys.Alt);
                             }
+
+                            if (_PressKeys?.Count > 0)
+                            {
+                                foreach (var pressKey in _PressKeys)
+                                {
+                                    actionObj = actionObj.KeyDown(pressKey);
+                                }
+                            }
+
 
                             if (_MouseIn ?? false)
                             {
@@ -388,6 +511,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (_AltKey ?? false)
                             {
                                 actionObj = actionObj.KeyUp(Keys.Alt);
+                            }
+
+                            if (_PressKeys?.Count > 0)
+                            {
+                                foreach (var pressKey in _PressKeys)
+                                {
+                                    actionObj = actionObj.KeyUp(pressKey);
+                                }
                             }
                             actionObj.Build().Perform();
                         }

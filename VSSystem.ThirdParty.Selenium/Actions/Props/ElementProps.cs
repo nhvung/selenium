@@ -70,12 +70,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             else if (!string.IsNullOrWhiteSpace(_ParentID))
             {
-#if DEBUG
-                if (_ParentID == "optioncontroller")
-                {
-
-                }
-#endif
                 try
                 {
                     searchCtx = searchCtx.FindElement(By.Id(_ParentID));
@@ -138,7 +132,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_ClassItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
+                                ?.Where(ite => ite.GetAttribute("value")?.Trim()?.Equals(_ClassItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
 
@@ -182,7 +176,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (!string.IsNullOrWhiteSpace(_TagItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
-                                ?.Where(ite => ite.GetAttribute("value")?.Equals(_TagItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
+                                ?.Where(ite => ite.GetAttribute("value")?.Trim()?.Equals(_TagItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
 

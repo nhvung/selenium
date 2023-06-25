@@ -16,7 +16,10 @@ namespace testselenium
 
 
             // string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
-            string checkUrl = $"https://sandbox.evidenceiq.com/biq";
+            // string checkUrl = $"https://sandbox.evidenceiq.com/biq";
+            string checkUrl = $"https://login.evidenceiq.com/biq";
+            string username = "am_checksystem";
+            string password = "Evidenceiq1!";
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
             // try
@@ -46,10 +49,10 @@ namespace testselenium
                     FileName = "Step1.BrowseToBIQ",
                 },
                 new WebAction{
-                    Props=new ElementProps("txtUserName"){Value="leu.vung1"}
+                    Props=new ElementProps("txtUserName"){Value=username}
                 },
                  new WebAction{
-                    Props=new ElementProps("txtPassword"){Value="Evidence2!"}
+                    Props=new ElementProps("txtPassword"){Value=password}
                 },
                 new WebAction{
                     Props=new ElementProps("btnOk"),
@@ -58,8 +61,7 @@ namespace testselenium
                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                     DelaySeconds = 1,
                     FileName = "Step2.LoggedIn",
-                },
-                 new WebAction(){DelaySeconds = 1},
+                }
             };
 
             sections.Add(loginSection);
@@ -84,7 +86,7 @@ namespace testselenium
                     Click = true
                 },
                 new WebAction(){
-                    DelaySeconds =5,
+                    DelaySeconds = 5,
                     Props=new ElementProps("btnCancel"){
                         IFrameID = "GCTIFrame"
                     },
@@ -323,8 +325,8 @@ namespace testselenium
             };
 
             client.Execute(new VSSystem.ThirdParty.Selenium.Actions.ActionTask[]{
-                // taskParams1Obj,
-            taskParams2Obj,
+                taskParams1Obj,
+            // taskParams2Obj,
             // taskParams3Obj,
             },
                                 errorLogAction: ex =>

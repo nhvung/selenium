@@ -105,7 +105,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         }
         protected List<WebAction> _Actions;
         public List<WebAction> Actions { get { return _Actions; } set { _Actions = value; } }
-
+        protected string _Title;
+        public string Title { get { return _Title; } set { _Title = value; } }
         public virtual bool Execute(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             bool result = true;
@@ -207,6 +208,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     if (_PressKeys?.Count > 0)
                     {
                         _KeyAction(driver, debugLogAction, errorLogAction);
+                    }
+                    else
+                    {
+                        _ExecuteTitle(driver, debugLogAction, errorLogAction);
                     }
                 }
 
@@ -376,8 +381,98 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             return true;
         }
+        bool _ExecuteTitle(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
+        {
+            bool result = true;
+            try
+            {
+                if (_Props?.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var lastWindow = driver.WindowHandles.LastOrDefault();
+                        if (!string.IsNullOrWhiteSpace(lastWindow))
+                        {
+                            driver = driver.SwitchTo().Window(lastWindow);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
+                {
+                    try
+                    {
+                        driver = driver.SwitchTo().Frame(_Props.IFrameID);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
+                    }
+                }
+
+                if (EType == EActionType.Wait)
+                {
+                    int waitTime = 500;
+                    if (!string.IsNullOrWhiteSpace(_Title))
+                    {
+                        string title = driver.Title;
+                        while (!title?.Equals(_Title, StringComparison.InvariantCultureIgnoreCase) ?? false)
+                        {
+                            Thread.Sleep(waitTime);
+                        }
+                    }
+                }
+                else if (EType == EActionType.Validate)
+                {
+                    if (!string.IsNullOrWhiteSpace(_Title))
+                    {
+                        string title = driver.Title;
+                        result = title?.Equals(_Title, StringComparison.InvariantCultureIgnoreCase) ?? false;
+                    }
+
+                }
+
+                if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
+                {
+                    try
+                    {
+                        driver = driver.SwitchTo().DefaultContent();
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("SwitchTo.ActiveElement exception.", ex));
+                    }
+                }
+
+                if (_Props?.SwitchToNewWindow ?? false)
+                {
+                    try
+                    {
+                        var firstWindow = driver.WindowHandles.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        {
+                            driver = driver.SwitchTo().Window(firstWindow);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(new Exception("_ExecuteTitle exception.", ex));
+            }
+            return result;
+        }
         bool _ExecuteElement(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
+            bool result = true;
             try
             {
                 if (_Props.SwitchToNewWindow ?? false)
@@ -408,6 +503,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                 }
 
+
+
                 var elementObj = Props.GetWebElement(driver, debugLogAction, errorLogAction);
                 if (elementObj != null)
                 {
@@ -428,23 +525,24 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         {
                             if (elementObj.Displayed != _Props.Displayed)
                             {
-                                return false;
+                                result = false;
                             }
                         }
                         if (!string.IsNullOrWhiteSpace(_Props.Text))
                         {
                             if (!elementObj.Text?.Equals(_Props.Text) ?? false)
                             {
-                                return false;
+                                result = false;
                             }
                         }
                         if (!string.IsNullOrWhiteSpace(_Props.Value))
                         {
                             if (!elementObj.GetAttribute("value")?.Equals(_Props.Value) ?? false)
                             {
-                                return false;
+                                result = false;
                             }
                         }
+
                     }
 
                     // if (elementObj.Displayed)
@@ -613,6 +711,30 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                 }
 
+                else
+                {
+                    if (EType == EActionType.Wait)
+                    {
+                        int waitTime = 500;
+                        if (!string.IsNullOrWhiteSpace(_Title))
+                        {
+                            string title = driver.Title;
+                            while (!title?.Equals(_Title, StringComparison.InvariantCultureIgnoreCase) ?? false)
+                            {
+                                Thread.Sleep(waitTime);
+                            }
+                        }
+                    }
+                    else if (EType == EActionType.Validate)
+                    {
+                        if (!string.IsNullOrWhiteSpace(_Title))
+                        {
+                            string title = driver.Title;
+                            result = title?.Equals(_Title, StringComparison.InvariantCultureIgnoreCase) ?? false;
+                        }
+
+                    }
+                }
                 if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
                     try
@@ -647,7 +769,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 errorLogAction?.Invoke(new Exception("_ExecuteElement exception.", ex));
             }
 
-            return true;
+            return result;
         }
 
 

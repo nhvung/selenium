@@ -12,11 +12,6 @@ namespace testselenium
         static Dictionary<string, bool> _validateResult;
         async static Task Main(string[] args)
         {
-
-
-
-            // string checkUrl = $"https://14.161.7.248:4431/ballisticsearch";
-            // string checkUrl = $"https://sandbox.evidenceiq.com/biq";
             string checkUrl = $"https://login.evidenceiq.com/biq";
             string username = "am_checksystem";
             string password = "Evidenceiq1!";
@@ -44,10 +39,14 @@ namespace testselenium
             loginSection.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
 
                 new WebAction(){Url = checkUrl},
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Validate){
+                    Title = "EVIDENCE IQ - LOGIN"
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
                     DelaySeconds = 1,
                     FileName = "Step1.BrowseToBIQ",
                 },
+
                 new WebAction{
                     Props=new ElementProps("txtUserName"){Value=username}
                 },
@@ -67,8 +66,8 @@ namespace testselenium
             sections.Add(loginSection);
 
             var gotoBIQ = new VSSystem.ThirdParty.Selenium.Actions.WebAction("Go to BIQ");
-            gotoBIQ.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
 
+            gotoBIQ.Actions = new List<VSSystem.ThirdParty.Selenium.Actions.WebAction>(){
                 new WebAction{
                     DelaySeconds = 1,
                     Props=new ElementProps("dvBallistics"),
@@ -92,10 +91,6 @@ namespace testselenium
                     },
                     Click = true
                 },
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds = 3,
-                    FileName = "Step4.GalleryPage",
-                },
                 new WebAction(){
                     DelaySeconds = 3,
                     Props=new ElementProps(){
@@ -105,7 +100,7 @@ namespace testselenium
                 },
                  new WebAction(){
                     DelaySeconds = 1,
-                    Props=new ElementProps("txtCaseNumber"){
+                    Props=new ElementProps("txtCaseNumber") {
                         IFrameID = "GCTIFrame",
                         Value = "test selenium"
                     },
@@ -325,8 +320,8 @@ namespace testselenium
             };
 
             client.Execute(new VSSystem.ThirdParty.Selenium.Actions.ActionTask[]{
-                taskParams1Obj,
-            // taskParams2Obj,
+                // taskParams1Obj,
+            taskParams2Obj,
             // taskParams3Obj,
             },
                                 errorLogAction: ex =>

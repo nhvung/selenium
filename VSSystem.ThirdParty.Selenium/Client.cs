@@ -35,9 +35,13 @@ namespace VSSystem.ThirdParty.Selenium
                                         }
                                     }
                                 }
-                                driver.Close();
-                                driver.Quit();
-                                driver.Dispose();
+                                try
+                                {
+                                    driver.Close();
+                                    driver.Quit();
+                                    driver.Dispose();
+                                }
+                                catch { }
 
                                 try
                                 {

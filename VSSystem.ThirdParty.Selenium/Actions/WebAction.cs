@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using VSSystem.ThirdParty.Selenium.Define;
+using VSSystem.ThirdParty.Selenium.Extensions;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
@@ -107,9 +108,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public List<WebAction> Actions { get { return _Actions; } set { _Actions = value; } }
         protected string _Title;
         public string Title { get { return _Title; } set { _Title = value; } }
+        WebAction _OnValidateInvalid;
+        public WebAction OnValidateInvalid { get { return _OnValidateInvalid; } set { _OnValidateInvalid = value; } }
+
         public virtual bool Execute(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             bool result = true;
+            DateTime now = DateTime.Now;
             try
             {
                 double delayMiliseconds = 50;
@@ -121,8 +126,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
                 }
-
-
 
                 if (EType == EActionType.ScreenShot)
                 {
@@ -162,7 +165,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
 
                         var screenShotObj = ((ITakesScreenshot)driver).GetScreenshot();
-                        screenShotObj.SaveAsFile(file.FullName, ScreenshotImageFormat.Png);
+                        var screenshotBytes = screenShotObj.AsByteArray;
+                        try
+                        {
+                            screenshotBytes = ImageExtension.ConvertImage(screenshotBytes, "jpg");
+                            file = new FileInfo($"{folderPath}/{fileName}.jpg");
+                        }
+                        catch { }
+                        File.WriteAllBytes(file.FullName, screenshotBytes);
                     }
                     catch (Exception ex)
                     {
@@ -202,16 +212,31 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 if (_Props != null)
                 {
                     result = _ExecuteElement(driver, debugLogAction, errorLogAction);
+                    if (EType == EActionType.Validate)
+                    {
+                        _OnValidateInvalid?.Execute(driver, debugLogAction, errorLogAction);
+                        return result;
+                    }
                 }
                 else
                 {
                     if (_PressKeys?.Count > 0)
                     {
-                        _KeyAction(driver, debugLogAction, errorLogAction);
+                        result = _KeyAction(driver, debugLogAction, errorLogAction);
+                        if (EType == EActionType.Validate)
+                        {
+                            _OnValidateInvalid?.Execute(driver, debugLogAction, errorLogAction);
+                            return result;
+                        }
                     }
                     else
                     {
-                        _ExecuteTitle(driver, debugLogAction, errorLogAction);
+                        result = _ExecuteTitle(driver, debugLogAction, errorLogAction);
+                        if (EType == EActionType.Validate)
+                        {
+                            _OnValidateInvalid?.Execute(driver, debugLogAction, errorLogAction);
+                            return result;
+                        }
                     }
                 }
 
@@ -242,6 +267,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (!actionResult)
                             {
                                 result = false;
+                                if (actionObj.EType == EActionType.Validate)
+                                {
+                                    break;
+                                }
                             }
                         }
                         catch { }
@@ -274,7 +303,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             return result;
         }
 
-        bool _KeyAction(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
+        protected virtual bool _KeyAction(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             try
             {
@@ -381,7 +410,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             return true;
         }
-        bool _ExecuteTitle(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
+        protected virtual bool _ExecuteTitle(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
             bool result = true;
             try

@@ -98,6 +98,9 @@ namespace testselenium
                     },
                     Click = true
                 },
+
+
+
                 new WebAction(){
                     DelaySeconds = 5,
                     Props=new ElementProps("btnCancel"){

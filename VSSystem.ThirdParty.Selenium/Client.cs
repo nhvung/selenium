@@ -39,7 +39,6 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     driver.Close();
                                     driver.Quit();
-                                    driver.Dispose();
                                 }
                                 catch { }
 

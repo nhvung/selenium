@@ -9,7 +9,7 @@
     <AssemblyName>testselenium</AssemblyName>
     <OutputPath>bin</OutputPath>
     <OutputType>Exe</OutputType>
-    <DefineConstants>PRO</DefineConstants>
+    <!-- <DefineConstants>PRO</DefineConstants> -->
   </PropertyGroup>
 <ItemGroup>
     <ProjectReference Include="../VSSystem.ThirdParty.Selenium/VSSystem.ThirdParty.Selenium.csproj" />

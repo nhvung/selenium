@@ -299,7 +299,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
 
             }
-            catch { }
+            catch (Exception ex)
+            {
+                errorLogAction?.Invoke(ex);
+            }
             return result;
         }
 

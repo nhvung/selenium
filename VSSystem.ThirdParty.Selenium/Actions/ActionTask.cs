@@ -38,5 +38,11 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public ActionTask()
         {
         }
+        public ActionTask(string name, string browser = "chrome", bool isIncognito = false)
+        {
+            _Name = name;
+            _Browser = browser;
+            _IsIncognito = isIncognito;
+        }
     }
 }

@@ -8,7 +8,11 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        public bool Execute(Actions.ActionTask[] actionTasks, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(Actions.ActionTask actionTask, Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        {
+            return Execute(new ActionTask[] { actionTask }, onFinishAction, debugLogAction, errorLogAction);
+        }
+        public bool Execute(Actions.ActionTask[] actionTasks, Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             bool result = true;
             try
@@ -32,6 +36,7 @@ namespace VSSystem.ThirdParty.Selenium
                                         if (!sectionResult)
                                         {
                                             result = false;
+                                            break;
                                         }
                                     }
                                 }
@@ -68,10 +73,15 @@ namespace VSSystem.ThirdParty.Selenium
                 }
             }
             catch { }
+            try
+            {
+                onFinishAction?.Invoke();
+            }
+            catch { }
             return result;
         }
 
-        public void Execute(string fileName, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(string fileName, System.Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             try
             {
@@ -79,7 +89,7 @@ namespace VSSystem.ThirdParty.Selenium
                 var taskObj = JsonConvert.DeserializeObject<VSSystem.ThirdParty.Selenium.Actions.ActionTask>(json);
                 if (taskObj != null)
                 {
-                    Execute(new ActionTask[] { taskObj }, debugLogAction, errorLogAction);
+                    return Execute(taskObj, onFinishAction, debugLogAction, errorLogAction);
                 }
 
             }
@@ -87,6 +97,7 @@ namespace VSSystem.ThirdParty.Selenium
             {
                 errorLogAction?.Invoke(ex);
             }
+            return false;
         }
     }
 

@@ -70,6 +70,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             else if (!string.IsNullOrWhiteSpace(_ParentID))
             {
+
                 try
                 {
                     searchCtx = searchCtx.FindElement(By.Id(_ParentID));
@@ -82,6 +83,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             if (!string.IsNullOrWhiteSpace(_ID))
             {
+#if DEBUG
+                if (_ID == "main_table_grid")
+                {
+
+                }
+
+#endif
                 try
                 {
                     elementObj = searchCtx.FindElement(By.Id(_ID));
@@ -93,6 +101,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             if (elementObj == null)
             {
+#if DEBUG
+                if (_Name == "County_GL")
+                {
+
+                }
+
+#endif
                 if (!string.IsNullOrWhiteSpace(_Name))
                 {
                     try
@@ -122,8 +137,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             if (elementObj == null)
             {
+
                 if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
                 {
+#if DEBUG
+                    if (_ClassItem.ClassName == "ajaxselect")
+                    {
+
+                    }
+
+#endif
                     try
                     {
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
@@ -186,6 +209,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 ?.Where(ite => ite.Text?.Trim()?.Equals(_TagItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
+                            if (_TagItem.Attributes?.Count > 0)
+                            {
+                                foreach (var attrObj in _TagItem.Attributes)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => attrObj.IsValid(ite.GetAttribute(attrObj.Name)))
+                                    ?.ToList();
+                                }
+                            }
                             if (foundElementObjs?.Count > 0)
                             {
                                 int index = _TagItem.Index ?? foundElementObjs.Count;
@@ -207,6 +239,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                 }
             }
+
             return elementObj;
         }
         public ElementProps() { }

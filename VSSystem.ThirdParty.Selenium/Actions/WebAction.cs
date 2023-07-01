@@ -676,22 +676,41 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             {
                                 if (_Props.EType == EElementType.Select)
                                 {
-                                    if (!string.IsNullOrWhiteSpace(_Props.Text))
+                                    try
+                                    {
+                                        new SelectElement(elementObj).SelectByText(_Props.Text);
+                                    }
+                                    catch //(Exception ex)
+                                    {
+
+                                    }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        elementObj.Click();
+                                        elementObj.SendKeys(_Props.Text);
+                                    }
+                                    catch
                                     {
                                         try
                                         {
-                                            new SelectElement(elementObj).SelectByText(_Props.Text);
+                                            new OpenQA.Selenium.Interactions.Actions(driver)
+                                            .MoveToElement(elementObj, 1, 1)
+                                            .Click(elementObj)
+                                            .SendKeys(_Props.Text)
+                                            .Perform();
                                         }
-                                        catch //(Exception ex)
-                                        {
-
-                                        }
+                                        catch { }
                                     }
                                 }
                             }
                             if (_MouseIn ?? false)
                             {
-                                new OpenQA.Selenium.Interactions.Actions(driver).MoveToElement(elementObj).Perform();
+                                new OpenQA.Selenium.Interactions.Actions(driver)
+                                .MoveToElement(elementObj)
+                                .Perform();
                             }
                             if (_Props.Checked != null)
                             {
@@ -710,19 +729,26 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 {
                                     try
                                     {
-                                        new OpenQA.Selenium.Interactions.Actions(driver).MoveToElement(elementObj, 1, 1).Click(elementObj).Perform();
+                                        new OpenQA.Selenium.Interactions.Actions(driver)
+                                        .MoveToElement(elementObj, 1, 1)
+                                        .Click(elementObj)
+                                        .Perform();
                                     }
                                     catch { }
                                 }
                             }
                             if (_DoubleClick ?? false)
                             {
-                                new OpenQA.Selenium.Interactions.Actions(driver).DoubleClick(elementObj).Perform();
+                                new OpenQA.Selenium.Interactions.Actions(driver)
+                                .DoubleClick(elementObj)
+                                .Perform();
                             }
 
                             if (_ClickAndHold ?? false)
                             {
-                                new OpenQA.Selenium.Interactions.Actions(driver).ClickAndHold(elementObj).Perform();
+                                new OpenQA.Selenium.Interactions.Actions(driver)
+                                .ClickAndHold(elementObj)
+                                .Perform();
                             }
                         }
                         if (_Props.Actions?.Count > 0)

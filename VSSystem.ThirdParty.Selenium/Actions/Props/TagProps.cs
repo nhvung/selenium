@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -11,11 +13,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Value { get { return _Value; } set { _Value = value; } }
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
+        List<AttributeProps> _Attributes;
+        [Newtonsoft.Json.JsonIgnore]
+        public List<AttributeProps> Attributes { get { return _Attributes; } set { _Attributes = value; } }
         public TagProps() { }
         public TagProps(string tagName, int? index = null)
         {
             _TagName = tagName;
             _Index = index;
+            _Attributes = null;
         }
         public TagProps(string tagName, string value = null, string text = null, int? index = null)
         {
@@ -23,6 +29,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             _Value = value;
             _Text = text;
             _Index = index;
+            _Attributes = null;
         }
     }
 

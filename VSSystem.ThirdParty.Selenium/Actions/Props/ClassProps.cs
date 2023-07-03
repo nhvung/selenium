@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace VSSystem.ThirdParty.Selenium.Actions
 {
     [Newtonsoft.Json.JsonObject(ItemNullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -11,6 +13,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Value { get { return _Value; } set { _Value = value; } }
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
+        List<AttributeProps> _Attributes;
+        public List<AttributeProps> Attributes { get { return _Attributes; } set { _Attributes = value; } }
         public ClassProps() { }
         public ClassProps(string className, int? index)
         {

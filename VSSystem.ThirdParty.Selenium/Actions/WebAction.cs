@@ -669,6 +669,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 }
                                 else
                                 {
+                                    elementObj.Clear();
                                     elementObj.SendKeys(_Props.Value);
                                 }
                             }
@@ -690,6 +691,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                     try
                                     {
                                         elementObj.Click();
+                                        elementObj.Clear();
                                         elementObj.SendKeys(_Props.Text);
                                     }
                                     catch

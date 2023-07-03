@@ -165,6 +165,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 ?.Where(ite => ite.Text?.Trim()?.Equals(_ClassItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
+                            if (_ClassItem.Attributes?.Count > 0)
+                            {
+                                foreach (var attrObj in _ClassItem.Attributes)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetAttribute(attrObj.Name)))
+                                    ?.ToList();
+                                }
+                            }
                             if (foundElementObjs?.Count > 0)
                             {
                                 int index = _ClassItem.Index ?? foundElementObjs.Count;
@@ -214,7 +223,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 foreach (var attrObj in _TagItem.Attributes)
                                 {
                                     foundElementObjs = foundElementObjs
-                                    ?.Where(ite => attrObj.IsValid(ite.GetAttribute(attrObj.Name)))
+                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetAttribute(attrObj.Name)))
                                     ?.ToList();
                                 }
                             }

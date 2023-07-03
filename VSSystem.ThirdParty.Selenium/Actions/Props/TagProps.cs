@@ -14,7 +14,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
         List<AttributeProps> _Attributes;
-        [Newtonsoft.Json.JsonIgnore]
         public List<AttributeProps> Attributes { get { return _Attributes; } set { _Attributes = value; } }
         public TagProps() { }
         public TagProps(string tagName, int? index = null)

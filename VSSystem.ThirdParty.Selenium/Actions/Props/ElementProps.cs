@@ -145,7 +145,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
 
                     }
-
 #endif
                     try
                     {

@@ -10,6 +10,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
     {
         string _Name;
         public string Name { get { return _Name; } set { _Name = value; } }
+        string _SessionGuid;
+        public string SessionGuid { get { return _SessionGuid; } set { _SessionGuid = value; } }
         string _Browser;
         public string Browser { get { return _Browser; } set { _Browser = value; } }
         [Newtonsoft.Json.JsonIgnore]
@@ -27,6 +29,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         }
         bool _IsIncognito;
         public bool IsIncognito { get { return _IsIncognito; } set { _IsIncognito = value; } }
+        string _Resolution;
+        public string Resolution { get { return _Resolution; } set { _Resolution = value; } }
         List<WebAction> _Sections;
         public List<WebAction> Sections { get { return _Sections; } set { _Sections = value; } }
 
@@ -38,11 +42,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public ActionTask()
         {
         }
-        public ActionTask(string name, string browser = "chrome", bool isIncognito = false)
+        public ActionTask(string name, string browser = "chrome", string resolution = "", bool isIncognito = false)
         {
             _Name = name;
             _Browser = browser;
             _IsIncognito = isIncognito;
+            _Resolution = resolution;
         }
     }
 }

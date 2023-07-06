@@ -58,6 +58,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public bool? ClickAndHold { get { return _ClickAndHold; } set { _ClickAndHold = value; } }
         bool? _MouseIn;
         public bool? MouseIn { get { return _MouseIn; } set { _MouseIn = value; } }
+        bool? _ScrollTo;
+        public bool? ScrollTo { get { return _ScrollTo; } set { _ScrollTo = value; } }
         #endregion
 
         #region Actions props
@@ -133,10 +135,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
+                            var originalSize = driver.Manage().Window.Size;
                             var lastWindow = driver.WindowHandles.LastOrDefault();
                             if (!string.IsNullOrWhiteSpace(lastWindow))
                             {
                                 driver = driver.SwitchTo().Window(lastWindow);
+                                driver.Manage().Window.Size = originalSize;
                             }
 
                         }
@@ -183,11 +187,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
+                            var firstWindow = driver.WindowHandles.FirstOrDefault();
                             if (_Props?.CloseWindow ?? false)
                             {
                                 driver.Close();
                             }
-                            var firstWindow = driver.WindowHandles.FirstOrDefault();
+
                             if (!string.IsNullOrWhiteSpace(firstWindow))
                             {
                                 driver = driver.SwitchTo().Window(firstWindow);
@@ -246,10 +251,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
+                            var originalSize = driver.Manage().Window.Size;
                             var lastWindow = driver.WindowHandles.LastOrDefault();
                             if (!string.IsNullOrWhiteSpace(lastWindow))
                             {
                                 driver = driver.SwitchTo().Window(lastWindow);
+                                driver.Manage().Window.Size = originalSize;
                             }
 
                         }
@@ -280,11 +287,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
+                            var firstWindow = driver.WindowHandles.FirstOrDefault();
                             if (_Props?.CloseWindow ?? false)
                             {
                                 driver.Close();
                             }
-                            var firstWindow = driver.WindowHandles.FirstOrDefault();
+
                             if (!string.IsNullOrWhiteSpace(firstWindow))
                             {
                                 driver = driver.SwitchTo().Window(firstWindow);
@@ -314,10 +322,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
                         {
                             driver = driver.SwitchTo().Window(lastWindow);
+                            driver.Manage().Window.Size = originalSize;
                         }
 
                     }
@@ -422,10 +432,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
                         {
                             driver = driver.SwitchTo().Window(lastWindow);
+                            driver.Manage().Window.Size = originalSize;
                         }
 
                     }
@@ -511,10 +523,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
                         {
                             driver = driver.SwitchTo().Window(lastWindow);
+                            driver.Manage().Window.Size = originalSize;
                         }
 
                     }
@@ -608,6 +622,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (_MouseIn ?? false)
                             {
                                 actionObj = actionObj.MoveToElement(elementObj);
+                            }
+                            if (_ScrollTo ?? false)
+                            {
+                                actionObj = actionObj.ScrollToElement(elementObj);
                             }
                             if (_Props.Checked != null)
                             {
@@ -712,6 +730,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             {
                                 new OpenQA.Selenium.Interactions.Actions(driver)
                                 .MoveToElement(elementObj)
+                                .Perform();
+                            }
+                            if (_ScrollTo ?? false)
+                            {
+                                new OpenQA.Selenium.Interactions.Actions(driver)
+                                .ScrollToElement(elementObj)
                                 .Perform();
                             }
                             if (_Props.Checked != null)

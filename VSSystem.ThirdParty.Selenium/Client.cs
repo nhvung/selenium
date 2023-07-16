@@ -55,6 +55,7 @@ namespace VSSystem.ThirdParty.Selenium
                                 }
                                 catch { }
 
+#if DEBUG
                                 try
                                 {
                                     var jsonTaskObj = JsonConvert.SerializeObject(actionTask, Formatting.Indented);
@@ -74,6 +75,8 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     errorLogAction?.Invoke(ex);
                                 }
+#endif
+
                             }
                         }
 

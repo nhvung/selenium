@@ -564,6 +564,14 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 Thread.Sleep(waitTime);
                             }
                         }
+                        else if (!string.IsNullOrWhiteSpace(_Props.Text))
+                        {
+                            string text = elementObj.Text;
+                            while (elementObj.Text.Equals(text, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                Thread.Sleep(waitTime);
+                            }
+                        }
                     }
                     else if (EType == EActionType.Validate)
                     {

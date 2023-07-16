@@ -33,8 +33,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Resolution { get { return _Resolution; } set { _Resolution = value; } }
         List<WebAction> _Sections;
         public List<WebAction> Sections { get { return _Sections; } set { _Sections = value; } }
-
-
+        long _CreatedTicks;
+        public long CreatedTicks { get { return _CreatedTicks; } set { _CreatedTicks = value; } }
         public ActionTask(string name)
         {
             _Name = name;

@@ -84,11 +84,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             if (!string.IsNullOrWhiteSpace(_ID))
             {
 #if DEBUG
-                if (_ID == "main_table_grid")
+                if (_ID == "loadingUI")
                 {
 
                 }
-
 #endif
                 try
                 {
@@ -101,13 +100,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             if (elementObj == null)
             {
-#if DEBUG
-                if (_Name == "County_GL")
-                {
-
-                }
-
-#endif
                 if (!string.IsNullOrWhiteSpace(_Name))
                 {
                     try

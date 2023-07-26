@@ -13,13 +13,10 @@ namespace testselenium
         static Dictionary<string, bool> _validateResult;
         async static Task Main(string[] args)
         {
-#if PRO 
-            string checkUrl = $"https://blackpinkhanoi2023.com/";
-#else
-            string checkUrl = $"https://blackpinkhanoi2023.com/";
-            string username = "leu.vung1";
-            string password = "Evidence2!";
-#endif
+
+            string checkUrl = $"https://learn-nvls.com/learn/gui/index.aspx";
+            string username = "whoisphut@gmail.com";
+            string password = "Password0123456!";
 
 
             var client = new VSSystem.ThirdParty.Selenium.Client();
@@ -29,22 +26,70 @@ namespace testselenium
                 new WebAction{
                     Url = checkUrl
                 },
-new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.Wait){
-    DelaySeconds = 1,
-    Props = new ElementProps{
-        XPath = "/html/body/div/div[2]/div[2]/div[5]/div[2]/div[3]/div/div/div",
-        Text = "Ticket Opening Soon"
-    },
-    Click = true
-},
-new WebAction(){
-    DelaySeconds = 3,
-    Props = new ElementProps{
-        XPath = "/html/body/div/div[2]/div[2]/div[5]/div[2]/div[3]/div/div/div",
-        Text = "Buy Ticket Now"
-    },
-    Click = true
-}
+                new WebAction{
+                    Props = new ElementProps("txtUserName"){
+                        Value = username
+                    }
+                },
+                new WebAction{
+                    Props = new ElementProps("txtPassword"){
+                        Value = password
+                    }
+                },
+                new WebAction{
+                    Props = new ElementProps{
+                        ClassItem = new ClassProps("button100"){
+                            Value="Sign in"
+                        }
+                    },
+                    Click = true
+                },
+                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds=5,
+                    FileName="signedin"
+                },
+                new WebAction{
+                    DelaySeconds = 3,
+                    Props=new ElementProps{
+                        ParentID="tdControlButtonAccept",
+                        TagItem=new TagProps("input", value: "Accept")
+                    },
+                    Click=true
+                },
+                new WebAction{
+                    DelaySeconds = 3,
+                    Props=new ElementProps("btnImgControl_1"){
+                        ParentID="tdControlButton"
+                    },
+                    Click=true
+                },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds=5,
+                     FileName="homepage"
+                },
+                 new WebAction{
+                    DelaySeconds = 3,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_TDPlateSearchManagement_Agency"),
+                    Click=true
+                },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds=5,
+                     FileName="vehiclemanager"
+                },
+                new WebAction{
+                    DelaySeconds = 3,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlateQuery_User"),
+                    Click=true
+                },
+                new WebAction{
+                    DelaySeconds = 3,
+                    Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlate_IconUser"),
+                    Click=true
+                },
+                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                    DelaySeconds=15,
+                     FileName="searchplate"
+                },
             };
 
 
@@ -72,7 +117,7 @@ new WebAction(){
                 Sections = actionObjs
             };
 
-            while (true)
+            if (true)
             {
                 ///html/body/div/div[2]/div[2]/div[5]/div[2]/div[3]/div/div
                 client.Execute(new VSSystem.ThirdParty.Selenium.Actions.ActionTask[]{
@@ -92,7 +137,7 @@ new WebAction(){
 
                                                 }
                                                 );
-                Thread.Sleep(1000);
+                Thread.Sleep(10000);
             }
 
 

@@ -49,7 +49,7 @@ namespace testselenium
                     FileName="signedin"
                 },
                 new WebAction{
-                    DelaySeconds = 3,
+                    DelaySeconds = 1,
                     Props=new ElementProps{
                         ParentID="tdControlButtonAccept",
                         TagItem=new TagProps("input", value: "Accept")
@@ -57,7 +57,7 @@ namespace testselenium
                     Click=true
                 },
                 new WebAction{
-                    DelaySeconds = 3,
+                    DelaySeconds = 1,
                     Props=new ElementProps("btnImgControl_1"){
                         ParentID="tdControlButton"
                     },
@@ -68,7 +68,7 @@ namespace testselenium
                      FileName="homepage"
                 },
                  new WebAction{
-                    DelaySeconds = 3,
+                    DelaySeconds = 1,
                     Props=new ElementProps("ctl00_ContentPlaceHolder1_TDPlateSearchManagement_Agency"),
                     Click=true
                 },
@@ -77,12 +77,12 @@ namespace testselenium
                      FileName="vehiclemanager"
                 },
                 new WebAction{
-                    DelaySeconds = 3,
+                    DelaySeconds = 1,
                     Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlateQuery_User"),
                     Click=true
                 },
                 new WebAction{
-                    DelaySeconds = 3,
+                    DelaySeconds = 1,
                     Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlate_IconUser"),
                     Click=true
                 },

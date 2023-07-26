@@ -28,7 +28,9 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
         {
             var opts = new FirefoxOptions();
             opts.AcceptInsecureCertificates = true;
-            opts.AddArgument("--headless");
+#if !DEBUG
+                 opts.AddArgument("--headless");
+#endif
             if (isIncognito)
             {
                 opts.AddArgument("--incognito");
@@ -39,7 +41,9 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
         {
             var opts = new EdgeOptions();
             opts.AcceptInsecureCertificates = true;
-            opts.AddArgument("--headless");
+#if !DEBUG
+                 opts.AddArgument("--headless");
+#endif
             if (isIncognito)
             {
                 opts.AddArgument("--incognito");

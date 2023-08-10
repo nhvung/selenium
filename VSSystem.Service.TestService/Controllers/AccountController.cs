@@ -12,7 +12,7 @@ namespace VSSystem.Service.TestService.Controllers
 {
     public class AccountController : AController
     {
-        public AccountController() : base("AccountController", BSHost.SERVICE_NAME, BSHost.StaticLogger, BSHost.PRIVATE_KEY)
+        public AccountController() : base("AccountController", VSHost.SERVICE_NAME, VSHost.StaticLogger, VSHost.PRIVATE_KEY)
         {
         }
         protected override Task _ProcessApiContext(string path, string queryString)

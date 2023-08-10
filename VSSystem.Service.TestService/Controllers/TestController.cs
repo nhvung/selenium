@@ -16,7 +16,7 @@ namespace VSSystem.Service.TestService.Controllers
     public class TestController : AController
     {
         System.IO.DirectoryInfo _executePoolFolder, _requestSchedulePoolFolder, _taskPoolFolder;
-        public TestController() : base("TestController", BSHost.SERVICE_NAME, BSHost.StaticLogger, BSHost.PRIVATE_KEY)
+        public TestController() : base("TestController", VSHost.SERVICE_NAME, VSHost.StaticLogger, VSHost.PRIVATE_KEY)
         {
             _executePoolFolder = new System.IO.DirectoryInfo($"{ServiceConfig.pools_execute}");
             _requestSchedulePoolFolder = new System.IO.DirectoryInfo($"{ServiceConfig.pools_request}/schedule");

@@ -7,7 +7,7 @@ using VSSystem.Extensions.Hosting;
 
 namespace VSSystem.Service.TestService
 {
-    public class BSStartup : AStartup
+    public class VSStartup : AStartup
     {
         protected override void _ConfigureMiddleware(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -23,11 +23,6 @@ namespace VSSystem.Service.TestService
                 RequestPath = "/autotest"
 
             });
-            // app.UseStaticFiles(new StaticFileOptions
-            // {
-            //     FileProvider = new PhysicalFileProvider(webRootPath),
-            //     RequestPath = "/main"
-            // });
         }
     }
 

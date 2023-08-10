@@ -7,11 +7,11 @@ using VSSystem.Logger;
 
 namespace VSSystem.Service.TestService
 {
-    public class BSHost : AWebHost
+    public class VSHost : AWebHost
     {
         public static string SERVICE_NAME = null;
         public static string PRIVATE_KEY = null;
-        public BSHost(string name, int port, string rootName, string privateKey)
+        public VSHost(string name, int port, string rootName, string privateKey)
             : base(name, port, rootName, privateKey)
         {
             if (string.IsNullOrWhiteSpace(SERVICE_NAME))
@@ -41,7 +41,7 @@ namespace VSSystem.Service.TestService
         }
         protected override void _UseStartup(IWebHostBuilder webHostBuilder)
         {
-            webHostBuilder.UseStartup<BSStartup>();
+            webHostBuilder.UseStartup<VSStartup>();
         }
         protected override void _InitializeInjectionServices()
         {

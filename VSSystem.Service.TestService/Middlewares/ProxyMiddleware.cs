@@ -6,7 +6,7 @@ namespace VSSystem.Service.TestService.Middlewares
 {
     public class ProxyMiddleware : AMiddleware
     {
-        public ProxyMiddleware(RequestDelegate next) : base(next, BSHost.SERVICE_NAME)
+        public ProxyMiddleware(RequestDelegate next) : base(next, VSHost.SERVICE_NAME)
         {
             _servicePath = string.Empty;
         }

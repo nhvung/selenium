@@ -7,7 +7,7 @@ namespace VSSystem.Service.TestService.Controllers
 {
     public class ScreenshotsController : AController
     {
-        public ScreenshotsController() : base("ScreenshotsController", BSHost.SERVICE_NAME, BSHost.StaticLogger, BSHost.PRIVATE_KEY)
+        public ScreenshotsController() : base("ScreenshotsController", VSHost.SERVICE_NAME, VSHost.StaticLogger, VSHost.PRIVATE_KEY)
         {
         }
         protected override Task _ProcessApiContext(string path, string queryString)

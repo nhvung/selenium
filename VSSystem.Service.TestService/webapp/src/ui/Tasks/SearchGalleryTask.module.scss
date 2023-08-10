@@ -1,0 +1,37 @@
+.SearchGalleryTask {
+    display: flex;
+    flex-direction: column;
+
+    &-section {
+        display: flex;
+        min-width: 250px;
+        flex-direction: row;
+    }
+
+    &-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        max-height: 500px;
+        overflow: auto;
+        padding: 5px;
+
+        &-fieldset {
+            min-width: 560px;
+            width: 43%;
+            border: 1px solid #eee;
+            margin-bottom: 5px;
+
+            &-div {
+                width: 100%;
+            }
+        }
+    }
+
+    &-popup {
+        padding: 10px;
+        max-height: 600px;
+        max-width: 600px;
+        overflow: auto;
+    }
+}

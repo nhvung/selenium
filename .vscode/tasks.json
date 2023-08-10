@@ -9,6 +9,16 @@
                 "${workspaceFolder}/TestSelenium/TestSelenium.csproj",
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildtestservice",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/services/testservice.csproj",
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

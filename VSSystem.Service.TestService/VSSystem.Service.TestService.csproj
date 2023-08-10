@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <ItemGroup>
+    <PackageReference Include="VSSystem.Extensions.Hosting" Version="1.1.12" />
+    <ProjectReference Include="../VSSystem.ThirdParty.Selenium/VSSystem.ThirdParty.Selenium.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>    
+    <AssemblyName>BSSystem.Service.BSTestService</AssemblyName>
+    <OutputType>Library</OutputType> 
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,14 @@
+.TestResult {
+    &-list {
+        position: relative;
+    }
+
+    &-name {
+        padding: 5px;
+        margin-left: 5px;
+    }
+
+    &-image {
+        max-width: 1200px;
+    }
+}

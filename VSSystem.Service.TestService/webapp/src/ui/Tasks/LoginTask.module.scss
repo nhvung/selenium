@@ -1,0 +1,21 @@
+.LoginTask {
+    &-section {
+        display: flex;
+        align-items: center;
+
+    }
+
+    &-label {
+        padding: 5px;
+    }
+
+    &-input {
+        border: 1px solid #eee;
+        outline: none;
+        padding: 5px;
+    }
+
+    &-chk {
+        padding-left: 10px;
+    }
+}

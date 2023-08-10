@@ -8,6 +8,16 @@
             "program": "${workspaceFolder}/TestSelenium/bin/netcoreapp3.1/testselenium.dll",
             "args": [],
             "cwd": "${workspaceFolder}/TestSelenium"
+        },
+        {
+            "name": "testservice",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildtestservice",
+            "program": "${workspaceFolder}/services/bin/net6.0/testservice.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/VSSystem.Service.TestService",
+            "console": "integratedTerminal"
         }
     ]
 }

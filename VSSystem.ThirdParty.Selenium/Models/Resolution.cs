@@ -22,10 +22,12 @@ namespace VSSystem.ThirdParty.Selenium.Models
         static Resolution _HD = new Resolution(1366, 768, "hd");
         static Resolution _HDPlus = new Resolution(1440, 768, "hd+");
         static Resolution _FullHD = new Resolution(1920, 1080, "fullhd");
+        static Resolution _WUXGA = new Resolution(1920, 1200, "wuxga");
         static Resolution _FullHDPlus = new Resolution(2160, 1080, "fullhd+");
         static Resolution _QHD = new Resolution(2560, 1440, "qhd");
         static Resolution _QHDPlus = new Resolution(2960, 1440, "qhd+");
         static Resolution _UHD = new Resolution(3840, 2160, "uhd");
+
 
         public static Resolution Default { get { return _FullHD; } }
 
@@ -49,6 +51,7 @@ namespace VSSystem.ThirdParty.Selenium.Models
                             {"hd+", _HDPlus},
 
                             {"fullhd", _FullHD},
+                            {"wuxga", _WUXGA},
                             {"fullhd+", _FullHDPlus},
 
                             {"2k", _QHD},

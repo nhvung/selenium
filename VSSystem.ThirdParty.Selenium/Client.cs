@@ -23,7 +23,7 @@ namespace VSSystem.ThirdParty.Selenium
                 {
                     foreach (var actionTask in actionTasks)
                     {
-                        using (var driver = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, driverFolderPath))
+                        using (var driver = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, actionTask.IsHeadless, driverFolderPath))
                         {
                             if (driver != null)
                             {
@@ -33,8 +33,9 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     resolutionObj = Resolution.Default;
                                 }
-                                driver.Manage().Window.Maximize();
+
                                 driver.Manage().Window.Size = resolutionObj.ToSize();
+                                driver.Manage().Window.Maximize();
 
                                 if (actionTask.Sections?.Count > 0)
                                 {

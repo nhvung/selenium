@@ -10,40 +10,43 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
 {
     class DriverExtension
     {
-        static ChromeOptions _CreateChromeOptions(bool isIncognito)
+        static ChromeOptions _CreateChromeOptions(bool isIncognito, bool isHeadless)
         {
             var opts = new ChromeOptions();
             opts.AcceptInsecureCertificates = true;
 
-#if !DEBUG
-                 opts.AddArgument("--headless");
-#endif
+            if (isHeadless)
+            {
+                opts.AddArgument("--headless");
+            }
             if (isIncognito)
             {
                 opts.AddArgument("--incognito");
             }
             return opts;
         }
-        static FirefoxOptions _CreateFirefoxOptions(bool isIncognito)
+        static FirefoxOptions _CreateFirefoxOptions(bool isIncognito, bool isHeadless)
         {
             var opts = new FirefoxOptions();
             opts.AcceptInsecureCertificates = true;
-#if !DEBUG
-                 opts.AddArgument("--headless");
-#endif
+            if (isHeadless)
+            {
+                opts.AddArgument("--headless");
+            }
             if (isIncognito)
             {
                 opts.AddArgument("--incognito");
             }
             return opts;
         }
-        static EdgeOptions _CreateEdgeOptions(bool isIncognito)
+        static EdgeOptions _CreateEdgeOptions(bool isIncognito, bool isHeadless)
         {
             var opts = new EdgeOptions();
             opts.AcceptInsecureCertificates = true;
-#if !DEBUG
-                 opts.AddArgument("--headless");
-#endif
+            if (isHeadless)
+            {
+                opts.AddArgument("--headless");
+            }
             if (isIncognito)
             {
                 opts.AddArgument("--incognito");
@@ -51,7 +54,7 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
             return opts;
         }
 
-        public static IWebDriver CreateDriver(EBrowser browser, bool isIncognito, string driverFolderPath = "")
+        public static IWebDriver CreateDriver(EBrowser browser, bool isIncognito, bool isHeadless, string driverFolderPath = "")
         {
             IWebDriver driver = null;
             try
@@ -64,19 +67,19 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                 {
                     case EBrowser.Chrome:
                         {
-                            var opts = _CreateChromeOptions(isIncognito);
+                            var opts = _CreateChromeOptions(isIncognito, isHeadless);
                             driver = new ChromeDriver(driverFolderPath, opts);
                         }
                         break;
                     case EBrowser.Firefox:
                         {
-                            var opts = _CreateFirefoxOptions(isIncognito);
+                            var opts = _CreateFirefoxOptions(isIncognito, isHeadless);
                             driver = new FirefoxDriver(driverFolderPath, opts);
                         }
                         break;
                     case EBrowser.Edge:
                         {
-                            var opts = _CreateEdgeOptions(isIncognito);
+                            var opts = _CreateEdgeOptions(isIncognito, isHeadless);
                             driver = new EdgeDriver(driverFolderPath, opts);
                         }
                         break;

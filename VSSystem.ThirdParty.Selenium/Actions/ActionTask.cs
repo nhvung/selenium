@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using VSSystem.ThirdParty.Selenium.Define;
 
 namespace VSSystem.ThirdParty.Selenium.Actions
@@ -29,6 +28,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         }
         bool _IsIncognito;
         public bool IsIncognito { get { return _IsIncognito; } set { _IsIncognito = value; } }
+        bool _IsHeadless;
+        public bool IsHeadless { get { return _IsHeadless; } set { _IsHeadless = value; } }
         string _Resolution;
         public string Resolution { get { return _Resolution; } set { _Resolution = value; } }
         List<WebAction> _Sections;
@@ -42,12 +43,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public ActionTask()
         {
         }
-        public ActionTask(string name, string browser = "chrome", string resolution = "", bool isIncognito = false)
+        public ActionTask(string name, string browser = "chrome", string resolution = "", bool isIncognito = false, bool isHeadless = false)
         {
             _Name = name;
             _Browser = browser;
             _IsIncognito = isIncognito;
             _Resolution = resolution;
+            _IsHeadless = isHeadless;
         }
     }
 }

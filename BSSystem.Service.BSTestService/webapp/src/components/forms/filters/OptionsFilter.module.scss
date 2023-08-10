@@ -1,0 +1,132 @@
+.OptionsFilter {
+
+    $expand-icon-size: 10px;
+
+    position: relative;
+
+
+    &-disabled {
+        background-color: #aaaaaa;
+        color: #eee;
+        pointer-events: none;
+    }
+
+    .content {
+        padding-right: $expand-icon-size;
+    }
+
+    .expand-icon {
+        display: flex;
+        // align-items: center;
+        justify-content: center;
+        float: right;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 3px;
+        min-width: $expand-icon-size;
+        font-size: 12pt;
+    }
+
+    &-box-container {
+        flex-direction: column;
+        display: flex;
+        position: fixed;
+        min-width: 200px;
+        box-shadow: 1px 1px 3px #aaaaaa;
+        background-color: #fff;
+        border-radius: var(--default-border-radius);
+
+        &-hide {
+            display: none;
+        }
+    }
+
+    &-box-search {
+        display: flex;
+        justify-content: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 10px;
+
+        input {
+            width: 100%;
+            border: var(--default-border);
+            border-radius: var(--default-border-radius);
+            min-height: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+            outline: none;
+        }
+    }
+
+    &-box-select {
+        display: flex;
+        justify-content: center;
+        border-bottom: solid 1px #eee;
+        padding-bottom: 10px;
+        padding-top: 10px;
+
+        button {
+            min-width: 80px;
+
+            &:nth-child(1) {
+                margin-left: 10px;
+            }
+
+            margin-right: 10px;
+        }
+    }
+
+    &-box-items {
+
+        max-height: 300px;
+        overflow-y: auto;
+
+        &-sub-item {
+            display: block;
+            position: relative;
+            text-align: left;
+            cursor: pointer;
+            margin: 1px;
+            padding: 8px 10px;
+            padding-left: 30px;
+            border: var(--default-border);
+            border-radius: var(--default-border-radius);
+            margin: 5px 5px;
+
+            &:hover {
+                border: solid 1px var(--default-background-hover-color);
+                border-radius: var(--default-border-radius);
+            }
+
+            &-active::before {
+                content: '\2713';
+                position: absolute;
+                left: 10px;
+                top: 5%;
+                color: var(--default-active-color);
+                font-size: 12pt;
+                font-weight: bold;
+            }
+
+            &-hide {
+                display: none;
+            }
+        }
+    }
+
+    &-box-buttons {
+        padding-top: 10px;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-top: solid 1px #eee;
+
+        button {
+            margin: 2px 2px;
+            min-width: 80px;
+        }
+    }
+}

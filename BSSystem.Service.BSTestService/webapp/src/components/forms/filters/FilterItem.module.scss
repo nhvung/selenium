@@ -1,0 +1,43 @@
+.FilterItem {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 6px 6px;
+    min-width: 70px;
+    display: flex;
+    justify-content: center;
+
+    border: var(--default-border);
+    border-radius: 5px;
+    margin-left: 5px;
+    white-space: nowrap;
+
+    &:hover {
+        cursor: pointer;
+        border-color: #E5E5E5;
+        background-color: #f5f5f5;
+    }
+
+    &-box-container {
+        flex-direction: column;
+        display: flex;
+        position: fixed;
+        min-width: 200px;
+        max-width: 300px;
+        box-shadow: 1px 1px 3px #aaaaaa;
+        background-color: #fff;
+        border-radius: 5px;
+        z-index: 2;
+
+        &-hide {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: 720px) {
+    .FilterItem {
+        &-box-container {
+            max-width: none;
+        }
+    }
+}

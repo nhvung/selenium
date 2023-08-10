@@ -1,0 +1,55 @@
+.ListBox {
+    display: block;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &-item {
+        padding: 5px;
+        display: flex;
+        align-items: center;
+
+        &-all {
+            background-color: #fff;
+            position: sticky;
+        }
+
+        &-hide {
+            display: none;
+        }
+
+        &-content {
+            display: inline-block;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+
+        &-search-box {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+
+            &:hover {
+                background-color: #fff;
+            }
+        }
+    }
+
+    &-chk-item {
+        display: inline-block;
+    }
+
+    &-search-box {
+        width: 95%;
+        padding: 4px;
+        outline: none;
+        border: 1px solid #eee;
+        border-radius: 5px 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

@@ -1,0 +1,98 @@
+.SynchronizationDialog {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    &-box {
+
+        &-options,
+        &-backuppath {
+            padding: 2px;
+            margin: 2px;
+
+            &-item {
+                border: var(--default-border);
+                padding: 2px;
+                margin: 2px;
+                min-width: 350px;
+
+                &-selection {
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+            }
+        }
+
+        &-destinationpath {
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+    }
+
+    &-txt-name,
+    &-txt-destinationpath {
+        width: calc(100% - 30px);
+        max-width: 621px;
+    }
+
+    &-txt-name {
+        max-width: 680px;
+    }
+
+    &-type {
+        display: flex;
+        margin: 10px;
+    }
+}
+
+@media (min-width: 750px) {
+    .SynchronizationDialog {
+        display: flex;
+        flex-direction: column;
+        min-width: 700px;
+
+        &-box {
+
+            &-options,
+            &-destinationpath {
+                display: flex;
+                align-items: center;
+                padding: 2px;
+                margin: 2px;
+
+                &-item {
+                    border: var(--default-border);
+                    padding: 2px;
+                    margin: 2px;
+                    display: flex;
+                    flex-direction: column;
+                    min-height: 205px;
+                    min-width: 360px;
+
+                    &-selection {
+                        display: flex;
+                        align-items: center;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        &-txt-destinationpath {
+            width: calc(100% - 165px);
+            max-width: 640px;
+        }
+    }
+}

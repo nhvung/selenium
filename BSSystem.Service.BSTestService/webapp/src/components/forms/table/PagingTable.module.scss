@@ -1,0 +1,141 @@
+.PagingTable {
+    position: absolute;
+    width: 100%;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+
+    div[class="pTable"] {
+        overflow: auto;
+        // height: calc(100% - 5px);
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: transparent;
+        }
+    }
+
+    &-header {
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
+        tr {
+            height: 30px;
+
+            th {
+                background-color: rgb(241, 240, 240);
+                border-left: solid 1px #eee;
+                border-right: solid 1px #eee;
+
+                input[type="checkbox"] {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+        }
+    }
+
+    &-body {
+        tr {
+            height: 25px;
+
+            &:nth-child(2n) {
+                background-color: #4169e111;
+            }
+
+            td {
+                border-left: solid 1px #eee;
+                border-right: solid 1px #eee;
+                padding: 4px 6px;
+            }
+
+            &:hover {
+                background-color: #eee;
+            }
+
+            &:nth-last-child(1) {
+                td {
+                    border-bottom: solid 1px #eee;
+                }
+            }
+        }
+    }
+
+    &-th-chk,
+    &-td-chk {
+        width: 30px;
+    }
+
+    &-chkrow,
+    &-chkallrows {
+        cursor: pointer;
+        width: 15px;
+        height: 15px;
+    }
+
+    &-paging {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        min-height: 30px;
+        display: flex;
+        align-items: center;
+        background-color: #eee;
+
+        button {
+            padding: 6px 10px;
+            border: 1px solid #eee;
+            border-radius: 5px 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0a51a5;
+                color: #fff;
+            }
+
+            min-width: 30px;
+            min-height: 20px;
+
+
+        }
+
+        &-active {
+            background-color: #0a51a5;
+            color: #fff;
+            pointer-events: none;
+        }
+
+        select {
+            border: 1px solid #eee;
+            padding: 2px 6px;
+            cursor: pointer;
+            border-radius: 2px 2px;
+
+            option {
+                border: none;
+            }
+        }
+
+        &-record {
+            position: relative;
+            right: 0;
+            margin-right: 10px;
+        }
+    }
+}
+
+@media (min-width: 720px) {
+    .PagingTable {
+
+        &-paging {
+
+            &-record {
+                position: absolute;
+                right: 0;
+                margin-right: 10px;
+            }
+        }
+    }
+}

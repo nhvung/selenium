@@ -1,0 +1,13 @@
+.RadioGroup {
+    &-item {
+        padding: 5px;
+
+        &-rad {
+            display: inline-block;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,34 @@
+.DatabaseInfo {
+    position: relative;
+    // border: var(--default-border);
+    min-width: 620px;
+    // width: 100%;
+    // max-width: 350px;
+    padding: 5px;
+
+    &-input {
+        padding: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div {
+            width: 70%;
+
+            div {
+                width: 100%;
+            }
+        }
+
+        &-exclude {
+            padding: 3px;
+            display: flex;
+            align-items: center;
+
+            &-disabled {
+                pointer-events: none;
+                opacity: .3;
+            }
+        }
+    }
+}

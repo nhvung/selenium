@@ -1,0 +1,109 @@
+.dtp {
+    font-family: Arial, Helvetica, sans-serif;
+    $default-background-color: #0a51a5;
+
+    &-fieldset {
+        border: 1px solid #eee !important;
+        border-radius: 2px 2px;
+        // box-shadow: 0 0rem 0.05rem #1c355e !important;
+
+        legend {
+            font-size: 10pt !important;
+            font-weight: normal !important;
+        }
+    }
+
+    &-cell {
+
+        min-width: 2rem;
+        min-height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1px;
+
+        &-header {
+            font-weight: bold;
+            background-color: #eee;
+        }
+
+        &-date,
+        &-month,
+        &-year {
+            background-color: #eee;
+
+            &:hover {
+                background-color: $default-background-color;
+                border-radius: 5px;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+
+        &-month,
+        &-year {
+            min-width: 3.7rem;
+            min-height: 3.7rem;
+        }
+
+        &-seleted {
+            background-color: $default-background-color;
+            border-radius: 5px;
+            color: aliceblue;
+        }
+
+        &-disabled {
+            background-color: gainsboro;
+            color: gray;
+        }
+    }
+
+    &-btn {
+        background-color: #eee;
+        margin: 8px 8px;
+        text-align: center;
+
+        &-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        &-confirm {
+            border-radius: 2px;
+            display: inline-block;
+            margin: 5px;
+            padding: 8px;
+            text-align: center;
+            min-width: 100px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $default-background-color;
+                border-radius: 2px 2px;
+                color: #fff;
+            }
+        }
+
+        &-time {
+            border-radius: 2px;
+            text-align: center;
+            position: relative;
+            border: 1px solid #eee;
+            cursor: pointer;
+            height: 30px;
+            width: 30px;
+            margin: 5px;
+
+            &-option:hover {
+                background-color: $default-background-color;
+                border-radius: 5px;
+                color: #fff;
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+.AutoCompleteTextbox {
+    margin: 5px 0 5px 0;
+    border: 1px solid #eee;
+    // border-radius: 5px 5px;
+    // min-height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        input {
+            position: relative;
+            padding-left: 15px;
+            min-height: 25px;
+            border: none;
+            outline: none;
+            margin-left: 10px;
+        }
+    }
+
+
+    &-button {
+        background-color: #fff !important;
+        border-radius: 5px;
+        min-height: 28px;
+        min-width: 30px;
+        color: #eee;
+        outline: none;
+        cursor: pointer;
+
+        &:hover {
+            color: darkred;
+        }
+
+        &-hide {
+            pointer-events: none;
+        }
+    }
+
+    &-box-container {
+        // border: 1px solid transparent;
+        flex-direction: column;
+        display: flex;
+        position: fixed;
+        min-width: 200px;
+        box-shadow: 1px 1px 3px #aaaaaa;
+        background-color: #fff;
+        z-index: 10;
+        border-radius: 5px 5px;
+        // min-height: 200px;
+
+        &-hide {
+            display: none;
+        }
+    }
+
+    &-item {
+        padding: 6px 10px;
+        margin-left: 3px;
+        margin-right: 3px;
+        margin-bottom: 1px;
+        margin-top: 1px;
+        cursor: pointer;
+        border-radius: 2px 2px;
+
+        &:nth-child(2n) {
+            background-color: #eee;
+        }
+
+        &:hover {
+            background-color: #aaaaaa;
+        }
+    }
+}

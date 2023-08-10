@@ -1,0 +1,108 @@
+.DateTimeFilter {
+    position: relative;
+    $default-background-color: #0a51a5;
+    $default-border-color: #0a51a5;
+
+    &-box-container {
+        padding-bottom: 50px;
+
+        fieldset {
+            border: none;
+            margin-top: 10px;
+
+            legend {
+                font-weight: bold;
+            }
+
+            div {
+                input {
+                    border: solid 1px #eee;
+                    min-height: 30px;
+                    padding-left: 20px;
+                    padding-right: 50px;
+                    pointer-events: none;
+                }
+
+                display: flex;
+
+                div {
+                    position: absolute;
+                    right: 15px;
+                    margin-top: 3px;
+
+                    button {
+                        background-color: transparent;
+                        border: 1px solid transparent;
+                        // min-height: 28px;
+                        // min-width: 28px;
+                        cursor: pointer;
+                        color: #eee;
+
+
+                        &:nth-child(1) {
+                            font-weight: bold;
+
+                            &:hover {
+                                color: darkred;
+
+                            }
+                        }
+
+                        &:nth-child(2) {
+                            font-weight: bold;
+
+                            &:hover {
+                                color: #000;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-time-value {
+        padding: 2px 6px;
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    &-button-group {
+        display: flex;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        justify-content: center;
+
+        button {
+            background-color: #fff;
+            border: solid 1px #eee;
+            // padding: 4px 20px;
+            // border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $default-background-color;
+                color: #fff;
+            }
+        }
+    }
+
+    &-dtp-container {
+        flex-direction: column;
+        display: flex;
+        position: fixed;
+        min-width: 200px;
+        box-shadow: 1px 1px 3px #aaaaaa;
+        background-color: #fff;
+        z-index: 4;
+
+        &-hide {
+            display: none;
+        }
+    }
+}

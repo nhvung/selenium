@@ -1,0 +1,19 @@
+.Filters {
+    position: absolute;
+    display: flex;
+    background-color: #fff;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    // user-select: none;
+    border-radius: 2px 2px;
+
+    &.left {
+        width: auto;
+        height: 100%;
+        left: 0;
+        min-width: 30px;
+        flex-direction: column;
+    }
+
+}

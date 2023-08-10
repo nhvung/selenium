@@ -1,0 +1,126 @@
+.ToolStripItem {
+    display: flex;
+    align-items: center;
+    border-radius: 3px 3px;
+    border: 1px solid transparent;
+    user-select: none;
+    height: 100%;
+
+    &-label,
+    &-label-link {
+        padding: 5px;
+        border-radius: 3px 3px;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-label-link {
+        padding: 6px;
+        justify-content: center;
+
+        &:hover {
+            background-color: #aaa;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: #E5E5E5;
+    }
+
+    &-nolink {
+        padding: 5px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #E5E5E5;
+        }
+    }
+
+    &-dropdown,
+    &-dropdown-link {
+        padding-bottom: 5px;
+        border-radius: 3px 3px;
+        border: 1px solid transparent;
+        height: 100%;
+        width: 10px;
+        font-size: 11pt;
+        display: block;
+    }
+
+    &-dropdown-link {
+        display: flex;
+        justify-content: center;
+
+        &:hover {
+            background-color: #aaa;
+        }
+    }
+
+    &-label-n,
+    &-label-link-n {
+        border-radius: 3px 3px;
+        padding: 5px;
+        display: flex;
+        width: calc(100% - 20px);
+        align-items: center;
+    }
+
+    &-label-link-n {
+        &:hover {
+            background-color: #aaa;
+        }
+    }
+
+    &-dropright,
+    &-dropright-link {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        border: 1px solid transparent;
+        font-size: 8pt;
+        width: 20px;
+        border-radius: 3px 3px;
+    }
+
+    &-dropright-link {
+        &:hover {
+            background-color: #aaa;
+        }
+    }
+
+
+    &-disabled {
+        pointer-events: none;
+        color: #aaa;
+    }
+
+    &-readonly {
+        pointer-events: none;
+    }
+
+
+    &-sub-popup {
+        border-radius: 3px 3px;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 200px;
+        max-width: 300px;
+        background-color: #fff;
+        box-shadow: var(--default-box-shadow);
+        z-index: 3;
+
+        &-hide {
+            display: none;
+        }
+
+        a {
+            width: 100%;
+            color: inherit;
+        }
+    }
+}

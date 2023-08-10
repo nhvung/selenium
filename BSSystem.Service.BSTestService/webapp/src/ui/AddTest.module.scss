@@ -1,0 +1,45 @@
+.AddTest {
+    min-width: 800px;
+    padding: 10px;
+    max-width: 800px;
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 5px;
+        width: 100%;
+
+        &-label {
+            margin-left: 15px;
+        }
+    }
+
+    &-tasks {
+        &-params {
+            max-height: 600px;
+            overflow: auto;
+            border: 1px solid #eee;
+            margin-bottom: 5px;
+
+            fieldset {
+                border: 1px solid #eee;
+                margin: 10px;
+            }
+        }
+    }
+
+    &-browser {
+        &-settings {
+            border: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+    }
+
+    &-popup {
+        padding: 10px;
+        max-width: 600px;
+        overflow: auto;
+    }
+}

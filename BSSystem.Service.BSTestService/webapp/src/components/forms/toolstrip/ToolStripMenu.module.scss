@@ -1,0 +1,85 @@
+.ToolStripMenu {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    min-height: 30px;
+    width: 100%;
+    padding: 3px;
+
+    &-top,
+    &-bottom {
+        position: absolute;
+        width: 100%;
+    }
+
+    &-top {
+        top: 0;
+
+    }
+
+    &-bottom {
+        top: auto;
+        bottom: 0;
+    }
+
+    &-menu-icon {
+        display: inline-block;
+        align-items: center;
+        position: absolute;
+        left: 5px;
+        top: 2px;
+
+
+        span {
+            position: absolute;
+            padding: 6px;
+            border: var(--default-border);
+            // border-radius: var(--default-border-radius);
+
+            &:hover {
+                cursor: pointer;
+                background-color: #aaa;
+            }
+        }
+    }
+
+    &-menu-logo {
+        position: relative;
+        padding: 10px;
+        margin-left: 25px;
+    }
+
+    &-menu-group {
+
+        display: none;
+
+
+        &-show {
+            display: block;
+            z-index: 100;
+            position: relative;
+            background-color: #fff;
+        }
+    }
+}
+
+@media (min-width: 600px) {
+    .ToolStripMenu {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-menu-icon {
+            display: none;
+        }
+
+        &-menu-logo {
+            margin-left: 5px;
+        }
+
+        &-menu-group {
+
+            display: flex;
+            height: 100%;
+        }
+    }
+}

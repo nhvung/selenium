@@ -1,0 +1,18 @@
+.ButtonFilter {
+    $default-background-color: #0a51a5;
+    position: relative;
+    background-color: #eee;
+
+    color: #000;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background-color: $default-background-color;
+        color: #fff;
+    }
+
+    &-element {
+        min-width: 35px !important;
+    }
+}

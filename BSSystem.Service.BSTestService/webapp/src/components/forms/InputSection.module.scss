@@ -1,0 +1,46 @@
+.InputSection {
+    &-container {
+        padding: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    &-label,
+    &-text,
+    &-password {
+        padding: 5px;
+        min-width: 30%;
+    }
+
+    &-text,
+    &-password {
+        border: 1px solid #eee;
+        outline: none;
+        width: 96%;
+
+        &-container {
+            width: 90%;
+        }
+    }
+
+    &-checkbox,
+    &-radio {
+        input {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #eee;
+            outline: none;
+            cursor: pointer;
+        }
+    }
+
+    &-combobox {
+        width: 92%;
+    }
+
+    &-label {
+        &-pointer {
+            cursor: pointer;
+        }
+    }
+}

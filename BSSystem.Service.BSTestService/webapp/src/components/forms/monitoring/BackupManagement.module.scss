@@ -1,0 +1,68 @@
+.BackupManagement {
+    position: absolute;
+    height: 99%;
+    width: 95%;
+    display: flex;
+    border: var(--default-border);
+    box-shadow: var(--default-box-shadow);
+    border-radius: var(--default-border-radius);
+    background-color: #fff;
+
+    &-backup-table {
+        top: 40px;
+
+        table {
+            tbody {
+                tr {
+                    td {
+
+                        :nth-child(4) {
+                            width: 200px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    &-component {
+        &-info {
+            width: 100%;
+            display: flex;
+            padding: 2px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            span {
+                text-align: left;
+                padding: 5px;
+            }
+        }
+    }
+
+    &-schedule {
+        &-info {
+            width: 100%;
+            display: flex;
+            padding: 2px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            span {
+                text-align: left;
+                padding: 5px;
+            }
+        }
+
+        &-daysofweek {
+            display: flex;
+
+            div {
+                padding: 2px;
+            }
+        }
+    }
+}

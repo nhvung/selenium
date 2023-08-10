@@ -1,0 +1,30 @@
+.HorizontalSplitPanel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+
+    &-panel1,
+    &-panel2 {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-splitter {
+        position: absolute;
+        z-index: 1;
+        height: 15px;
+        width: 100%;
+        background-color: transparent;
+        border-top: 1px solid #aaa;
+
+        &:hover {
+            cursor: row-resize;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+.toolstrip {
+    display: flex;
+    position: absolute;
+    flex-wrap: wrap;
+    z-index: 2;
+    justify-content: left;
+
+    &_top,
+    &_bottom {
+        @extend .toolstrip;
+        width: 100%;
+    }
+
+    &_left,
+    &_right {
+        @extend .toolstrip;
+        height: 100%;
+        flex-direction: column;
+    }
+
+    &_top {
+        left: 0;
+        top: 0;
+        min-height: 20px;
+    }
+
+    &_bottom {
+        bottom: 0;
+        min-height: 30px;
+    }
+
+    &_left {
+        left: 0;
+    }
+
+    &_right {
+        right: 0;
+    }
+}

@@ -1,0 +1,75 @@
+.dialog {
+    .background {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #aaa;
+        opacity: .7;
+    }
+
+    .main {
+        @extend .background;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        opacity: 1;
+        position: absolute;
+
+        .contents {
+            position: absolute;
+            background-color: #fff;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 5px 5px;
+
+            .title {
+                min-height: 30px;
+                background-color: var(--default-button-background-title-color);
+                color: var(--default-button-title-color);
+                width: 100%;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .body {
+                min-height: 75px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // width: 100%;
+                margin-top: auto;
+            }
+
+            .buttonGroup {
+                min-height: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                margin-top: auto;
+
+                .button {
+                    min-width: 70px;
+                    text-align: center;
+                    border: 1px solid var(--default-border-color);
+                    padding: 5pt;
+                    margin: 5pt;
+                    cursor: pointer;
+                    border-radius: 5px 5px;
+                    background-color: var(--default-button-background-color);
+
+                    &:hover {
+                        background-color: var(--default-button-background-hover-color);
+                        color: var(--default-button-hover-color);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+.TextFilter {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: text;
+    min-width: 150px;
+
+    &-container {
+        // position: absolute;
+        width: calc(100% - 2px);
+        // height: calc(100% - 2px);
+        display: flex;
+        background-color: transparent;
+
+
+        input {
+            font-family: inherit;
+            border: none;
+            outline: none;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc(100% - 5px);
+
+            &[type="time"]::-webkit-calendar-picker-indicator,
+            &[type="datetime-local"]::-webkit-calendar-picker-indicator,
+            &[type="date"]::-webkit-calendar-picker-indicator {
+                margin-right: 10px;
+                cursor: pointer;
+                // display: none;
+            }
+
+            &[type=number]::-webkit-inner-spin-button,
+            &[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: "";
+                opacity: 0;
+            }
+        }
+    }
+
+
+    &-button {
+        position: absolute;
+        right: 3px;
+        background-color: #fff !important;
+        color: #eee;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+        min-width: 17px;
+
+        &:hover {
+            color: darkred !important;
+        }
+
+        &-hide {
+            pointer-events: none;
+        }
+    }
+}

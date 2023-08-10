@@ -1,0 +1,61 @@
+:root {
+    --default-background-color: #f6f8fa;
+    --default-color: #fff;
+
+    --default-border: 1px solid #eee;
+
+    --default-hover-border-color: #0a51a5;
+
+    --default-background-hover-color: #0a51a5;
+    --default-hover-color: #fff;
+    --default-font-size: 10pt;
+    --default-font-family: Arial,
+        sans-serif;
+
+    --default-button-background-color: #eee;
+    --default-button-background-hover-color: #0a51a5;
+    --default-button-hover-color: #fff;
+
+    --default-button-background-title-color: #0a51a5;
+    --default-button-title-color: #fff;
+
+    --default-background-header-color: #0a51a5;
+    --default-header-color: #fff;
+
+    --default-active-color: #0a51a5;
+
+    --default-border-radius: 5px 5px;
+
+    --default-box-shadow: #3c40434d 0px 1px 2px 0px, #3c404326 0px 1px 3px 1px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    position: absolute;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 10px;
+}
+
+body {
+    font-family: var(--default-font-family);
+    font-size: var(--default-font-size);
+    background-color: var(--default-background-color);
+}
+
+button {
+
+    padding: 6px 8px;
+    border: none;
+    background-color: var(--default-button-background-color);
+    border-radius: var(--default-border-radius);
+
+    &:hover:enabled {
+        cursor: pointer;
+        color: var(--default-button-hover-color);
+        background-color: var(--default-button-background-hover-color);
+        transition: .1s;
+    }
+}

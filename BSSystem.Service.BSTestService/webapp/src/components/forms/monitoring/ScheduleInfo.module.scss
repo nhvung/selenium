@@ -1,0 +1,22 @@
+.ScheduleInfo {
+    position: relative;
+
+    &-txt {
+        height: 15px;
+        // margin-top: 2px;
+
+
+    }
+
+    &-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &-timezone {
+        padding: 5px;
+    }
+
+
+}

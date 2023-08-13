@@ -1,0 +1,171 @@
+{
+  "Name": "Test BIQ web edge",
+  "Browser": "edge",
+  "IsIncognito": true,
+  "Sections": [
+    {
+      "Name": "test login",
+      "RequestActions": [
+        {
+          "Url": "https://sandbox.evidenceiq.com/biq"
+        },
+        {
+          "Props": {
+            "ID": "txtUserName",
+            "Value": "leu.vung1"
+          }
+        },
+        {
+          "Props": {
+            "ID": "txtPassword",
+            "Value": "Evidence2!"
+          }
+        },
+        {
+          "Props": {
+            "ID": "btnOk"
+          },
+          "Click": true
+        },
+        {
+          "Url": "https://sandbox.evidenceiq.com/biq/GUI/Home.aspx"
+        },
+        {
+          "Props": {
+            "ID": "ctl00_AgencySelectionControl_cboAgencySelection",
+            "Type": "select",
+            "Text": "LEA_Vung"
+          },
+          "DelaySeconds": 1
+        },
+        {
+          "DelaySeconds": 1,
+          "FolderPath": null,
+          "FileName": "step-1-login-success"
+        }
+      ]
+    },
+    {
+      "Name": "test view gallery",
+      "RequestActions": [
+        {
+          "Props": {
+            "ID": "dvBallistics"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "icon_function",
+              "Index": 2,
+              "Value": null,
+              "Text": null
+            }
+          },
+          "DelaySeconds": 1,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "btnCancel",
+            "IFrameID": "GCTIFrame"
+          },
+          "DelaySeconds": 2,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "button100_green",
+              "Index": 0,
+              "Value": null,
+              "Text": null
+            }
+          },
+          "DelaySeconds": 1,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "txtCaseNumber",
+            "IFrameID": "GCTIFrame",
+            "Value": "Test Selenium"
+          },
+          "DelaySeconds": 1
+        },
+        {
+          "Props": {
+            "ID": "btnContinue",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true
+        }
+      ],
+      "ValidateActions": [
+        {
+          "Props": {
+            "ID": "resultview"
+          },
+          "DelaySeconds": 5,
+          "Displayed": true
+        }
+      ],
+      "ScreenShot": {
+        "DelaySeconds": 1,
+        "FolderPath": null,
+        "FileName": "step-2-view-gallery"
+      }
+    },
+    {
+      "Name": "test search 1n",
+      "RequestActions": [
+        {
+          "Props": {
+            "ParentID": "resultview",
+            "TagItem": {
+              "TagName": "span",
+              "Index": null,
+              "Value": "",
+              "Text": "9mm Luger / 9mm Parabellum / 9mm Luger +P / 9x19mm Parabellum"
+            }
+          },
+          "DelaySeconds": 1,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "ctl00_ContentPlaceHolder1_btnSearchFace"
+          },
+          "DelaySeconds": 3,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "ctl00_ContentPlaceHolder1_btnQuickSearch"
+          },
+          "DelaySeconds": 10,
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "btnContinue",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "btnControl_0",
+            "ParentID": "pAlertWin"
+          },
+          "DelaySeconds": 15,
+          "Click": true
+        },
+        {
+          "DelaySeconds": 15
+        }
+      ]
+    }
+  ]
+}

@@ -37,7 +37,7 @@ function ListTest(props?: componentWithApiProps & {}) {
     const [creators, setCreators] = useState<comboBoxItemProps[]>(undefined);
 
     function loadFilters() {
-        const url = `${apiUrl.replace('/list', '')}/api/test/getfilters`;
+        const url = `${apiUrl}/api/test/getfilters`;
         getAsync(url, undefined, async response => {
             if (response.status === 200) {
                 const jsonObj = await response.json();
@@ -61,7 +61,7 @@ function ListTest(props?: componentWithApiProps & {}) {
 
     async function fetchList(): Promise<dataResponse> {
         selectedNamesRef.current = undefined;
-        let url = `${apiUrl.replace('/list', '')}/api/test/list/tasks?timezoneOffset=${timezoneOffset}`;
+        let url = `${apiUrl}/api/test/list/tasks?timezoneOffset=${timezoneOffset}`;
         if (creatorNameRef.current) {
             url += `&creator=${creatorNameRef.current}`;
         }

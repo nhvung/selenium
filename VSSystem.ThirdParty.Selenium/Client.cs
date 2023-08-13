@@ -33,9 +33,15 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     resolutionObj = Resolution.Default;
                                 }
+                                if (actionTask.IsHeadless)
+                                {
+                                    driver.Manage().Window.Size = resolutionObj.ToSize();
+                                }
+                                else
+                                {
+                                    driver.Manage().Window.Maximize();
+                                }
 
-                                driver.Manage().Window.Size = resolutionObj.ToSize();
-                                driver.Manage().Window.Maximize();
 
                                 if (actionTask.Sections?.Count > 0)
                                 {
@@ -60,7 +66,8 @@ namespace VSSystem.ThirdParty.Selenium
                                 try
                                 {
                                     var jsonTaskObj = JsonConvert.SerializeObject(actionTask, Formatting.Indented);
-                                    string fileName = actionTask.Name;
+
+                                    string fileName = string.Join("_", actionTask.Name.Split(Path.GetInvalidFileNameChars()));
                                     if (string.IsNullOrWhiteSpace(fileName))
                                     {
                                         fileName = Guid.NewGuid().ToString().ToLower();

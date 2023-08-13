@@ -1,7 +1,4 @@
-﻿using VSSystem.Service.TestService.Extensions;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Hosting;
 using VSSystem.Extensions.Hosting;
 using VSSystem.Logger;
 

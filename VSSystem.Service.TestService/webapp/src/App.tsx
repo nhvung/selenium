@@ -32,8 +32,8 @@ function App(props: componentWithApiProps) {
         contents = (<div id={thisId} className={className}>
             <Layout maxHeight={maxContentHeight} id={`${thisId}-layout`} key={undefined}
                 className={thisCss["App-layout"]}>
-                <Route path='/autotest/result' element={<TestResult apiUrl={props.apiUrl} />} />
-                <Route path='/autotest/list' element={<ListTest apiUrl={props.apiUrl} />} />
+                <Route path='/autotest/main/result' element={<TestResult apiUrl={props.apiUrl} />} />
+                <Route path='/autotest/main/list' element={<ListTest apiUrl={props.apiUrl} />} />
             </Layout>
         </div>);
         return contents;

@@ -35,7 +35,7 @@ function Login(props?: componentWithApiProps & {}) {
 
     try {
         let contents = (<div id={thisId} className={className}>
-            <Authenticate className={thisCss["Login-form"]} submitHandler={submitAsync} successHandler={() => Promise.resolve(navigate('/autotest/list'))} logoPath='./eiq-logo-blue.webp' title='BIQ AUTOMATION TEST' />
+            <Authenticate className={thisCss["Login-form"]} submitHandler={submitAsync} successHandler={() => Promise.resolve(navigate('/autotest/main/list'))} logoPath='./eiq-logo-blue.webp' title='BIQ AUTOMATION TEST' />
         </div>);
         return contents;
     }

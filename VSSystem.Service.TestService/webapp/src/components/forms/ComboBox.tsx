@@ -49,6 +49,12 @@ function ComboBox(props?: componentProps & {
                     }
                 }
             }
+            else {
+                var popupDiv = getElementById(`${thisId}-selection-popup`) as HTMLDivElement;
+                if (popupDiv) {
+                    popupDiv.remove();
+                }
+            }
         }
         catch (e) {
             console.log(e);

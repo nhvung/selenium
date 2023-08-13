@@ -1,0 +1,315 @@
+{
+  "Name": "Test BIQ web firefox",
+  "Browser": "firefox",
+  "IsIncognito": true,
+  "Sections": [
+    {
+      "Name": "Test Login",
+      "Actions": [
+        {
+          "Url": "https://login.evidenceiq.com/biq"
+        },
+        {
+          "Type": "Validate",
+          "Title": "EVIDENCE IQ - LOGIN"
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step1.BrowseToBIQ",
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "txtUserName",
+            "Value": "am_checksystem"
+          }
+        },
+        {
+          "Props": {
+            "ID": "txtPassword",
+            "Value": "Evidenceiq1!"
+          }
+        },
+        {
+          "Props": {
+            "ID": "btnOk"
+          },
+          "Click": true
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step2.LoggedIn",
+          "DelaySeconds": 1.0
+        }
+      ]
+    },
+    {
+      "Name": "Go to BIQ",
+      "Actions": [
+        {
+          "Type": "Validate",
+          "Title": "EVIDENCE IQ - home"
+        },
+        {
+          "Props": {
+            "ID": "dvBallistics"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step3.GoToBIQ",
+          "DelaySeconds": 3.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "icon_function",
+              "Index": 2
+            }
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "btnCancel",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true,
+          "DelaySeconds": 5.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "button100_green",
+              "Value": "",
+              "Text": "Search"
+            }
+          },
+          "Click": true,
+          "DelaySeconds": 3.0
+        },
+        {
+          "Props": {
+            "ID": "txtCaseNumber",
+            "IFrameID": "GCTIFrame",
+            "Value": "test selenium"
+          },
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "btnContinue",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step5.SearchGalleryResult",
+          "DelaySeconds": 5.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajxitem",
+              "Index": 1
+            },
+            "ParentID": "resultview"
+          },
+          "DoubleClick": true,
+          "DelaySeconds": 3.0
+        },
+        {
+          "Type": "ScreenShot",
+          "Props": {
+            "SwitchToNewWindow": true,
+            "CloseWindow": true
+          },
+          "FileName": "Step6.GalleryDetail",
+          "DelaySeconds": 10.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 0
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 1
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 2
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 3
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 4
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "ctl00_ContentPlaceHolder1_btnSearchFace"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Name": "",
+          "Type": "Wait",
+          "DelaySeconds": 10.0,
+          "Actions": [
+            {
+              "Type": "Wait",
+              "Props": {
+                "ClassItem": {
+                  "ClassName": "modalPopup"
+                },
+                "Displayed": false
+              },
+              "DelaySeconds": 3.0
+            },
+            {
+              "Props": {
+                "ID": "ctl00_ContentPlaceHolder1_cboAgency",
+                "Type": "select",
+                "Text": "My Agency"
+              },
+              "DelaySeconds": 1.0
+            },
+            {
+              "Type": "Wait",
+              "Props": {
+                "ClassItem": {
+                  "ClassName": "modalPopup"
+                },
+                "Displayed": false
+              },
+              "DelaySeconds": 3.0
+            },
+            {
+              "Props": {
+                "ID": "ctl00_ContentPlaceHolder1_chkIncludeTestFired",
+                "Checked": true
+              },
+              "DelaySeconds": 1.0
+            },
+            {
+              "Props": {
+                "ID": "ctl00_ContentPlaceHolder1_btnQuickSearch"
+              },
+              "Click": true,
+              "DelaySeconds": 1.0
+            },
+            {
+              "Props": {
+                "ID": "infodiv",
+                "IFrameID": "GCTIFrame",
+                "Actions": [
+                  {
+                    "Props": {
+                      "ID": "txtCaseNumber",
+                      "Value": "test selenium"
+                    }
+                  },
+                  {
+                    "Props": {
+                      "ID": "btnContinue"
+                    },
+                    "Click": true
+                  }
+                ]
+              },
+              "DelaySeconds": 1.0
+            },
+            {
+              "Type": "Wait",
+              "Props": {
+                "ClassItem": {
+                  "ClassName": "modalPopup"
+                },
+                "Displayed": false
+              },
+              "DelaySeconds": 3.0
+            },
+            {
+              "Props": {
+                "ParentID": "tdControlButton",
+                "TagItem": {
+                  "TagName": "input",
+                  "Value": "wait"
+                }
+              },
+              "Click": true,
+              "DelaySeconds": 1.0
+            },
+            {
+              "Type": "Wait",
+              "Props": {
+                "ClassItem": {
+                  "ClassName": "modalPopup"
+                },
+                "Displayed": false
+              },
+              "DelaySeconds": 3.0
+            },
+            {
+              "Props": {
+                "ParentID": "tdControlButton",
+                "TagItem": {
+                  "TagName": "input",
+                  "Value": "ok"
+                }
+              },
+              "Click": true,
+              "DelaySeconds": 1.0
+            },
+            {
+              "Type": "ScreenShot",
+              "FileName": "Step11.SearchPotentialLink",
+              "DelaySeconds": 3.0
+            }
+          ]
+        },
+        {
+          "DelaySeconds": 10.0
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-net stop bstestservice
+net stop testservice
 
-taskkill /f /pid 30920
+taskkill /f /pid 20224
 
-net start bstestservice
+net start testservice

@@ -30,9 +30,10 @@ const apiUrl = window.location.href;
 
 root.render(<React.StrictMode>
     <Routes>
-        <Route prefixPath="/autotest" element={<App apiUrl={apiUrl} />} />
+        <Route prefixPath="/autotest/main" element={<App apiUrl={apiUrl} />} />
         <Route path="/autotest/login" element={<Login apiUrl={apiUrl} />} />
         <Route path='/' redirectPath='/autotest/login' />
+        <Route path='/autotest' redirectPath='/autotest/login' />
     </Routes>
 
 

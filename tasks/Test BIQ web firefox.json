@@ -1,0 +1,26 @@
+{
+  "Name": "Test BIQ web firefox",
+  "Browser": "firefox",
+  "IsIncognito": true,
+  "Sections": [
+    {
+      "Actions": [
+        {
+          "DelaySeconds": 5.0,
+          "Type": "Delay"
+        },
+        {
+          "Url": "https://sandbox.evidenceiq.com/biq",
+          "Type": "Navigate"
+        },
+        {
+          "DelaySeconds": 10.0,
+          "Type": "Delay"
+        }
+      ],
+      "Name": "Test Login",
+      "Type": "Section",
+      "EType": 4
+    }
+  ]
+}

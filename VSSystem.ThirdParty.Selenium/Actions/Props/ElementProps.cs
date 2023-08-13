@@ -132,17 +132,20 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                 if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
                 {
-#if DEBUG
-                    if (_ClassItem.ClassName == "ajaxselect")
-                    {
-
-                    }
-#endif
                     try
                     {
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
                         if (foundElementObjs?.Count > 0)
                         {
+                            if (_ClassItem.Attributes?.Count > 0)
+                            {
+                                foreach (var attrObj in _ClassItem.Attributes)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetAttribute(attrObj.Name)))
+                                    ?.ToList();
+                                }
+                            }
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
@@ -156,15 +159,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 ?.Where(ite => ite.Text?.Trim()?.Equals(_ClassItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
-                            if (_ClassItem.Attributes?.Count > 0)
-                            {
-                                foreach (var attrObj in _ClassItem.Attributes)
-                                {
-                                    foundElementObjs = foundElementObjs
-                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetAttribute(attrObj.Name)))
-                                    ?.ToList();
-                                }
-                            }
+
                             if (foundElementObjs?.Count > 0)
                             {
                                 int index = _ClassItem.Index ?? foundElementObjs.Count;
@@ -196,6 +191,15 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                         if (foundElementObjs?.Count > 0)
                         {
+                            if (_TagItem.Attributes?.Count > 0)
+                            {
+                                foreach (var attrObj in _TagItem.Attributes)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetDomAttribute(attrObj.Name)))
+                                    ?.ToList();
+                                }
+                            }
                             if (!string.IsNullOrWhiteSpace(_TagItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
@@ -209,15 +213,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 ?.Where(ite => ite.Text?.Trim()?.Equals(_TagItem.Text, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
-                            if (_TagItem.Attributes?.Count > 0)
-                            {
-                                foreach (var attrObj in _TagItem.Attributes)
-                                {
-                                    foundElementObjs = foundElementObjs
-                                    ?.Where(ite => attrObj.ValidPredicate(ite.GetAttribute(attrObj.Name)))
-                                    ?.ToList();
-                                }
-                            }
+
                             if (foundElementObjs?.Count > 0)
                             {
                                 int index = _TagItem.Index ?? foundElementObjs.Count;

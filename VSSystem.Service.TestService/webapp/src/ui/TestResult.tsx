@@ -29,7 +29,7 @@ function TestResult(props?: componentWithApiProps & {}) {
             totalRecords: 0
         };
         //638241727412000317_99df6e95-3d20-4824-964b-d94c8831d9bf
-        const url = `${apiUrl.replace('/result', '')}/api/test/result?sessionguid=${sessionGuid}`;
+        const url = `${apiUrl}/api/test/result?sessionguid=${sessionGuid}`;
         result = await getAsync(url, undefined, async response => {
             if (response.status === 200) {
                 const imageObjs = await response.json();

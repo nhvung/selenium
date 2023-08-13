@@ -1,0 +1,222 @@
+{
+  "Name": "Test BIQ web firefox",
+  "Browser": "firefox",
+  "IsIncognito": true,
+  "Sections": [
+    {
+      "Name": "Test Login",
+      "Actions": [
+        {
+          "Url": "https://sandbox.evidenceiq.com/biq"
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step1.BrowseToBIQ",
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "txtUserName",
+            "Value": "leu.vung1"
+          }
+        },
+        {
+          "Props": {
+            "ID": "txtPassword",
+            "Value": "Evidence2!"
+          }
+        },
+        {
+          "Props": {
+            "ID": "btnOk"
+          },
+          "Click": true
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step2.LoggedIn",
+          "DelaySeconds": 1.0
+        },
+        {
+          "DelaySeconds": 1.0
+        }
+      ]
+    },
+    {
+      "Name": "Go to BIQ",
+      "Actions": [
+        {
+          "Props": {
+            "ID": "dvBallistics"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step3.GoToBIQ",
+          "DelaySeconds": 3.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "icon_function",
+              "Index": 2
+            }
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "btnCancel",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true,
+          "DelaySeconds": 5.0
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step4.GalleryPage",
+          "DelaySeconds": 3.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "button100_green",
+              "Value": "",
+              "Text": "Search"
+            }
+          },
+          "Click": true,
+          "DelaySeconds": 3.0
+        },
+        {
+          "Props": {
+            "ID": "txtCaseNumber",
+            "IFrameID": "GCTIFrame",
+            "Value": "test selenium"
+          },
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "ID": "btnContinue",
+            "IFrameID": "GCTIFrame"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Type": "ScreenShot",
+          "FileName": "Step5.SearchGalleryResult",
+          "DelaySeconds": 5.0
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 0
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 1
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 2
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 3
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ClassItem": {
+              "ClassName": "ajaxselect",
+              "Index": 4
+            },
+            "ParentID": "resultview"
+          },
+          "Click": true
+        },
+        {
+          "Props": {
+            "ID": "ctl00_ContentPlaceHolder1_btnAnalysisReport"
+          },
+          "Click": true,
+          "DelaySeconds": 1.0
+        },
+        {
+          "Props": {
+            "SwitchToNewWindow": true,
+            "CloseWindow": true
+          },
+          "DelaySeconds": 5.0,
+          "Actions": [
+            {
+              "Type": "Wait",
+              "Props": {
+                "ID": "loadingUI",
+                "Displayed": false
+              },
+              "DelaySeconds": 3.0
+            },
+            {
+              "Props": {
+                "TagItem": {
+                  "TagName": "button",
+                  "Text": "Wait"
+                }
+              },
+              "Click": true,
+              "DelaySeconds": 3.0
+            },
+            {
+              "Type": "Wait",
+              "Props": {
+                "ID": "loadingUI",
+                "Displayed": false
+              },
+              "DelaySeconds": 5.0
+            },
+            {
+              "ShiftKey": true,
+              "PressKeys": [
+                "f"
+              ],
+              "DelaySeconds": 1.0
+            },
+            {
+              "Type": "ScreenShot",
+              "FileName": "Step6.RunCSA",
+              "DelaySeconds": 5.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

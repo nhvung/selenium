@@ -14,10 +14,11 @@ namespace testselenium
         async static Task Main(string[] args)
         {
 
-            string checkUrl = $"https://learn-nvls.com/learn/gui/index.aspx";
+            // string checkUrl = $"https://learn-nvls.com/learn/gui/index.aspx";
+            string checkUrl = $"https://www.google.com.vn";
             string username = "whoisphut@gmail.com";
             string password = "Password0123456!";
-
+            //https://stackoverflow.com/questions/18686474/find-pid-of-browser-process-launched-by-selenium-webdriver
 
             var client = new VSSystem.ThirdParty.Selenium.Client();
 
@@ -31,65 +32,65 @@ namespace testselenium
                         Value = username
                     }
                 },
-                new WebAction{
-                    Props = new ElementProps("txtPassword"){
-                        Value = password
-                    }
-                },
-                new WebAction{
-                    Props = new ElementProps{
-                        ClassItem = new ClassProps("button100"){
-                            Value="Sign in"
-                        }
-                    },
-                    Click = true
-                },
-                new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds=5,
-                    FileName="signedin"
-                },
-                new WebAction{
-                    DelaySeconds = 1,
-                    Props=new ElementProps{
-                        ParentID="tdControlButtonAccept",
-                        TagItem=new TagProps("input", value: "Accept")
-                    },
-                    Click=true
-                },
-                new WebAction{
-                    DelaySeconds = 1,
-                    Props=new ElementProps("btnImgControl_1"){
-                        ParentID="tdControlButton"
-                    },
-                    Click=true
-                },
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds=5,
-                     FileName="homepage"
-                },
-                 new WebAction{
-                    DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_TDPlateSearchManagement_Agency"),
-                    Click=true
-                },
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds=5,
-                     FileName="vehiclemanager"
-                },
-                new WebAction{
-                    DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlateQuery_User"),
-                    Click=true
-                },
-                new WebAction{
-                    DelaySeconds = 1,
-                    Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlate_IconUser"),
-                    Click=true
-                },
-                 new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
-                    DelaySeconds=15,
-                     FileName="searchplate"
-                },
+                // new WebAction{
+                //     Props = new ElementProps("txtPassword"){
+                //         Value = password
+                //     }
+                // },
+                // new WebAction{
+                //     Props = new ElementProps{
+                //         ClassItem = new ClassProps("button100"){
+                //             Value="Sign in"
+                //         }
+                //     },
+                //     Click = true
+                // },
+                // new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //     DelaySeconds=5,
+                //     FileName="signedin"
+                // },
+                // new WebAction{
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps{
+                //         ParentID="tdControlButtonAccept",
+                //         TagItem=new TagProps("input", value: "Accept")
+                //     },
+                //     Click=true
+                // },
+                // new WebAction{
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps("btnImgControl_1"){
+                //         ParentID="tdControlButton"
+                //     },
+                //     Click=true
+                // },
+                //  new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //     DelaySeconds=5,
+                //      FileName="homepage"
+                // },
+                //  new WebAction{
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps("ctl00_ContentPlaceHolder1_TDPlateSearchManagement_Agency"),
+                //     Click=true
+                // },
+                //  new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //     DelaySeconds=5,
+                //      FileName="vehiclemanager"
+                // },
+                // new WebAction{
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlateQuery_User"),
+                //     Click=true
+                // },
+                // new WebAction{
+                //     DelaySeconds = 1,
+                //     Props=new ElementProps("ctl00_ContentPlaceHolder1_imgLicensePlate_IconUser"),
+                //     Click=true
+                // },
+                //  new WebAction(VSSystem.ThirdParty.Selenium.Define.EActionType.ScreenShot){
+                //     DelaySeconds=15,
+                //      FileName="searchplate"
+                // },
             };
 
 

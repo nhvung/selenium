@@ -70,7 +70,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             else if (!string.IsNullOrWhiteSpace(_ParentID))
             {
-
                 try
                 {
                     searchCtx = searchCtx.FindElement(By.Id(_ParentID));
@@ -83,12 +82,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
             if (!string.IsNullOrWhiteSpace(_ID))
             {
-#if DEBUG
-                if (_ID == "loadingUI")
-                {
-
-                }
-#endif
                 try
                 {
                     elementObj = searchCtx.FindElement(By.Id(_ID));
@@ -132,6 +125,19 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                 if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
                 {
+#if DEBUG
+                    if (_ClassItem.ClassName == "dialog-footer-center")
+                    {
+
+                    }
+#endif
+
+#if DEBUG
+                    if (_ClassItem.Text == "Send Report")
+                    {
+
+                    }
+#endif
                     try
                     {
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
@@ -187,6 +193,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+#if DEBUG
+                        if (_TagItem.Text == "Send Report")
+                        {
+
+                        }
+#endif
                         var foundElementObjs = searchCtx.FindElements(By.TagName(_TagItem.TagName))?.Where(ite => ite.Displayed)?.ToList();
 
                         if (foundElementObjs?.Count > 0)

@@ -23,9 +23,9 @@ namespace VSSystem.ThirdParty.Selenium
                 {
                     foreach (var actionTask in actionTasks)
                     {
-                        using (var driver = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, actionTask.IsHeadless, driverFolderPath))
+                        using (var driverInfo = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, actionTask.IsHeadless, driverFolderPath))
                         {
-                            if (driver != null)
+                            if (driverInfo.Driver != null)
                             {
                                 Resolution resolutionObj;
                                 Resolution.TryParse(actionTask.Resolution, out resolutionObj);
@@ -35,11 +35,11 @@ namespace VSSystem.ThirdParty.Selenium
                                 }
                                 if (actionTask.IsHeadless)
                                 {
-                                    driver.Manage().Window.Size = resolutionObj.ToSize();
+                                    driverInfo.Driver.Manage().Window.Size = resolutionObj.ToSize();
                                 }
                                 else
                                 {
-                                    driver.Manage().Window.Maximize();
+                                    driverInfo.Driver.Manage().Window.Maximize();
                                 }
 
 
@@ -47,7 +47,7 @@ namespace VSSystem.ThirdParty.Selenium
                                 {
                                     foreach (var section in actionTask.Sections)
                                     {
-                                        var sectionResult = section.Execute(driver, debugLogAction, errorLogAction);
+                                        var sectionResult = section.Execute(driverInfo.Driver, debugLogAction, errorLogAction);
                                         if (!sectionResult)
                                         {
                                             result = false;
@@ -55,12 +55,6 @@ namespace VSSystem.ThirdParty.Selenium
                                         }
                                     }
                                 }
-                                try
-                                {
-                                    driver.Close();
-                                    driver.Quit();
-                                }
-                                catch { }
 
 #if DEBUG
                                 try

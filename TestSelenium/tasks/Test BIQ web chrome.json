@@ -2,90 +2,16 @@
   "Name": "Test BIQ web chrome",
   "Browser": "chrome",
   "IsIncognito": true,
+  "IsHeadless": false,
   "Sections": [
     {
-      "Url": "https://learn-nvls.com/learn/gui/index.aspx"
+      "Url": "https://www.google.com.vn"
     },
     {
       "Props": {
         "ID": "txtUserName",
         "Value": "whoisphut@gmail.com"
       }
-    },
-    {
-      "Props": {
-        "ID": "txtPassword",
-        "Value": "Password0123456!"
-      }
-    },
-    {
-      "Props": {
-        "ClassItem": {
-          "ClassName": "button100",
-          "Value": "Sign in"
-        }
-      },
-      "Click": true
-    },
-    {
-      "Type": "ScreenShot",
-      "FileName": "signedin",
-      "DelaySeconds": 5.0
-    },
-    {
-      "Props": {
-        "ParentID": "tdControlButtonAccept",
-        "TagItem": {
-          "TagName": "input",
-          "Value": "Accept"
-        }
-      },
-      "Click": true,
-      "DelaySeconds": 1.0
-    },
-    {
-      "Props": {
-        "ID": "btnImgControl_1",
-        "ParentID": "tdControlButton"
-      },
-      "Click": true,
-      "DelaySeconds": 1.0
-    },
-    {
-      "Type": "ScreenShot",
-      "FileName": "homepage",
-      "DelaySeconds": 5.0
-    },
-    {
-      "Props": {
-        "ID": "ctl00_ContentPlaceHolder1_TDPlateSearchManagement_Agency"
-      },
-      "Click": true,
-      "DelaySeconds": 1.0
-    },
-    {
-      "Type": "ScreenShot",
-      "FileName": "vehiclemanager",
-      "DelaySeconds": 5.0
-    },
-    {
-      "Props": {
-        "ID": "ctl00_ContentPlaceHolder1_imgLicensePlateQuery_User"
-      },
-      "Click": true,
-      "DelaySeconds": 1.0
-    },
-    {
-      "Props": {
-        "ID": "ctl00_ContentPlaceHolder1_imgLicensePlate_IconUser"
-      },
-      "Click": true,
-      "DelaySeconds": 1.0
-    },
-    {
-      "Type": "ScreenShot",
-      "FileName": "searchplate",
-      "DelaySeconds": 15.0
     }
   ],
   "CreatedTicks": 0

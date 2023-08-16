@@ -791,7 +791,11 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             {
                                 try
                                 {
-                                    actionObj.Props.ParentElement = elementObj;
+                                    if (actionObj.Props != null)
+                                    {
+                                        actionObj.Props.ParentElement = elementObj;
+                                    }
+
                                     actionObj.Execute(driver, debugLogAction, errorLogAction);
                                 }
                                 catch (Exception ex)

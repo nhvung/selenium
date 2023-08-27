@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using OpenQA.Selenium;
@@ -100,7 +101,10 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                 }
                 result = new DriverInfo(driver, pId);
             }
-            catch { }
+            catch (Exception ex)
+            {
+
+            }
             return result;
         }
     }

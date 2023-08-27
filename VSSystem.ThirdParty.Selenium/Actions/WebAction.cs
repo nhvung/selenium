@@ -52,6 +52,8 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public ElementProps Props { get { return _Props; } set { _Props = value; } }
         bool? _Click;
         public bool? Click { get { return _Click; } set { _Click = value; } }
+        bool? _RightClick;
+        public bool? RightClick { get { return _RightClick; } set { _RightClick = value; } }
         bool? _DoubleClick;
         public bool? DoubleClick { get { return _DoubleClick; } set { _DoubleClick = value; } }
         bool? _ClickAndHold;
@@ -338,13 +340,19 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 }
                 if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
                 {
+#if DEBUG
+                    if (_Props.IFrameID == "iframeNotifyInfo")
+                    {
+
+                    }
+#endif
                     try
                     {
                         driver = driver.SwitchTo().Frame(_Props.IFrameID);
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("Change IFrame exception.", ex));
+                        errorLogAction?.Invoke(new Exception($"Change IFrame {_Props.IFrameID} exception.", ex));
                     }
                 }
 
@@ -448,6 +456,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 }
                 if (!string.IsNullOrWhiteSpace(_Props?.IFrameID))
                 {
+#if DEBUG
+                    if (_Props.IFrameID == "iframeNotifyInfo")
+                    {
+
+                    }
+#endif
                     try
                     {
                         driver = driver.SwitchTo().Frame(_Props.IFrameID);
@@ -539,6 +553,13 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 }
                 if (!string.IsNullOrWhiteSpace(_Props.IFrameID))
                 {
+#if DEBUG
+                    if (_Props.IFrameID == "iframeNotification")
+                    {
+
+                    }
+
+#endif
                     try
                     {
                         driver = driver.SwitchTo().Frame(_Props.IFrameID);
@@ -646,6 +667,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             {
                                 actionObj = actionObj.Click(elementObj);
                             }
+                            if (_RightClick ?? false)
+                            {
+                                actionObj = actionObj.ContextClick(elementObj);
+                            }
                             if (_DoubleClick ?? false)
                             {
                                 actionObj = actionObj.DoubleClick(elementObj);
@@ -654,6 +679,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             if (_ClickAndHold ?? false)
                             {
                                 actionObj = actionObj.ClickAndHold(elementObj);
+
                             }
 
                             if (_ControlKey ?? false)
@@ -770,6 +796,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                     }
                                     catch { }
                                 }
+                            }
+                            if (_RightClick ?? false)
+                            {
+                                try
+                                {
+                                    new OpenQA.Selenium.Interactions.Actions(driver)
+                                    .MoveToElement(elementObj, 1, 1)
+                                    .ContextClick(elementObj)
+                                    .Perform();
+                                }
+                                catch { }
                             }
                             if (_DoubleClick ?? false)
                             {

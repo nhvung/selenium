@@ -16,6 +16,10 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         List<AttributeProps> _Attributes;
         public List<AttributeProps> Attributes { get { return _Attributes; } set { _Attributes = value; } }
         public TagProps() { }
+        public TagProps(string tagName)
+        {
+            _TagName = tagName;
+        }
         public TagProps(string tagName, int? index = null)
         {
             _TagName = tagName;

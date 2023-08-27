@@ -35,9 +35,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         {
 
         }
-        public AttributeProps(string name = "", Func<string, bool> validPredicate = default)
+        public AttributeProps(string name, Func<string, bool> validPredicate = default)
         {
             _Name = name;
+            _ContentType = "text/html";
+        }
+        public AttributeProps(string name, string value)
+        {
+            _Name = name;
+            _Value = value;
+            _ContentType = "text/html";
         }
 
         public bool ValidPredicate(string objectValue)

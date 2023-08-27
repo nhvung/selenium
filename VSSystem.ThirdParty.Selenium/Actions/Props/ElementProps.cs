@@ -70,25 +70,38 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             }
             else if (!string.IsNullOrWhiteSpace(_ParentID))
             {
+#if DEBUG
+                if (_ParentID == "3dOptionCtr")
+                {
+
+                }
+
+#endif
                 try
                 {
                     searchCtx = searchCtx.FindElement(By.Id(_ParentID));
                 }
                 catch (Exception ex)
                 {
-                    errorLogAction?.Invoke(new Exception("FindElement(By.ParentID(", ex));
+                    errorLogAction?.Invoke(new Exception("FindElement(By.ParentID(" + _ParentID, ex));
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(_ID))
             {
+#if DEBUG
+                if (_ID == "dvNotification")
+                {
+
+                }
+#endif
                 try
                 {
                     elementObj = searchCtx.FindElement(By.Id(_ID));
                 }
                 catch (Exception ex)
                 {
-                    errorLogAction?.Invoke(new Exception("FindElement(By.Id(", ex));
+                    errorLogAction?.Invoke(new Exception("FindElement(By.Id(" + _ID, ex));
                 }
             }
             if (elementObj == null)
@@ -101,7 +114,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("FindElement(By.Name(", ex));
+                        errorLogAction?.Invoke(new Exception("FindElement(By.Name(" + _Name, ex));
                     }
                 }
             }
@@ -116,7 +129,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("FindElement(By.XPath(", ex));
+                        errorLogAction?.Invoke(new Exception("FindElement(By.XPath(" + _XPath, ex));
                     }
                 }
             }
@@ -125,19 +138,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
 
                 if (!string.IsNullOrWhiteSpace(_ClassItem?.ClassName))
                 {
-#if DEBUG
-                    if (_ClassItem.ClassName == "dialog-footer-center")
-                    {
-
-                    }
-#endif
-
-#if DEBUG
-                    if (_ClassItem.Text == "Send Report")
-                    {
-
-                    }
-#endif
                     try
                     {
                         var foundElementObjs = searchCtx.FindElements(By.ClassName(_ClassItem.ClassName))?.Where(ite => ite.Displayed)?.ToList();
@@ -183,7 +183,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("FindElement(By.ClassName(", ex));
+                        errorLogAction?.Invoke(new Exception("FindElement(By.ClassName(" + _ClassItem.ClassName, ex));
                     }
                 }
             }
@@ -191,18 +191,27 @@ namespace VSSystem.ThirdParty.Selenium.Actions
             {
                 if (!string.IsNullOrWhiteSpace(_TagItem?.TagName))
                 {
+#if DEBUG
+                    if (_TagItem.TagName == "td")
+                    {
+
+                    }
+                    if (_TagItem.Text == "Compare Images")
+                    {
+
+                    }
+#endif
+
                     try
                     {
-#if DEBUG
-                        if (_TagItem.Text == "Send Report")
-                        {
+                        var foundElementObjs = searchCtx.FindElements(By.TagName(_TagItem.TagName))?.ToList();
 
-                        }
-#endif
-                        var foundElementObjs = searchCtx.FindElements(By.TagName(_TagItem.TagName))?.Where(ite => ite.Displayed)?.ToList();
+                        foundElementObjs = foundElementObjs.Where(ite => ite.Displayed)?.ToList();
 
                         if (foundElementObjs?.Count > 0)
                         {
+#if DEBUG
+#endif
                             if (_TagItem.Attributes?.Count > 0)
                             {
                                 foreach (var attrObj in _TagItem.Attributes)
@@ -243,7 +252,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     }
                     catch (Exception ex)
                     {
-                        errorLogAction?.Invoke(new Exception("FindElement(By.TagName(", ex));
+                        errorLogAction?.Invoke(new Exception("FindElement(By.TagName(" + _TagItem.TagName, ex));
                     }
                 }
             }

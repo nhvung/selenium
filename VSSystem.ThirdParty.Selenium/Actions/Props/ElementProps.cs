@@ -152,13 +152,33 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                     ?.ToList();
                                 }
                             }
+                            if (_ClassItem.Values?.Count > 0)
+                            {
+                                var values = _ClassItem.Values.Where(ite => !string.IsNullOrWhiteSpace(ite)).ToList();
+                                if (values?.Count > 0)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => values.Contains(ite.GetAttribute("value")?.Trim(), StringComparer.InvariantCultureIgnoreCase))
+                                    ?.ToList();
+                                }
+
+                            }
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
                                 ?.Where(ite => ite.GetAttribute("value")?.Trim()?.Equals(_ClassItem.Value, StringComparison.InvariantCultureIgnoreCase) ?? false)
                                 ?.ToList();
                             }
-
+                            if (_ClassItem.Texts?.Count > 0)
+                            {
+                                var texts = _ClassItem.Texts.Where(ite => !string.IsNullOrWhiteSpace(ite)).ToList();
+                                if (texts?.Count > 0)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => texts.Contains(ite.Text, StringComparer.InvariantCultureIgnoreCase))
+                                    ?.ToList();
+                                }
+                            }
                             if (!string.IsNullOrWhiteSpace(_ClassItem.Text))
                             {
                                 foundElementObjs = foundElementObjs
@@ -221,6 +241,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                     ?.ToList();
                                 }
                             }
+                            if (_TagItem.Values?.Count > 0)
+                            {
+                                var values = _TagItem.Values.Where(ite => !string.IsNullOrWhiteSpace(ite)).ToList();
+                                if (values?.Count > 0)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => values.Contains(ite.GetAttribute("value")?.Trim(), StringComparer.InvariantCultureIgnoreCase))
+                                    ?.ToList();
+                                }
+                            }
                             if (!string.IsNullOrWhiteSpace(_TagItem.Value))
                             {
                                 foundElementObjs = foundElementObjs
@@ -228,6 +258,16 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                                 ?.ToList();
                             }
 
+                            if (_TagItem.Texts?.Count > 0)
+                            {
+                                var texts = _TagItem.Texts.Where(ite => !string.IsNullOrWhiteSpace(ite)).ToList();
+                                if (texts?.Count > 0)
+                                {
+                                    foundElementObjs = foundElementObjs
+                                    ?.Where(ite => texts.Contains(ite.Text, StringComparer.InvariantCultureIgnoreCase))
+                                    ?.ToList();
+                                }
+                            }
                             if (!string.IsNullOrWhiteSpace(_TagItem.Text))
                             {
                                 foundElementObjs = foundElementObjs

@@ -11,8 +11,12 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public int? Index { get { return _Index; } set { _Index = value; } }
         string _Value;
         public string Value { get { return _Value; } set { _Value = value; } }
+        List<string> _Values;
+        public List<string> Values { get { return _Values; } set { _Values = value; } }
         string _Text;
         public string Text { get { return _Text; } set { _Text = value; } }
+        List<string> _Texts;
+        public List<string> Texts { get { return _Texts; } set { _Texts = value; } }
         List<AttributeProps> _Attributes;
         public List<AttributeProps> Attributes { get { return _Attributes; } set { _Attributes = value; } }
         public TagProps() { }

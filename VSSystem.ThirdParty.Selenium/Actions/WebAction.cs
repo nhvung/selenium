@@ -114,6 +114,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
         public string Title { get { return _Title; } set { _Title = value; } }
         WebAction _OnValidateInvalid;
         public WebAction OnValidateInvalid { get { return _OnValidateInvalid; } set { _OnValidateInvalid = value; } }
+        protected string _previousWindowHandle;
 
         public virtual bool Execute(IWebDriver driver, Action<string> debugLogAction = null, Action<Exception> errorLogAction = null)
         {
@@ -131,28 +132,32 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     Thread.Sleep(System.TimeSpan.FromMilliseconds(delayMiliseconds));
                 }
 
+
+
                 if (EType == EActionType.ScreenShot)
                 {
-                    if (_Props?.SwitchToNewWindow ?? false)
-                    {
-                        try
-                        {
-                            var originalSize = driver.Manage().Window.Size;
-                            var lastWindow = driver.WindowHandles.LastOrDefault();
-                            if (!string.IsNullOrWhiteSpace(lastWindow))
-                            {
-                                driver = driver.SwitchTo().Window(lastWindow);
-                                driver.Manage().Window.Size = originalSize;
-                            }
 
-                        }
-                        catch (Exception ex)
-                        {
-                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
-                        }
-                    }
                     try
                     {
+                        if (_Props?.SwitchToNewWindow ?? false)
+                        {
+                            try
+                            {
+                                _previousWindowHandle = driver.CurrentWindowHandle;
+                                var originalSize = driver.Manage().Window.Size;
+                                var lastWindow = driver.WindowHandles.LastOrDefault();
+                                if (!string.IsNullOrWhiteSpace(lastWindow))
+                                {
+                                    driver = driver.SwitchTo().Window(lastWindow);
+                                    driver.Manage().Window.Size = originalSize;
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                            }
+                        }
                         string folderPath = _FolderPath;
                         if (string.IsNullOrWhiteSpace(folderPath))
                         {
@@ -179,32 +184,41 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                         catch { }
                         File.WriteAllBytes(file.FullName, screenshotBytes);
+
+                        if (_Props?.SwitchToNewWindow ?? false)
+                        {
+                            try
+                            {
+                                if (_Props?.CloseWindow ?? false)
+                                {
+                                    driver.Close();
+                                }
+
+                                if (!string.IsNullOrWhiteSpace(_previousWindowHandle))
+                                {
+                                    driver = driver.SwitchTo().Window(_previousWindowHandle);
+                                }
+                                else
+                                {
+                                    var previousWindowHandle = driver.WindowHandles[driver.WindowHandles.Count - 1];
+                                    if (!string.IsNullOrWhiteSpace(previousWindowHandle))
+                                    {
+                                        driver = driver.SwitchTo().Window(previousWindowHandle);
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
                         errorLogAction?.Invoke(new Exception("Screenshot exception.", ex));
                     }
 
-                    if (_Props?.SwitchToNewWindow ?? false)
-                    {
-                        try
-                        {
-                            var firstWindow = driver.WindowHandles.FirstOrDefault();
-                            if (_Props?.CloseWindow ?? false)
-                            {
-                                driver.Close();
-                            }
 
-                            if (!string.IsNullOrWhiteSpace(firstWindow))
-                            {
-                                driver = driver.SwitchTo().Window(firstWindow);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            errorLogAction?.Invoke(new Exception("Change new window exception.", ex));
-                        }
-                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(_Url))
@@ -219,6 +233,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 if (_Props != null)
                 {
                     result = _ExecuteElement(driver, debugLogAction, errorLogAction);
+
                     if (EType == EActionType.Validate)
                     {
                         _OnValidateInvalid?.Execute(driver, debugLogAction, errorLogAction);
@@ -253,6 +268,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
+                            _previousWindowHandle = driver.CurrentWindowHandle;
                             var originalSize = driver.Manage().Window.Size;
                             var lastWindow = driver.WindowHandles.LastOrDefault();
                             if (!string.IsNullOrWhiteSpace(lastWindow))
@@ -289,15 +305,22 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                     {
                         try
                         {
-                            var firstWindow = driver.WindowHandles.FirstOrDefault();
                             if (_Props?.CloseWindow ?? false)
                             {
                                 driver.Close();
                             }
 
-                            if (!string.IsNullOrWhiteSpace(firstWindow))
+                            if (!string.IsNullOrWhiteSpace(_previousWindowHandle))
                             {
-                                driver = driver.SwitchTo().Window(firstWindow);
+                                driver = driver.SwitchTo().Window(_previousWindowHandle);
+                            }
+                            else
+                            {
+                                var previousWindowHandle = driver.WindowHandles[driver.WindowHandles.Count - 1];
+                                if (!string.IsNullOrWhiteSpace(previousWindowHandle))
+                                {
+                                    driver = driver.SwitchTo().Window(previousWindowHandle);
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -306,8 +329,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                         }
                     }
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -324,6 +345,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        _previousWindowHandle = driver.CurrentWindowHandle;
                         var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
@@ -412,10 +434,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
-                        var firstWindow = driver.WindowHandles.FirstOrDefault();
-                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        if (!string.IsNullOrWhiteSpace(_previousWindowHandle))
                         {
-                            driver = driver.SwitchTo().Window(firstWindow);
+                            driver = driver.SwitchTo().Window(_previousWindowHandle);
+                        }
+                        else
+                        {
+                            var previousWindowHandle = driver.WindowHandles[driver.WindowHandles.Count - 1];
+                            if (!string.IsNullOrWhiteSpace(previousWindowHandle))
+                            {
+                                driver = driver.SwitchTo().Window(previousWindowHandle);
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -440,6 +469,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        _previousWindowHandle = driver.CurrentWindowHandle;
                         var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
@@ -510,10 +540,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
-                        var firstWindow = driver.WindowHandles.FirstOrDefault();
-                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        if (!string.IsNullOrWhiteSpace(_previousWindowHandle))
                         {
-                            driver = driver.SwitchTo().Window(firstWindow);
+                            driver = driver.SwitchTo().Window(_previousWindowHandle);
+                        }
+                        else
+                        {
+                            var previousWindowHandle = driver.WindowHandles[driver.WindowHandles.Count - 1];
+                            if (!string.IsNullOrWhiteSpace(previousWindowHandle))
+                            {
+                                driver = driver.SwitchTo().Window(previousWindowHandle);
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -537,6 +574,7 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
+                        _previousWindowHandle = driver.CurrentWindowHandle;
                         var originalSize = driver.Manage().Window.Size;
                         var lastWindow = driver.WindowHandles.LastOrDefault();
                         if (!string.IsNullOrWhiteSpace(lastWindow))
@@ -884,10 +922,17 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                 {
                     try
                     {
-                        var firstWindow = driver.WindowHandles.FirstOrDefault();
-                        if (!string.IsNullOrWhiteSpace(firstWindow))
+                        if (!string.IsNullOrWhiteSpace(_previousWindowHandle))
                         {
-                            driver = driver.SwitchTo().Window(firstWindow);
+                            driver = driver.SwitchTo().Window(_previousWindowHandle);
+                        }
+                        else
+                        {
+                            var previousWindowHandle = driver.WindowHandles[driver.WindowHandles.Count - 1];
+                            if (!string.IsNullOrWhiteSpace(previousWindowHandle))
+                            {
+                                driver = driver.SwitchTo().Window(previousWindowHandle);
+                            }
                         }
                     }
                     catch (Exception ex)

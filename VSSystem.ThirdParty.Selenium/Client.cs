@@ -9,11 +9,11 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        public bool Execute(Actions.ActionTask actionTask, string driverFolderPath = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(Actions.ActionTask actionTask, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
-            return Execute(new ActionTask[] { actionTask }, driverFolderPath, onFinishAction, debugLogAction, errorLogAction);
+            return Execute(new ActionTask[] { actionTask }, driverFolderPath, executableLocation, onFinishAction, debugLogAction, errorLogAction);
         }
-        public bool Execute(Actions.ActionTask[] actionTasks, string driverFolderPath = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(Actions.ActionTask[] actionTasks, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             bool result = true;
             try
@@ -23,7 +23,7 @@ namespace VSSystem.ThirdParty.Selenium
                 {
                     foreach (var actionTask in actionTasks)
                     {
-                        using (var driverInfo = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, actionTask.IsHeadless, driverFolderPath))
+                        using (var driverInfo = DriverExtension.CreateDriver(actionTask.EBrowser, actionTask.IsIncognito, actionTask.IsHeadless, driverFolderPath, executableLocation))
                         {
                             if (driverInfo.Driver != null)
                             {
@@ -94,7 +94,7 @@ namespace VSSystem.ThirdParty.Selenium
             return result;
         }
 
-        public bool Execute(string fileName, string driverFolderPath = "", System.Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public bool Execute(string fileName, string driverFolderPath = "", string executableLocation = "", System.Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace VSSystem.ThirdParty.Selenium
                 var taskObj = JsonConvert.DeserializeObject<VSSystem.ThirdParty.Selenium.Actions.ActionTask>(json);
                 if (taskObj != null)
                 {
-                    return Execute(taskObj, driverFolderPath, onFinishAction, debugLogAction, errorLogAction);
+                    return Execute(taskObj, driverFolderPath, executableLocation, onFinishAction, debugLogAction, errorLogAction);
                 }
 
             }

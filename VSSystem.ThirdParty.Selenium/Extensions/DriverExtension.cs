@@ -13,7 +13,7 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
 {
     class DriverExtension
     {
-        static ChromeOptions _CreateChromeOptions(bool isIncognito, bool isHeadless)
+        static ChromeOptions _CreateChromeOptions(bool isIncognito, bool isHeadless, string executableLocation)
         {
 
             var opts = new ChromeOptions();
@@ -27,9 +27,16 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
             {
                 opts.AddArgument("--incognito");
             }
+            if (!string.IsNullOrWhiteSpace(executableLocation))
+            {
+                if (File.Exists(executableLocation))
+                {
+                    opts.BinaryLocation = executableLocation;
+                }
+            }
             return opts;
         }
-        static FirefoxOptions _CreateFirefoxOptions(bool isIncognito, bool isHeadless)
+        static FirefoxOptions _CreateFirefoxOptions(bool isIncognito, bool isHeadless, string executableLocation)
         {
             var opts = new FirefoxOptions();
             opts.AcceptInsecureCertificates = true;
@@ -41,9 +48,16 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
             {
                 opts.AddArgument("--incognito");
             }
+            if (!string.IsNullOrWhiteSpace(executableLocation))
+            {
+                if (File.Exists(executableLocation))
+                {
+                    opts.BrowserExecutableLocation = executableLocation;
+                }
+            }
             return opts;
         }
-        static EdgeOptions _CreateEdgeOptions(bool isIncognito, bool isHeadless)
+        static EdgeOptions _CreateEdgeOptions(bool isIncognito, bool isHeadless, string executableLocation)
         {
             var opts = new EdgeOptions();
             opts.AcceptInsecureCertificates = true;
@@ -55,10 +69,17 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
             {
                 opts.AddArgument("--incognito");
             }
+            if (!string.IsNullOrWhiteSpace(executableLocation))
+            {
+                if (File.Exists(executableLocation))
+                {
+                    opts.BinaryLocation = executableLocation;
+                }
+            }
             return opts;
         }
 
-        public static DriverInfo CreateDriver(EBrowser browser, bool isIncognito, bool isHeadless, string driverFolderPath = "")
+        public static DriverInfo CreateDriver(EBrowser browser, bool isIncognito, bool isHeadless, string driverFolderPath = "", string executableLocation = "")
         {
             DriverInfo result = default;
             IWebDriver driver = null;
@@ -75,7 +96,8 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                         {
                             ChromeDriverService service = ChromeDriverService.CreateDefaultService(driverFolderPath);
                             service.HideCommandPromptWindow = true;
-                            var opts = _CreateChromeOptions(isIncognito, isHeadless);
+                            var opts = _CreateChromeOptions(isIncognito, isHeadless, executableLocation);
+
                             driver = new ChromeDriver(service, opts);
                             pId = service.ProcessId;
                         }
@@ -84,7 +106,7 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                         {
                             FirefoxDriverService service = FirefoxDriverService.CreateDefaultService(driverFolderPath);
                             service.HideCommandPromptWindow = true;
-                            var opts = _CreateFirefoxOptions(isIncognito, isHeadless);
+                            var opts = _CreateFirefoxOptions(isIncognito, isHeadless, executableLocation);
                             driver = new FirefoxDriver(service, opts);
                             pId = service.ProcessId;
                         }
@@ -93,7 +115,7 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                         {
                             EdgeDriverService service = EdgeDriverService.CreateDefaultService(driverFolderPath);
                             service.HideCommandPromptWindow = true;
-                            var opts = _CreateEdgeOptions(isIncognito, isHeadless);
+                            var opts = _CreateEdgeOptions(isIncognito, isHeadless, executableLocation);
                             driver = new EdgeDriver(service, opts);
                             pId = service.ProcessId;
                         }

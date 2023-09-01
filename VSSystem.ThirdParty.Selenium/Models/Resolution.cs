@@ -27,6 +27,7 @@ namespace VSSystem.ThirdParty.Selenium.Models
         static Resolution _QHD = new Resolution(2560, 1440, "qhd");
         static Resolution _QHDPlus = new Resolution(2960, 1440, "qhd+");
         static Resolution _UHD = new Resolution(3840, 2160, "uhd");
+        static Resolution _8K = new Resolution(7680, 4320, "8k");
 
 
         public static Resolution Default { get { return _FullHD; } }
@@ -62,6 +63,8 @@ namespace VSSystem.ThirdParty.Selenium.Models
 
                             {"4k", _UHD},
                             {"uhd", _UHD},
+
+                            {"8k", _8K},
                         };
                 }
                 if (_mapping.ContainsKey(s))

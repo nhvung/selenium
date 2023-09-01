@@ -582,7 +582,6 @@ namespace VSSystem.ThirdParty.Selenium.Actions
                             driver = driver.SwitchTo().Window(lastWindow);
                             driver.Manage().Window.Size = originalSize;
                         }
-
                     }
                     catch (Exception ex)
                     {

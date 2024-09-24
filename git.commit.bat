@@ -1,3 +1,3 @@
-git add .
-git commit -am "update code"
+git add . && 
+git commit -am "update code" && 
 git push

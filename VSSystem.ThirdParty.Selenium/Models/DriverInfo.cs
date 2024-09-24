@@ -17,17 +17,17 @@ namespace VSSystem.ThirdParty.Selenium.Models
             _Driver?.Quit();
             if (_ProcessId > 0)
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                try
                 {
-                    try
+                    var process = Process.GetProcessById(_ProcessId);
+                    if (process != null)
                     {
-                        var process = Process.GetProcessById(_ProcessId);
-                        if (process != null)
-                        {
-                            process.Kill();
-                        }
+                        process.Kill();
                     }
-                    catch { }
+                }
+                catch // (Exception ex)
+                {
+
                 }
             }
         }

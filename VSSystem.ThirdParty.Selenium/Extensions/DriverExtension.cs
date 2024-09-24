@@ -27,6 +27,10 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
             {
                 opts.AddArgument("--incognito");
             }
+            opts.AddArgument("--allowed-ips");
+            opts.AddArgument("--no-sandbox");
+            opts.AddArgument("--disable-dev-shm-usage");
+            //chromeOptions.addArguments("--no-sandbox", "--disable-dev-shm-usage");
             if (!string.IsNullOrWhiteSpace(executableLocation))
             {
                 if (File.Exists(executableLocation))
@@ -123,7 +127,7 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                 }
                 result = new DriverInfo(driver, pId);
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
 
             }

@@ -1,47 +1,44 @@
 using System;
-using System.Drawing.Imaging;
 using System.IO;
 
 namespace VSSystem.ThirdParty.Selenium.Extensions
 {
     class ImageExtension
     {
-        public static byte[] ConvertImage(byte[] input, string imageFormat)
+        public static byte[] ConvertImage(byte[] input, string imageFormat, int quality = 100)
         {
             byte[] result = input;
             try
             {
-                using (var srcStream = new MemoryStream(input))
+                using (var outStream = new MemoryStream())
                 {
-                    using (var outStream = new MemoryStream())
+                    using (var img = SkiaSharp.SKBitmap.Decode(input))
                     {
-                        using (var img = System.Drawing.Image.FromStream(srcStream))
+                        if (imageFormat.Equals("jpeg", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            if (imageFormat.Equals("Jpeg", StringComparison.InvariantCultureIgnoreCase)
-                                || imageFormat.Equals("Jpg", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                img.Save(outStream, ImageFormat.Jpeg);
-                            }
-                            else if (imageFormat.Equals("Png", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                img.Save(outStream, ImageFormat.Png);
-                            }
-                            else if (imageFormat.Equals("Bmp", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                img.Save(outStream, ImageFormat.Bmp);
-                            }
-
-                            img.Dispose();
+                            img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Jpeg, quality);
                         }
-                        outStream.Close();
-                        outStream.Dispose();
-                        result = outStream.ToArray();
+                        else if (imageFormat.Equals("png", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Png, quality);
+                        }
+                        else if (imageFormat.Equals("bmp", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Bmp, quality);
+                        }
+                        else if (imageFormat.Equals("gif", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Gif, quality);
+                        }
+                        img.Dispose();
                     }
-                    srcStream.Close();
-                    srcStream.Dispose();
+                    outStream.Close();
+                    outStream.Dispose();
+                    result = outStream.ToArray();
                 }
+                input = null;
             }
-            catch //(Exception ex)
+            catch //(System.Exception ex)
             {
 
             }

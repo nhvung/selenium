@@ -101,23 +101,6 @@ namespace testselenium
                 Sections = actionObjs
             };
 
-            var taskParams2Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web firefox")
-            {
-                IsIncognito = true,
-                Browser = "firefox",
-                Sections = (new[]
-                { actionObjs,
-                }).SelectMany(ite => ite)
-                .ToList()
-            };
-
-            var taskParams3Obj = new VSSystem.ThirdParty.Selenium.Actions.ActionTask("Test BIQ web edge")
-            {
-                IsIncognito = true,
-                Browser = "edge",
-                Sections = actionObjs
-            };
-
             if (true)
             {
                 ///html/body/div/div[2]/div[2]/div[5]/div[2]/div[3]/div/div

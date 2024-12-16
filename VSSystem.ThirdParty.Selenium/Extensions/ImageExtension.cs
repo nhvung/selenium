@@ -18,6 +18,10 @@ namespace VSSystem.ThirdParty.Selenium.Extensions
                         {
                             img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Jpeg, quality);
                         }
+                        else if (imageFormat.Equals("jpg", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Jpeg, quality);
+                        }
                         else if (imageFormat.Equals("png", StringComparison.InvariantCultureIgnoreCase))
                         {
                             img.Encode(outStream, SkiaSharp.SKEncodedImageFormat.Png, quality);

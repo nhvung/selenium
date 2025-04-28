@@ -9,13 +9,13 @@ namespace VSSystem.ThirdParty.Selenium
 {
     public class Client
     {
-        public bool Execute(Actions.ActionTask actionTask, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public int Execute(Actions.ActionTask actionTask, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             return Execute(new ActionTask[] { actionTask }, driverFolderPath, executableLocation, onFinishAction, debugLogAction, errorLogAction);
         }
-        public bool Execute(Actions.ActionTask[] actionTasks, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public int Execute(Actions.ActionTask[] actionTasks, string driverFolderPath = "", string executableLocation = "", Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
-            bool result = true;
+            int result = -1;
             try
             {
 
@@ -27,6 +27,7 @@ namespace VSSystem.ThirdParty.Selenium
                         {
                             if (driverInfo.Driver != null)
                             {
+                                result = driverInfo.ProcessId;
                                 Resolution resolutionObj;
                                 Resolution.TryParse(actionTask.Resolution, out resolutionObj);
                                 if (resolutionObj == null)
@@ -50,7 +51,7 @@ namespace VSSystem.ThirdParty.Selenium
                                         var sectionResult = section.Execute(driverInfo.Driver, debugLogAction, errorLogAction);
                                         if (!sectionResult)
                                         {
-                                            result = false;
+
                                             break;
                                         }
                                     }
@@ -78,7 +79,6 @@ namespace VSSystem.ThirdParty.Selenium
                                     errorLogAction?.Invoke(ex);
                                 }
 #endif
-
                             }
                         }
 
@@ -94,7 +94,7 @@ namespace VSSystem.ThirdParty.Selenium
             return result;
         }
 
-        public bool Execute(string fileName, string driverFolderPath = "", string executableLocation = "", System.Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
+        public int Execute(string fileName, string driverFolderPath = "", string executableLocation = "", System.Action onFinishAction = default, Action<string> debugLogAction = default, Action<Exception> errorLogAction = default)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace VSSystem.ThirdParty.Selenium
             {
                 errorLogAction?.Invoke(ex);
             }
-            return false;
+            return -1;
         }
     }
 
